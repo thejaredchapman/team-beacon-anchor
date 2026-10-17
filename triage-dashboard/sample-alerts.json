@@ -108,7 +108,7 @@
     "packet_id": "Sample-06",
     "type": "Missing fact",
     "what": "Wound size and stage not stated",
-    "rule_id": "INT-E2",
+    "rule_id": "INT-E6",
     "page": "p. 9"
   },
   {

@@ -6,7 +6,7 @@
 
 ## Who IHH is
 
-A Santa Ana nonprofit that pairs **housing, healthcare and case management** for people experiencing homelessness. Its **recuperative care** gives people leaving the hospital a safe place to heal: people too sick for the street, but not sick enough to stay in a hospital. Studies link recuperative care to fewer hospital days and readmissions. California's Medicaid agency found a **29.2%** net cost reduction (preliminary). IHH served **2,287** people in recuperative care in 2024. More in `ABOUT-IHH.md`.
+A Santa Ana nonprofit that pairs **housing, healthcare and case management** for people experiencing homelessness *(IHH website)*. Its **recuperative care** gives people leaving the hospital a safe place to heal: people too sick for the street, but not sick enough to stay in a hospital. Studies link recuperative care to fewer hospital days and readmissions. California's Medicaid agency found a **29.2%** net cost reduction (preliminary). IHH served **2,287** people in recuperative care in 2024. More in `ABOUT-IHH.md`.
 
 ## The problem
 
@@ -37,7 +37,7 @@ A Santa Ana nonprofit that pairs **housing, healthcare and case management** for
 - **People decide.** The tools never approve or deny.
 - **Nothing is sent, and the real packets are never published.** Messages are drafts in an outbox. With an API key, page images (pre-read) and referral details (Ask Anchor) go to the Claude API, so use only de-identified data.
 - **Checked:**
-  - 36 automated tests pass
+  - 38 automated tests pass
   - an independent verifier moved the rule work from FAIL to PASS WITH FIXES
   - IHH's real decisions are held out for scoring only
 
@@ -45,7 +45,9 @@ A Santa Ana nonprofit that pairs **housing, healthcare and case management** for
 
 | Real | Mocked |
 |---|---|
-| Rule overlay, verification checklist, intake pipeline (local), held-out scorer | Triage board data (10 made-up packets); message sending (dry run); review of the 11 real packets (organizer check cleared; ready to resume) |
+| Rule overlay, verification checklist, intake pipeline (local), held-out scorer | Triage board data (10 made-up packets); message sending (dry run) |
+
+Not done yet: the review of the 11 real packets (organizer check cleared; ready to resume).
 
 ## What we need from IHH
 

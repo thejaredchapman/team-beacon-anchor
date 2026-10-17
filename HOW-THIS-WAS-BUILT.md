@@ -52,7 +52,7 @@ We began with a Packet Triage design and build plan written before the event. It
   - two wrong claims in the organizer note
   - wrong fact links on ID-2 and ID-3
   - seven smaller issues
-- We fixed them all. **The second run said PASS WITH FIXES**, after rebuilding the files independently and getting byte-identical results.
+- We fixed the main items. **The second run said PASS WITH FIXES**, after rebuilding the files independently and getting byte-identical results.
 
 ### 5. Build the intake and follow-up pipeline
 - A local web app that accepts PDF, multi-page TIFF faxes, photos (including iPhone HEIC), Word, text, email and zip.
@@ -65,7 +65,7 @@ We began with a Packet Triage design and build plan written before the event. It
   - immediate red-flag messages: a flag staff add goes to the intake team and the hospital at once; a flag the pre-read finds goes to the clinical reviewer at once, and to the hospital once a clinician confirms it
 - **Every internal message goes to the IHH Referral Intake team.** A "for:" line says which role should act.
 - **Dry run only:** every message is a file in `outbox/`.
-- 36 unit tests pass (`cd intake-pipeline && python3 -m unittest discover -s tests -t .`), and a full end-to-end run produced every tier in order.
+- 38 unit tests pass (`cd intake-pipeline && python3 -m unittest discover -s tests -t .`), and a full end-to-end run produced every tier in order.
 
 ## Tools
 

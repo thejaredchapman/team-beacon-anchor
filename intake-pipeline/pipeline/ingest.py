@@ -117,7 +117,10 @@ def convert(kind, src, out_dir):
 def add_file(con, referral_id, filename, data, depth=0, via="arrival"):
     """Store one file, normalize it, record it. Expands EML and ZIP. Returns list of document rows."""
     if len(data) > MAX_BYTES:
-        return [_record(con, referral_id, via, filename, "too_large", data, None, None, None, "rejected", "Over 50 MB; ask for a smaller file")]
+        row = _record(con, referral_id, via, filename, "too_large", data, None, None, None, "rejected", "Over 50 MB; ask for a smaller file")
+        rules._add_todo(con, referral_id, "missing", f"Resend {safe_name(filename)} as a smaller file (over 50 MB)", "coordinator", "auto")
+        con.commit()
+        return [row]
     kind = detect_kind(data, filename)
     folder = store.WORK / referral_id
     (folder / "original").mkdir(parents=True, exist_ok=True)
@@ -149,7 +152,12 @@ def add_file(con, referral_id, filename, data, depth=0, via="arrival"):
         docs.append(_record(con, referral_id, via, filename, "zip", data, original, None, None, "ready", "Archive; contents extracted below"))
         with zipfile.ZipFile(io.BytesIO(data)) as z:
             for info in z.infolist()[:50]:
-                if info.is_dir() or info.file_size > MAX_BYTES:
+                if info.is_dir():
+                    continue
+                if info.file_size > MAX_BYTES:
+                    docs.append(_record(con, referral_id, via, info.filename, "too_large", b"", None, None, None, "rejected", "Over 50 MB inside a zip; ask for a smaller file"))
+                    rules._add_todo(con, referral_id, "missing", f"Resend {safe_name(info.filename)} as a smaller file (over 50 MB)", "coordinator", "auto")
+                    con.commit()
                     continue
                 docs += add_file(con, referral_id, info.filename, z.read(info), depth + 1, via)
         return docs

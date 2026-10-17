@@ -95,7 +95,7 @@ Messages carry the referral number only, never a patient name. Internal messages
 | Multi-page TIFF faxes and photos (including iPhone HEIC) | Turned into PDF |
 | Word, RTF and ODT | Turned into text |
 | Emails (including fax-to-email) and zip files | Unpacked |
-| Anything unreadable | Marked "ask the hospital to resend" and added to the to-do list, so it goes out with the next request |
+| Anything unreadable, or over 50 MB | Marked "ask the hospital to resend" and added to the to-do list, so it goes out with the next request |
 | Programs | Rejected |
 
 ## Folders (all git-ignored)
@@ -108,7 +108,7 @@ Messages carry the referral number only, never a patient name. Internal messages
 ## Tests
 
 ```bash
-python3 -m unittest discover -s tests -t . -v      # 36 tests
+python3 -m unittest discover -s tests -t . -v      # 38 tests
 ```
 
 The tests cover:
@@ -120,7 +120,7 @@ The tests cover:
 - resent pages closing items
 - the fast lane and manual mode
 - safety: unconfirmed quotes never count as found, and made-up rule IDs are dropped (from the pre-read, Ask Anchor, and staff-typed to-dos)
-- unreadable files going into the next hospital request
+- unreadable and oversize files going into the next hospital request
 - Ask Anchor: answers only from context, built-in fallback, rule-ID guard
 - who's working: Untouched / Opened / Worked on, and the history
 - the Claude client: models that refuse a forced tool fall back safely

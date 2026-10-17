@@ -26,7 +26,7 @@ def inline(s):
     s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
     s = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
     s = re.sub(r"~~(.+?)~~", r"<s>\1</s>", s)
-    s = re.sub(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', s)
+    s = re.sub(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1<span class="sr-only"> (opens in a new tab)</span></a>', s)
     s = re.sub(r"\[([^\]]+)\]\(([^)\s]+)\)", r"\1", s)          # local links: keep the text
     return s
 
@@ -37,7 +37,7 @@ def md(text):
 
     def close_lists(to=0):
         while len(list_stack) > to:
-            out.append(f"</{list_stack.pop()[0]}>")
+            out.append(f"</li></{list_stack.pop()[0]}>")
 
     while i < len(lines):
         ln = lines[i]
@@ -70,11 +70,13 @@ def md(text):
             tag = "ol" if marker[0].isdigit() else "ul"
             level = indent // 2 + 1
             while list_stack and list_stack[-1][1] > level:
-                out.append(f"</{list_stack.pop()[0]}>")
-            if not list_stack or list_stack[-1][1] < level:
+                out.append(f"</li></{list_stack.pop()[0]}>")
+            if list_stack and list_stack[-1][1] == level:
+                out.append("</li>")
+            else:
                 out.append(f"<{tag}>")
                 list_stack.append((tag, level))
-            out.append(f"<li>{inline(rest)}</li>")
+            out.append(f"<li>{inline(rest)}")
             i += 1
             continue
         if ln.strip() and list_stack and ln.startswith("   "):
@@ -119,10 +121,10 @@ def test_summary():
 
 # The verifier's reports stay local (they may describe real packets), so this page shows only their outcome.
 VERIFY_STATUS = [
-    ("First check", "FAIL: one rule break and six wrong facts (test counts, out-of-date status, unreadable faxes, unchecked rule IDs, README gaps). Fixed."),
+    ("First check", "FAIL: one rule break and six wrong facts (test counts, out-of-date status, unreadable faxes, unchecked rule IDs, README gaps). The main fixes were made."),
     ("Re-check", "FAIL: the earlier fixes held, but this page copied a report that described a real packet, and the privacy wording was wrong. Fixed: reports no longer copied, privacy wording corrected, sample packets rewritten from scratch."),
     ("Final check", "PASS WITH FIXES: no P0 or P1 items."),
-    ("Page check", "FAIL on wording: red-flag routing, the grade score, and two source details. Fixed; small wording and accessibility items remain open."),
+    ("Page check", "FAIL on wording: red-flag routing, the grade score, and two source details. Fixed, along with the smaller wording and accessibility items."),
 ]
 
 
@@ -223,8 +225,8 @@ BOARD_JS = r"""
       [['Expected discharge', f.discharge || '', '+' + P.discharge], ['Answer clock', r.c, '+' + P.clock], ['Housing', f.housing || '', '+' + P.housing], ['High care need', f.care_needs || '', '+' + P.need], ['Recent repeat episode', f.recent_episode || '', '+' + P.recent], ['Total', r.pr.level, String(r.pr.score)]]));
     box.append(el('h4', { textContent: 'Patient details (made up)' }), table('Real packets show black boxes (redacted) for name and address', ['Name', 'Address', 'Allergies', 'Blood type'], [[f.patient_name || '', f.address || '', f.allergies || '', f.blood_type || '']]));
     const fax = 'triage-dashboard/faxes/' + id + '-original-fax.pdf';
-    box.append(el('h4', { textContent: 'Original fax (mock PDF)' }), el('p', {}, [el('a', { href: fax, target: '_blank', rel: 'noopener', textContent: 'Open ' + id + ' original fax (PDF, opens in a new tab)' })]));
-    box.append(el('h4', { textContent: 'Email log' }), table('Times to the second; a sample log, no real messages', ['Time', 'Direction', 'Channel', 'Subject', 'Status'], D.emails.filter((e) => e.packet_id === id).map((e) => [e.time, e.direction, e.channel, e.subject, e.status])));
+    box.append(el('h4', { textContent: 'Original fax (mock PDF)' }), el('p', {}, [el('a', { href: fax, target: '_blank', rel: 'noopener', textContent: 'Open ' + id + ' mock fax (one page per section, PDF, opens in a new tab)' })]));
+    box.append(el('h4', { textContent: 'Email log' }), table('Made-up log, times to the second. The tool itself sends nothing.', ['Time', 'Direction', 'Channel', 'Subject', 'Status'], D.emails.filter((e) => e.packet_id === id).map((e) => [e.time, e.direction, e.channel, e.subject, e.status])));
     box.append(el('h4', { textContent: 'The packet, page by page' }), table('', ['Pages', 'Document', 'What it shows'], D.pages.filter((p) => p.packet_id === id).map((p) => [p.page_from === p.page_to ? 'p. ' + p.page_from : 'pp. ' + p.page_from + '-' + p.page_to, p.doc_type, p.key_content])));
     box.append(el('h4', { textContent: 'Medications' }), table('', ['Medicine', 'Dose', 'How often', 'Self-gives?', 'For', 'Page'], D.meds.filter((m) => m.packet_id === id).map((m) => [m.medicine, m.dose, m.how_often, m.self_administers, m.purpose, 'p. ' + m.page])));
     box.append(el('h4', { textContent: 'Medical history and recent episodes' }), table('', ['Condition', 'Status', 'Recent?', 'Page'], D.history.filter((x) => x.packet_id === id).map((x) => [x.condition, x.status, x.recent, 'p. ' + x.page])),
@@ -311,7 +313,7 @@ def everything():
     groups = "".join(f"<h3>{html.escape(g)}</h3><ul>" + "".join(
         f'<li><a href="{html.escape(p)}"><code>{html.escape(p)}</code></a>: {html.escape(d)}</li>' for p, d in items if (HERE / p).exists()) + "</ul>" for g, items in FILES)
     return f"""<div class="prose"><h2>Everything we made</h2>
-<p>Links open the files from the <code>saturday-oct17-build</code> folder, so they work when this page is opened from that folder. Online: <a href="https://claude.ai/artifact/NVUonEKc7TRXnVU9QafCVG" target="_blank" rel="noopener">Anchor Board</a>.</p>
+<p>Links open the files from the <code>saturday-oct17-build</code> folder, so they work when this page is opened from that folder. Online: <a href="https://claude.ai/artifact/NVUonEKc7TRXnVU9QafCVG" target="_blank" rel="noopener">Anchor Board<span class="sr-only"> (opens in a new tab)</span></a>.</p>
 {groups}
 <p class="note">Not linked on purpose: <code>packet-review/</code> (work on the real packets stays local), and the app's <code>work/</code>, <code>outbox/</code> and <code>.env</code>.</p></div>"""
 
@@ -350,7 +352,7 @@ def main():
 <div class="two" style="margin-top:16px"><div class="panel"><h3>The queue</h3><div class="tbl"><table><caption class="note">Packets by priority</caption>
 <thead><tr><th scope="col">Packet</th><th scope="col">Priority</th><th scope="col">Answer clock</th><th scope="col">Grade</th><th scope="col">Score</th><th scope="col">Open items</th></tr></thead><tbody id="b-queue"></tbody></table></div>
 <p class="note">Grade: Great = all 7 core documents, a fact score of 85%+ (found = 2 points, unclear or can't tell = 1), no conflicts. Bad = critical alert, missing core document, or under 60%. Neutral = everything else. The grade is completeness, never eligibility.</p></div>
-<div class="panel stack" id="b-detail" aria-live="polite"></div></div>""",
+<div class="panel stack" id="b-detail"></div></div>""",
         "app": f'''<div class="prose"><p class="panel"><strong>Try Anchor online:</strong> <a href="{BOARD_URL}" target="_blank" rel="noopener">open the Anchor Board<span class="sr-only"> (opens in a new tab)</span></a>. It runs in the browser on made-up sample packets, with nothing to install. The full intake app below runs on your own computer.</p>
 {doc("intake-pipeline/README.md")}</div>''',
         "checks": checks,
@@ -360,7 +362,7 @@ def main():
         "files": everything(),
         "by": built_by(),
     }
-    body = "".join(f'<section id="{i}" role="tabpanel" aria-labelledby="tab-{i}" tabindex="0" hidden class="panel">{sections[i]}</section>' for i, _ in tabs)
+    body = "".join(f'<section id="{i}" role="tabpanel" aria-labelledby="tab-{i}" tabindex="0" class="panel">{sections[i]}</section>' for i, _ in tabs)
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Anchor</title><style>{CSS}</style></head><body>
 <a class="skip" href="#main">Skip to content</a>

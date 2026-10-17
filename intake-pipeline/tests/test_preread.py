@@ -118,6 +118,8 @@ class PreRead(Base):
         g = rules.grade(self.con, rid)
         self.assertEqual(g["grade"], "Great")
         self.assertTrue(g["fast_lane"])
+        self.assertIn("Fact score", g["why"])          # a weighted score, not "% of facts found"
+        self.assertNotIn("of facts found", g["why"])
         self.assertEqual(self.flags(rid, type="red"), [])
         cant = [r["id"] for r in rules.cant_tell(self.con, rid)]
         self.assertIn("INF-2", cant)   # COVID swab timing needs a redacted date

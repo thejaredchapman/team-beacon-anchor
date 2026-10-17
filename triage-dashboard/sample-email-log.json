@@ -56,7 +56,7 @@
     "direction": "Draft",
     "channel": "Email",
     "who": "Hospital case manager (sample)",
-    "subject": "Request for 3 item(s): No PT/OT notes; so walking 100 ft (MOB-3) can't be checked; Form says independent with ADLs; nursing note says needs help with dressing changes and bathing; COVID swab within 24 h: dat",
+    "subject": "Request for 3 items: PT/OT notes; help needed with bathing and dressing changes; date of COVID swab",
     "status": "Draft, not sent"
   },
   {
@@ -216,7 +216,7 @@
     "direction": "Draft",
     "channel": "Email",
     "who": "Hospital case manager (sample)",
-    "subject": "Request for 4 item(s): Last 5 sets of vitals not sent; Insulin listed on MAR; form says diabetic on oral meds only; Form says no wounds; wound note describes a sac",
+    "subject": "Request for 4 items: last 5 sets of vitals; insulin vs oral diabetes medicines; wound status; wound care plan",
     "status": "Draft, not sent"
   },
   {

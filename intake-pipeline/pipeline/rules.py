@@ -110,11 +110,11 @@ def grade(con, rid):
     elif missing_core:
         g, why = "Bad", "Core document missing: " + ", ".join(missing_core)
     elif pct < 60:
-        g, why = "Bad", f"Only {pct}% of facts found"
+        g, why = "Bad", f"Fact score only {pct}%"
     elif pct >= 85 and open_conflicts == 0:
-        g, why = "Great", f"{pct}% of facts found, all core documents, no conflicts"
+        g, why = "Great", f"Fact score {pct}%, all core documents, no conflicts"
     else:
-        g, why = "Neutral", f"{pct}% of facts found" + (f", {open_conflicts} conflict(s) to settle" if open_conflicts else "")
+        g, why = "Neutral", f"Fact score {pct}%" + (f", {open_conflicts} conflict(s) to settle" if open_conflicts else "")
     return {"grade": g, "pct": pct, "why": why, "fast_lane": g == "Great" and critical == 0 and open_conflicts == 0,
             "missing_core": missing_core, "conflicts": conflicts}
 

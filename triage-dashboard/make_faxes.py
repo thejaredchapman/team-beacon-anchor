@@ -14,7 +14,7 @@ EXTRA = {
 for pid, p in prof.items():
     n = pid.split('-')[1]
     p['patient_name'] = f"Sample Patient {n} (made up)"
-    p['address'] = "No fixed address (made up)" if p['housing'] == "Unhoused" else "Removed for privacy"
+    p['address'] = "No fixed address (made up)" if p['housing'] == "Unhoused" else "Black box (redacted)"
     p['allergies'], p['blood_type'] = EXTRA[pid]
 
 def wm(c):

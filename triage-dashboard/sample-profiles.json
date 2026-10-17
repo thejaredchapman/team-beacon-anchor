@@ -42,7 +42,7 @@
   "recent_note": "Progress note says this is the second pneumonia admission in recent months (no dates).",
   "high_need": 1,
   "patient_name": "Sample Patient 03 (made up)",
-  "address": "Removed for privacy",
+  "address": "Black box (redacted)",
   "allergies": "Sulfa drugs",
   "blood_type": "O positive (lab report)",
   "fax_pdf": "/_blob/63aaf4e671f140c877bbf790d2b99fbd"
@@ -154,7 +154,7 @@
   "recent_note": "H&P describes an admission for the same problem last month (exact date redacted).",
   "high_need": 0,
   "patient_name": "Sample Patient 10 (made up)",
-  "address": "Removed for privacy",
+  "address": "Black box (redacted)",
   "allergies": "Iodine contrast",
   "blood_type": "Not in packet",
   "fax_pdf": "/_blob/dcc74451c195e2afd90c15dc0e1424cb"

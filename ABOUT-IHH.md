@@ -7,7 +7,7 @@ Who IHH is, what it does, and how it helps people and Orange County. Each fact n
 - **A nonprofit based in Santa Ana**, known until 2025 as Illumination Foundation. *(event background, `docs/background.md`)*
 - **Founded in 2008** as The Illumination Foundation. *(IHH website, home page)*
 - **Its mission**, in its own words: "to disrupt the cycle of homelessness by providing healthcare, housing, and hope—together." *(IHH, Mission and Vision page, via `docs/background.md`)*
-- **It serves people experiencing homelessness** across Orange County. Its forms also list Los Angeles and the Inland Empire. *(IHH website)*
+- **It serves people experiencing homelessness** across Orange County. *(IHH website)*
 
 ## What IHH does
 

@@ -73,6 +73,33 @@ class Ingest(Base):
         self.assertEqual(st["msg"], "needs_resend")
         self.assertEqual(st["blocked"], "rejected")
 
+    def test_too_large_file_goes_on_the_to_do_list(self):
+        old = ingest.MAX_BYTES
+        ingest.MAX_BYTES = 10
+        try:
+            rid = ingest.create_referral(self.con, "H", "upload", [("big.pdf", b"%PDF-1.4 " + b"x" * 20)])
+        finally:
+            ingest.MAX_BYTES = old
+        todo = self.con.execute("SELECT text FROM flags WHERE referral_id=? AND type='missing'", (rid,)).fetchall()
+        self.assertEqual(len(todo), 1)
+        self.assertIn("big.pdf", todo[0]["text"])
+
+    def test_too_large_zip_member_goes_on_the_to_do_list(self):
+        import io
+        import zipfile
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as z:
+            z.writestr("huge.pdf", b"%PDF-1.4 " + b"x" * 5000)
+        old = ingest.MAX_BYTES
+        ingest.MAX_BYTES = 1000
+        try:
+            rid = ingest.create_referral(self.con, "H", "upload", [("pages.zip", buf.getvalue())])
+        finally:
+            ingest.MAX_BYTES = old
+        todo = [r["text"] for r in self.con.execute("SELECT text FROM flags WHERE referral_id=? AND type='missing'", (rid,))]
+        self.assertEqual(len(todo), 1)
+        self.assertIn("huge.pdf", todo[0])
+
     def test_unreadable_file_goes_into_the_next_request(self):
         rid = ingest.create_referral(self.con, "H", "upload", [("scan.msg", b"\xd0\xcf\x11\xe0rest")])
         todo = self.con.execute("SELECT * FROM flags WHERE referral_id=? AND type='missing'", (rid,)).fetchall()

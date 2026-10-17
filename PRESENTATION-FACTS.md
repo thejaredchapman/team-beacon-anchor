@@ -40,14 +40,14 @@ Judging weights: **Day-one impact 40%** · **Product and idea 35%** · **Clarity
 | Priority by patient need: discharge today +3 (tomorrow +2), clock late +3 (at risk +2), unhoused +1, high care need +1, recent repeat episode +1. **P1** is 6+ points, **P2** 3–5, **P3** 2 or less. | Board, How grading works |
 | The intake app reads PDF, multi-page TIFF faxes, phone photos, Word, text, email and zip, and turns faxes and photos into PDFs. | `intake-pipeline/`; tests |
 | Follow-ups: receipt at **0**, requests at **30** and **60**, escalation at **60**, **90**, **110** and **120** minutes. A red flag the pre-read finds goes to the clinical reviewer **immediately**, and to the hospital once a clinician confirms; a red flag staff add goes to the intake team and hospital at once. | `pipeline/notify.py`; end-to-end run |
-| **36** automated tests pass. | `cd intake-pipeline && python3 -m unittest discover -s tests -t .` |
+| **38** automated tests pass. | `cd intake-pipeline && python3 -m unittest discover -s tests -t .` |
 | An independent verifier first failed our rule work, then passed it after fixes. | `verification/` (local only) |
 
 ## Say what is mocked (judges trust this)
 
 - The triage board uses **10 made-up packets**. Real packets can't go on a published page.
 - Messages are **written to an outbox, not sent**. The event forbids real sending.
-- The **review of the 11 real packets** paused while an organizer checked a possible missed date in one packet. The organizer cleared it; the review can resume.
+- **Not done yet:** the review of the 11 real packets. It paused while an organizer checked a possible missed date in one packet; the organizer cleared it, and the review can resume.
 - Accessibility is built to WCAG 2.2 AA but **not yet tested with screen-reader users**.
 
 ## Don't say
@@ -63,7 +63,7 @@ Judging weights: **Day-one impact 40%** · **Product and idea 35%** · **Clarity
 1. **Problem (25 s):** "A long, sideways fax. Two hours to answer. The deciding fact is often deep in the chart, not on the form."
 2. **Intake (35 s):** Drop a fax email into the inbox and press **Check fax inbox**. It becomes a 3-page PDF, and the receipt is written to the outbox.
 3. **Red flag (30 s):** Add a red flag. A staff-added red flag tells the intake team and the hospital immediately; one the pre-read finds goes to the clinical reviewer first and reaches the hospital only after they press Confirm. Open the hospital one: "This is not a decision."
-4. **Clock (20 s):** Advance the clock: requests at 30 and 60, escalation at 90, 110 and 120.
+4. **Clock (20 s):** Advance the clock: requests at 30 and 60, escalation at 60, 90, 110 and 120.
 5. **Triage Board (40 s):** Show the queue sorted by patient need. Open a Bad packet: missing information first, priority points, the to-do list with rule IDs.
 6. **Trust (30 s):** Show the verification checklist, the verifier going from FAIL to PASS WITH FIXES, and one line on what's mocked.
 
