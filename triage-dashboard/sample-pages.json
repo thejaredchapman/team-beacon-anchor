@@ -1,0 +1,722 @@
+[
+  {
+    "page_id": "Sample-01-p01",
+    "packet_id": "Sample-01",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-01-p02",
+    "packet_id": "Sample-01",
+    "page_from": 2,
+    "page_to": 2,
+    "doc_type": "IHH referral form",
+    "key_content": "All sections filled"
+  },
+  {
+    "page_id": "Sample-01-p03",
+    "packet_id": "Sample-01",
+    "page_from": 3,
+    "page_to": 8,
+    "doc_type": "CalAIM authorization",
+    "key_content": "Recuperative care pathway"
+  },
+  {
+    "page_id": "Sample-01-p04",
+    "packet_id": "Sample-01",
+    "page_from": 9,
+    "page_to": 9,
+    "doc_type": "Face sheet",
+    "key_content": "Diagnoses, payer, allergies"
+  },
+  {
+    "page_id": "Sample-01-p05",
+    "packet_id": "Sample-01",
+    "page_from": 10,
+    "page_to": 13,
+    "doc_type": "History and physical",
+    "key_content": "Cellulitis, vitals stable"
+  },
+  {
+    "page_id": "Sample-01-p06",
+    "packet_id": "Sample-01",
+    "page_from": 14,
+    "page_to": 14,
+    "doc_type": "Vitals",
+    "key_content": "5 sets, no fever"
+  },
+  {
+    "page_id": "Sample-01-p07",
+    "packet_id": "Sample-01",
+    "page_from": 15,
+    "page_to": 16,
+    "doc_type": "Medication list",
+    "key_content": "3 discharge medicines"
+  },
+  {
+    "page_id": "Sample-01-p08",
+    "packet_id": "Sample-01",
+    "page_from": 17,
+    "page_to": 19,
+    "doc_type": "PT evaluation",
+    "key_content": "Walks 300 ft, no device"
+  },
+  {
+    "page_id": "Sample-01-p09",
+    "packet_id": "Sample-01",
+    "page_from": 20,
+    "page_to": 22,
+    "doc_type": "Progress notes",
+    "key_content": "Redness shrinking"
+  },
+  {
+    "page_id": "Sample-02-p01",
+    "packet_id": "Sample-02",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-02-p02",
+    "packet_id": "Sample-02",
+    "page_from": 2,
+    "page_to": 2,
+    "doc_type": "IHH referral form",
+    "key_content": "Wound marked simple; ADLs marked independent"
+  },
+  {
+    "page_id": "Sample-02-p03",
+    "packet_id": "Sample-02",
+    "page_from": 3,
+    "page_to": 4,
+    "doc_type": "CalAIM authorization",
+    "key_content": "Signed; some boxes blank"
+  },
+  {
+    "page_id": "Sample-02-p04",
+    "packet_id": "Sample-02",
+    "page_from": 5,
+    "page_to": 6,
+    "doc_type": "Face sheet",
+    "key_content": "Diagnosis list"
+  },
+  {
+    "page_id": "Sample-02-p05",
+    "packet_id": "Sample-02",
+    "page_from": 7,
+    "page_to": 7,
+    "doc_type": "Imaging report",
+    "key_content": "Foot X-ray reading"
+  },
+  {
+    "page_id": "Sample-02-p06",
+    "packet_id": "Sample-02",
+    "page_from": 8,
+    "page_to": 10,
+    "doc_type": "History and physical",
+    "key_content": "Admitted for foot wound and high blood sugar"
+  },
+  {
+    "page_id": "Sample-02-p07",
+    "packet_id": "Sample-02",
+    "page_from": 11,
+    "page_to": 12,
+    "doc_type": "Labs and vitals",
+    "key_content": "Vitals; swab date redacted"
+  },
+  {
+    "page_id": "Sample-02-p08",
+    "packet_id": "Sample-02",
+    "page_from": 13,
+    "page_to": 13,
+    "doc_type": "Wound care note",
+    "key_content": "Dressing changes twice a day"
+  },
+  {
+    "page_id": "Sample-02-p09",
+    "packet_id": "Sample-02",
+    "page_from": 14,
+    "page_to": 14,
+    "doc_type": "Nursing note",
+    "key_content": "Needs help with bathing"
+  },
+  {
+    "page_id": "Sample-02-p10",
+    "packet_id": "Sample-02",
+    "page_from": 15,
+    "page_to": 20,
+    "doc_type": "Medication record",
+    "key_content": "Sideways scans"
+  },
+  {
+    "page_id": "Sample-02-p11",
+    "packet_id": "Sample-02",
+    "page_from": 21,
+    "page_to": 22,
+    "doc_type": "Discharge plan",
+    "key_content": "Draft, unsigned"
+  },
+  {
+    "page_id": "Sample-03-p01",
+    "packet_id": "Sample-03",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-03-p02",
+    "packet_id": "Sample-03",
+    "page_from": 2,
+    "page_to": 2,
+    "doc_type": "IHH referral form",
+    "key_content": "Oxygen: No"
+  },
+  {
+    "page_id": "Sample-03-p03",
+    "packet_id": "Sample-03",
+    "page_from": 3,
+    "page_to": 7,
+    "doc_type": "CalAIM authorization",
+    "key_content": "Complete"
+  },
+  {
+    "page_id": "Sample-03-p04",
+    "packet_id": "Sample-03",
+    "page_from": 8,
+    "page_to": 8,
+    "doc_type": "Face sheet",
+    "key_content": "Payer, allergies"
+  },
+  {
+    "page_id": "Sample-03-p05",
+    "packet_id": "Sample-03",
+    "page_from": 9,
+    "page_to": 11,
+    "doc_type": "History and physical",
+    "key_content": "Pneumonia, improving"
+  },
+  {
+    "page_id": "Sample-03-p06",
+    "packet_id": "Sample-03",
+    "page_from": 12,
+    "page_to": 12,
+    "doc_type": "Progress note",
+    "key_content": "Oxygen at night mentioned"
+  },
+  {
+    "page_id": "Sample-03-p07",
+    "packet_id": "Sample-03",
+    "page_from": 13,
+    "page_to": 13,
+    "doc_type": "Chest X-ray",
+    "key_content": "Improving infiltrate"
+  },
+  {
+    "page_id": "Sample-03-p08",
+    "packet_id": "Sample-03",
+    "page_from": 14,
+    "page_to": 15,
+    "doc_type": "Labs",
+    "key_content": "Blood counts normalizing"
+  },
+  {
+    "page_id": "Sample-03-p09",
+    "packet_id": "Sample-03",
+    "page_from": 16,
+    "page_to": 18,
+    "doc_type": "PT evaluation",
+    "key_content": "Walks 150 ft with rest"
+  },
+  {
+    "page_id": "Sample-04-p01",
+    "packet_id": "Sample-04",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-04-p02",
+    "packet_id": "Sample-04",
+    "page_from": 2,
+    "page_to": 3,
+    "doc_type": "Face sheet",
+    "key_content": "Age differs from H&P"
+  },
+  {
+    "page_id": "Sample-04-p03",
+    "packet_id": "Sample-04",
+    "page_from": 4,
+    "page_to": 4,
+    "doc_type": "Social work note",
+    "key_content": "Living situation"
+  },
+  {
+    "page_id": "Sample-04-p04",
+    "packet_id": "Sample-04",
+    "page_from": 5,
+    "page_to": 8,
+    "doc_type": "History and physical",
+    "key_content": "Isolation status"
+  },
+  {
+    "page_id": "Sample-04-p05",
+    "packet_id": "Sample-04",
+    "page_from": 9,
+    "page_to": 14,
+    "doc_type": "Labs",
+    "key_content": "Cultures pending"
+  },
+  {
+    "page_id": "Sample-04-p06",
+    "packet_id": "Sample-04",
+    "page_from": 15,
+    "page_to": 20,
+    "doc_type": "Progress notes",
+    "key_content": "IV antibiotics"
+  },
+  {
+    "page_id": "Sample-04-p07",
+    "packet_id": "Sample-04",
+    "page_from": 21,
+    "page_to": 22,
+    "doc_type": "Psychiatry consult",
+    "key_content": "Suicidal thoughts noted"
+  },
+  {
+    "page_id": "Sample-04-p08",
+    "packet_id": "Sample-04",
+    "page_from": 23,
+    "page_to": 30,
+    "doc_type": "Older record",
+    "key_content": "Earlier stay, scanned sideways"
+  },
+  {
+    "page_id": "Sample-05-p01",
+    "packet_id": "Sample-05",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "IHH referral form",
+    "key_content": "Complete"
+  },
+  {
+    "page_id": "Sample-05-p02",
+    "packet_id": "Sample-05",
+    "page_from": 2,
+    "page_to": 2,
+    "doc_type": "Face sheet",
+    "key_content": "Payer, allergies"
+  },
+  {
+    "page_id": "Sample-05-p03",
+    "packet_id": "Sample-05",
+    "page_from": 3,
+    "page_to": 6,
+    "doc_type": "CalAIM authorization",
+    "key_content": "Complete"
+  },
+  {
+    "page_id": "Sample-05-p04",
+    "packet_id": "Sample-05",
+    "page_from": 7,
+    "page_to": 9,
+    "doc_type": "History and physical",
+    "key_content": "Post-op course"
+  },
+  {
+    "page_id": "Sample-05-p05",
+    "packet_id": "Sample-05",
+    "page_from": 10,
+    "page_to": 11,
+    "doc_type": "Nursing flowsheet",
+    "key_content": "Vitals stable"
+  },
+  {
+    "page_id": "Sample-05-p06",
+    "packet_id": "Sample-05",
+    "page_from": 12,
+    "page_to": 14,
+    "doc_type": "Medication record",
+    "key_content": "Discharge medicines"
+  },
+  {
+    "page_id": "Sample-06-p01",
+    "packet_id": "Sample-06",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-06-p02",
+    "packet_id": "Sample-06",
+    "page_from": 2,
+    "page_to": 2,
+    "doc_type": "IHH referral form",
+    "key_content": "Wheelchair user"
+  },
+  {
+    "page_id": "Sample-06-p03",
+    "packet_id": "Sample-06",
+    "page_from": 3,
+    "page_to": 8,
+    "doc_type": "CalAIM authorization",
+    "key_content": "Home health: wound care"
+  },
+  {
+    "page_id": "Sample-06-p04",
+    "packet_id": "Sample-06",
+    "page_from": 9,
+    "page_to": 9,
+    "doc_type": "Wound note",
+    "key_content": "Size and stage missing"
+  },
+  {
+    "page_id": "Sample-06-p05",
+    "packet_id": "Sample-06",
+    "page_from": 10,
+    "page_to": 12,
+    "doc_type": "History and physical",
+    "key_content": "Stable"
+  },
+  {
+    "page_id": "Sample-06-p06",
+    "packet_id": "Sample-06",
+    "page_from": 13,
+    "page_to": 13,
+    "doc_type": "Vitals",
+    "key_content": "5 sets"
+  },
+  {
+    "page_id": "Sample-06-p07",
+    "packet_id": "Sample-06",
+    "page_from": 14,
+    "page_to": 16,
+    "doc_type": "PT evaluation",
+    "key_content": "Transfers unclear"
+  },
+  {
+    "page_id": "Sample-06-p08",
+    "packet_id": "Sample-06",
+    "page_from": 17,
+    "page_to": 20,
+    "doc_type": "Medication list",
+    "key_content": "Discharge medicines"
+  },
+  {
+    "page_id": "Sample-06-p09",
+    "packet_id": "Sample-06",
+    "page_from": 21,
+    "page_to": 29,
+    "doc_type": "Progress notes",
+    "key_content": "Daily notes"
+  },
+  {
+    "page_id": "Sample-07-p01",
+    "packet_id": "Sample-07",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-07-p02",
+    "packet_id": "Sample-07",
+    "page_from": 2,
+    "page_to": 2,
+    "doc_type": "IHH referral form",
+    "key_content": "Oral meds only; no wounds"
+  },
+  {
+    "page_id": "Sample-07-p03",
+    "packet_id": "Sample-07",
+    "page_from": 3,
+    "page_to": 6,
+    "doc_type": "Face sheet",
+    "key_content": "Diagnoses"
+  },
+  {
+    "page_id": "Sample-07-p04",
+    "packet_id": "Sample-07",
+    "page_from": 7,
+    "page_to": 10,
+    "doc_type": "History and physical",
+    "key_content": "High blood sugar"
+  },
+  {
+    "page_id": "Sample-07-p05",
+    "packet_id": "Sample-07",
+    "page_from": 11,
+    "page_to": 16,
+    "doc_type": "Labs",
+    "key_content": "Glucose readings"
+  },
+  {
+    "page_id": "Sample-07-p06",
+    "packet_id": "Sample-07",
+    "page_from": 17,
+    "page_to": 20,
+    "doc_type": "Medication record",
+    "key_content": "Insulin listed"
+  },
+  {
+    "page_id": "Sample-07-p07",
+    "packet_id": "Sample-07",
+    "page_from": 21,
+    "page_to": 21,
+    "doc_type": "Physician orders",
+    "key_content": "Sliding scale"
+  },
+  {
+    "page_id": "Sample-07-p08",
+    "packet_id": "Sample-07",
+    "page_from": 22,
+    "page_to": 22,
+    "doc_type": "Wound note",
+    "key_content": "Sacral wound"
+  },
+  {
+    "page_id": "Sample-07-p09",
+    "packet_id": "Sample-07",
+    "page_from": 23,
+    "page_to": 31,
+    "doc_type": "Progress notes",
+    "key_content": "Glucose improving"
+  },
+  {
+    "page_id": "Sample-08-p01",
+    "packet_id": "Sample-08",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-08-p02",
+    "packet_id": "Sample-08",
+    "page_from": 2,
+    "page_to": 2,
+    "doc_type": "IHH referral form",
+    "key_content": "TB section blank"
+  },
+  {
+    "page_id": "Sample-08-p03",
+    "packet_id": "Sample-08",
+    "page_from": 3,
+    "page_to": 8,
+    "doc_type": "CalAIM authorization",
+    "key_content": "Complete"
+  },
+  {
+    "page_id": "Sample-08-p04",
+    "packet_id": "Sample-08",
+    "page_from": 9,
+    "page_to": 9,
+    "doc_type": "Face sheet",
+    "key_content": "Payer"
+  },
+  {
+    "page_id": "Sample-08-p05",
+    "packet_id": "Sample-08",
+    "page_from": 10,
+    "page_to": 12,
+    "doc_type": "History and physical",
+    "key_content": "Fracture care"
+  },
+  {
+    "page_id": "Sample-08-p06",
+    "packet_id": "Sample-08",
+    "page_from": 13,
+    "page_to": 13,
+    "doc_type": "X-ray",
+    "key_content": "Closed fracture, aligned"
+  },
+  {
+    "page_id": "Sample-08-p07",
+    "packet_id": "Sample-08",
+    "page_from": 14,
+    "page_to": 15,
+    "doc_type": "PT evaluation",
+    "key_content": "Walks 400 ft"
+  },
+  {
+    "page_id": "Sample-08-p08",
+    "packet_id": "Sample-08",
+    "page_from": 16,
+    "page_to": 17,
+    "doc_type": "Medication list",
+    "key_content": "Discharge medicines"
+  },
+  {
+    "page_id": "Sample-08-p09",
+    "packet_id": "Sample-08",
+    "page_from": 18,
+    "page_to": 21,
+    "doc_type": "Progress notes",
+    "key_content": "Pain controlled"
+  },
+  {
+    "page_id": "Sample-09-p01",
+    "packet_id": "Sample-09",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-09-p02",
+    "packet_id": "Sample-09",
+    "page_from": 2,
+    "page_to": 3,
+    "doc_type": "Face sheet",
+    "key_content": "Shown twice"
+  },
+  {
+    "page_id": "Sample-09-p03",
+    "packet_id": "Sample-09",
+    "page_from": 4,
+    "page_to": 5,
+    "doc_type": "Medication list",
+    "key_content": "Discharge medicines"
+  },
+  {
+    "page_id": "Sample-09-p04",
+    "packet_id": "Sample-09",
+    "page_from": 6,
+    "page_to": 9,
+    "doc_type": "History and physical",
+    "key_content": "Fall, no fracture"
+  },
+  {
+    "page_id": "Sample-09-p05",
+    "packet_id": "Sample-09",
+    "page_from": 10,
+    "page_to": 14,
+    "doc_type": "Labs",
+    "key_content": "Normal"
+  },
+  {
+    "page_id": "Sample-09-p06",
+    "packet_id": "Sample-09",
+    "page_from": 15,
+    "page_to": 17,
+    "doc_type": "Progress notes",
+    "key_content": "Stable"
+  },
+  {
+    "page_id": "Sample-09-p07",
+    "packet_id": "Sample-09",
+    "page_from": 18,
+    "page_to": 18,
+    "doc_type": "Nursing note",
+    "key_content": "Aggressive toward staff"
+  },
+  {
+    "page_id": "Sample-09-p08",
+    "packet_id": "Sample-09",
+    "page_from": 19,
+    "page_to": 21,
+    "doc_type": "Social work note",
+    "key_content": "Housing"
+  },
+  {
+    "page_id": "Sample-09-p09",
+    "packet_id": "Sample-09",
+    "page_from": 22,
+    "page_to": 22,
+    "doc_type": "PT/OT evaluation",
+    "key_content": "Walks 200 ft"
+  },
+  {
+    "page_id": "Sample-09-p10",
+    "packet_id": "Sample-09",
+    "page_from": 23,
+    "page_to": 23,
+    "doc_type": "IHH referral form",
+    "key_content": "Last page"
+  },
+  {
+    "page_id": "Sample-10-p01",
+    "packet_id": "Sample-10",
+    "page_from": 1,
+    "page_to": 1,
+    "doc_type": "Fax cover",
+    "key_content": "Cover sheet"
+  },
+  {
+    "page_id": "Sample-10-p02",
+    "packet_id": "Sample-10",
+    "page_from": 2,
+    "page_to": 2,
+    "doc_type": "IHH referral form",
+    "key_content": "AOx4 ticked"
+  },
+  {
+    "page_id": "Sample-10-p03",
+    "packet_id": "Sample-10",
+    "page_from": 3,
+    "page_to": 8,
+    "doc_type": "CalAIM authorization",
+    "key_content": "No follow-up listed"
+  },
+  {
+    "page_id": "Sample-10-p04",
+    "packet_id": "Sample-10",
+    "page_from": 9,
+    "page_to": 9,
+    "doc_type": "Face sheet",
+    "key_content": "Diagnoses"
+  },
+  {
+    "page_id": "Sample-10-p05",
+    "packet_id": "Sample-10",
+    "page_from": 10,
+    "page_to": 13,
+    "doc_type": "History and physical",
+    "key_content": "Heart failure"
+  },
+  {
+    "page_id": "Sample-10-p06",
+    "packet_id": "Sample-10",
+    "page_from": 14,
+    "page_to": 15,
+    "doc_type": "Labs",
+    "key_content": "Kidney function stable"
+  },
+  {
+    "page_id": "Sample-10-p07",
+    "packet_id": "Sample-10",
+    "page_from": 16,
+    "page_to": 16,
+    "doc_type": "Progress note",
+    "key_content": "Intermittently confused"
+  },
+  {
+    "page_id": "Sample-10-p08",
+    "packet_id": "Sample-10",
+    "page_from": 17,
+    "page_to": 18,
+    "doc_type": "Echo report",
+    "key_content": "Ejection fraction stated"
+  },
+  {
+    "page_id": "Sample-10-p09",
+    "packet_id": "Sample-10",
+    "page_from": 19,
+    "page_to": 21,
+    "doc_type": "Medication list",
+    "key_content": "Discharge medicines"
+  },
+  {
+    "page_id": "Sample-10-p10",
+    "packet_id": "Sample-10",
+    "page_from": 22,
+    "page_to": 26,
+    "doc_type": "Progress notes",
+    "key_content": "Swelling down"
+  }
+]

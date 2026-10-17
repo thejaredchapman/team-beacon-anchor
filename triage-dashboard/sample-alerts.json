@@ -1,0 +1,186 @@
+[
+  {
+    "alert_id": "A01",
+    "packet_id": "Sample-02",
+    "type": "Critical",
+    "what": "Imaging report mentions possible bone infection in the foot; referral form calls it a simple wound",
+    "rule_id": "MSK-X2",
+    "page": "p. 7"
+  },
+  {
+    "alert_id": "A02",
+    "packet_id": "Sample-02",
+    "type": "Missing document",
+    "what": "No PT/OT notes; so walking 100 ft (MOB-3) can't be checked",
+    "rule_id": "MOB-2",
+    "page": "—"
+  },
+  {
+    "alert_id": "A03",
+    "packet_id": "Sample-02",
+    "type": "Contradiction",
+    "what": "Form says independent with ADLs; nursing note says needs help with dressing changes and bathing",
+    "rule_id": "ADL-2",
+    "page": "p. 2 vs p. 14"
+  },
+  {
+    "alert_id": "A04",
+    "packet_id": "Sample-02",
+    "type": "Can't tell",
+    "what": "COVID swab within 24 h: dates redacted",
+    "rule_id": "INF-2",
+    "page": "p. 11"
+  },
+  {
+    "alert_id": "A05",
+    "packet_id": "Sample-03",
+    "type": "Contradiction",
+    "what": "Form says no oxygen; progress note mentions oxygen at night",
+    "rule_id": "RESP-3",
+    "page": "p. 2 vs p. 12"
+  },
+  {
+    "alert_id": "A06",
+    "packet_id": "Sample-03",
+    "type": "Missing fact",
+    "what": "MRSA swab result not found",
+    "rule_id": "INF-1",
+    "page": "—"
+  },
+  {
+    "alert_id": "A07",
+    "packet_id": "Sample-04",
+    "type": "Critical",
+    "what": "Active infection on isolation, clearance not documented",
+    "rule_id": "OTH-4",
+    "page": "p. 8"
+  },
+  {
+    "alert_id": "A08",
+    "packet_id": "Sample-04",
+    "type": "Critical",
+    "what": "Suicidal thoughts noted in psych consult",
+    "rule_id": "MH-2",
+    "page": "p. 21"
+  },
+  {
+    "alert_id": "A09",
+    "packet_id": "Sample-04",
+    "type": "Missing document",
+    "what": "No IHH referral form",
+    "rule_id": "DOC-1",
+    "page": "—"
+  },
+  {
+    "alert_id": "A10",
+    "packet_id": "Sample-04",
+    "type": "Missing document",
+    "what": "No medication list",
+    "rule_id": "DOC-7",
+    "page": "—"
+  },
+  {
+    "alert_id": "A11",
+    "packet_id": "Sample-04",
+    "type": "Contradiction",
+    "what": "Age differs between face sheet and H&P",
+    "rule_id": "—",
+    "page": "p. 3 vs p. 5"
+  },
+  {
+    "alert_id": "A12",
+    "packet_id": "Sample-04",
+    "type": "Contradiction",
+    "what": "Living situation differs between form and social work note",
+    "rule_id": "GEN-1",
+    "page": "p. 4 vs p. 26"
+  },
+  {
+    "alert_id": "A13",
+    "packet_id": "Sample-06",
+    "type": "Rule gap",
+    "what": "Wheelchair user: rules allow if transfers independently; PT note unclear",
+    "rule_id": "MOB-4",
+    "page": "p. 14"
+  },
+  {
+    "alert_id": "A14",
+    "packet_id": "Sample-06",
+    "type": "Missing fact",
+    "what": "Wound size and stage not stated",
+    "rule_id": "INT-E2",
+    "page": "p. 9"
+  },
+  {
+    "alert_id": "A15",
+    "packet_id": "Sample-07",
+    "type": "Missing document",
+    "what": "Last 5 sets of vitals not sent",
+    "rule_id": "DOC-6",
+    "page": "—"
+  },
+  {
+    "alert_id": "A16",
+    "packet_id": "Sample-07",
+    "type": "Contradiction",
+    "what": "Insulin listed on MAR; form says diabetic on oral meds only",
+    "rule_id": "DM-3",
+    "page": "p. 2 vs p. 17"
+  },
+  {
+    "alert_id": "A17",
+    "packet_id": "Sample-07",
+    "type": "Contradiction",
+    "what": "Form says no wounds; wound note describes a sacral wound",
+    "rule_id": "INT-E2",
+    "page": "p. 2 vs p. 22"
+  },
+  {
+    "alert_id": "A18",
+    "packet_id": "Sample-07",
+    "type": "Can't tell",
+    "what": "Insulin started under 24 h ago: dates redacted",
+    "rule_id": "DM-3",
+    "page": "p. 17"
+  },
+  {
+    "alert_id": "A19",
+    "packet_id": "Sample-08",
+    "type": "Missing fact",
+    "what": "TB test result not found",
+    "rule_id": "FORM-X4",
+    "page": "—"
+  },
+  {
+    "alert_id": "A20",
+    "packet_id": "Sample-09",
+    "type": "Critical",
+    "what": "Aggressive behavior toward staff in nursing note",
+    "rule_id": "OTH-1",
+    "page": "p. 18"
+  },
+  {
+    "alert_id": "A21",
+    "packet_id": "Sample-09",
+    "type": "Missing document",
+    "what": "No CalOptima authorization",
+    "rule_id": "DOC-3",
+    "page": "—"
+  },
+  {
+    "alert_id": "A22",
+    "packet_id": "Sample-10",
+    "type": "Contradiction",
+    "what": "Form says AOx4; progress note says intermittently confused",
+    "rule_id": "COG-2",
+    "page": "p. 2 vs p. 16"
+  },
+  {
+    "alert_id": "A23",
+    "packet_id": "Sample-10",
+    "type": "Missing fact",
+    "what": "Follow-up appointment not scheduled",
+    "rule_id": "—",
+    "page": "—"
+  }
+]

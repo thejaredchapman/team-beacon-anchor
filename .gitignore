@@ -1,0 +1,12 @@
+.env
+*.env
+__pycache__/
+*.pyc
+*.db
+.DS_Store
+packets/
+*.zip
+intake-pipeline/work/
+intake-pipeline/outbox/
+intake-pipeline/fax-inbox/
+intake-pipeline/samples/

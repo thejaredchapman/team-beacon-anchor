@@ -1,0 +1,226 @@
+[
+  {
+    "hist_id": "Sample-01-h1",
+    "packet_id": "Sample-01",
+    "condition": "Cellulitis, lower leg",
+    "status": "Current, improving",
+    "recent": "No",
+    "page": 10
+  },
+  {
+    "hist_id": "Sample-01-h2",
+    "packet_id": "Sample-01",
+    "condition": "Hypertension",
+    "status": "Chronic, controlled",
+    "recent": "No",
+    "page": 9
+  },
+  {
+    "hist_id": "Sample-02-h1",
+    "packet_id": "Sample-02",
+    "condition": "Type 2 diabetes",
+    "status": "Current",
+    "recent": "Can't tell",
+    "page": 5
+  },
+  {
+    "hist_id": "Sample-02-h2",
+    "packet_id": "Sample-02",
+    "condition": "Foot wound, right",
+    "status": "Current, dressing changes",
+    "recent": "Yes (this admission)",
+    "page": 8
+  },
+  {
+    "hist_id": "Sample-02-h3",
+    "packet_id": "Sample-02",
+    "condition": "Possible bone infection (osteomyelitis) on imaging",
+    "status": "Not confirmed",
+    "recent": "Can't tell",
+    "page": 7
+  },
+  {
+    "hist_id": "Sample-02-h4",
+    "packet_id": "Sample-02",
+    "condition": "High blood pressure",
+    "status": "Current",
+    "recent": "Can't tell",
+    "page": 5
+  },
+  {
+    "hist_id": "Sample-03-h1",
+    "packet_id": "Sample-03",
+    "condition": "Pneumonia",
+    "status": "Current, improving",
+    "recent": "Yes",
+    "page": 9
+  },
+  {
+    "hist_id": "Sample-03-h2",
+    "packet_id": "Sample-03",
+    "condition": "COPD",
+    "status": "Chronic",
+    "recent": "No",
+    "page": 9
+  },
+  {
+    "hist_id": "Sample-03-h3",
+    "packet_id": "Sample-03",
+    "condition": "Tobacco use",
+    "status": "Current",
+    "recent": "No",
+    "page": 9
+  },
+  {
+    "hist_id": "Sample-04-h1",
+    "packet_id": "Sample-04",
+    "condition": "Infection requiring isolation",
+    "status": "Current, not cleared",
+    "recent": "Yes",
+    "page": 5
+  },
+  {
+    "hist_id": "Sample-04-h2",
+    "packet_id": "Sample-04",
+    "condition": "Depression with suicidal thoughts",
+    "status": "Current",
+    "recent": "Yes",
+    "page": 21
+  },
+  {
+    "hist_id": "Sample-04-h3",
+    "packet_id": "Sample-04",
+    "condition": "Substance use",
+    "status": "Stated",
+    "recent": "Can't tell",
+    "page": 4
+  },
+  {
+    "hist_id": "Sample-05-h1",
+    "packet_id": "Sample-05",
+    "condition": "Post-surgical incision with staples",
+    "status": "Current",
+    "recent": "No",
+    "page": 7
+  },
+  {
+    "hist_id": "Sample-05-h2",
+    "packet_id": "Sample-05",
+    "condition": "Asthma",
+    "status": "Chronic, mild",
+    "recent": "No",
+    "page": 7
+  },
+  {
+    "hist_id": "Sample-06-h1",
+    "packet_id": "Sample-06",
+    "condition": "Pressure wound",
+    "status": "Current",
+    "recent": "No",
+    "page": 9
+  },
+  {
+    "hist_id": "Sample-06-h2",
+    "packet_id": "Sample-06",
+    "condition": "Type 2 diabetes",
+    "status": "Chronic",
+    "recent": "No",
+    "page": 10
+  },
+  {
+    "hist_id": "Sample-06-h3",
+    "packet_id": "Sample-06",
+    "condition": "Spinal cord injury",
+    "status": "Long-standing",
+    "recent": "No",
+    "page": 10
+  },
+  {
+    "hist_id": "Sample-07-h1",
+    "packet_id": "Sample-07",
+    "condition": "Type 2 diabetes, poorly controlled",
+    "status": "Current",
+    "recent": "Yes",
+    "page": 7
+  },
+  {
+    "hist_id": "Sample-07-h2",
+    "packet_id": "Sample-07",
+    "condition": "Sacral wound",
+    "status": "Current",
+    "recent": "Can't tell",
+    "page": 22
+  },
+  {
+    "hist_id": "Sample-07-h3",
+    "packet_id": "Sample-07",
+    "condition": "Hypertension",
+    "status": "Chronic",
+    "recent": "No",
+    "page": 7
+  },
+  {
+    "hist_id": "Sample-08-h1",
+    "packet_id": "Sample-08",
+    "condition": "Closed wrist fracture",
+    "status": "Current",
+    "recent": "No",
+    "page": 10
+  },
+  {
+    "hist_id": "Sample-08-h2",
+    "packet_id": "Sample-08",
+    "condition": "Seasonal allergies",
+    "status": "Chronic",
+    "recent": "No",
+    "page": 9
+  },
+  {
+    "hist_id": "Sample-09-h1",
+    "packet_id": "Sample-09",
+    "condition": "Fall with bruising",
+    "status": "Current",
+    "recent": "Can't tell",
+    "page": 6
+  },
+  {
+    "hist_id": "Sample-09-h2",
+    "packet_id": "Sample-09",
+    "condition": "Bipolar disorder",
+    "status": "Chronic",
+    "recent": "Can't tell",
+    "page": 6
+  },
+  {
+    "hist_id": "Sample-09-h3",
+    "packet_id": "Sample-09",
+    "condition": "Alcohol use",
+    "status": "Stated",
+    "recent": "Can't tell",
+    "page": 19
+  },
+  {
+    "hist_id": "Sample-10-h1",
+    "packet_id": "Sample-10",
+    "condition": "Heart failure",
+    "status": "Current, improving",
+    "recent": "Yes",
+    "page": 10
+  },
+  {
+    "hist_id": "Sample-10-h2",
+    "packet_id": "Sample-10",
+    "condition": "Atrial fibrillation",
+    "status": "Chronic",
+    "recent": "No",
+    "page": 10
+  },
+  {
+    "hist_id": "Sample-10-h3",
+    "packet_id": "Sample-10",
+    "condition": "Hypertension",
+    "status": "Chronic",
+    "recent": "No",
+    "page": 10
+  }
+]

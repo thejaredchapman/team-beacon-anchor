@@ -1,0 +1,994 @@
+<style>
+#dash-root .pt { display: grid; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans); }
+#dash-root .pt-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+#dash-root .pt-head p { margin: var(--cds-gap-xs) 0 0; color: var(--color-fg-muted); max-width: 72ch; }
+#dash-root .pt-sample { display: inline-block; margin-top: var(--cds-gap-sm); padding: 2px 10px; border-radius: 999px; border: 1px dashed var(--color-border-line); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+#dash-root .pt-tabs { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); border-bottom: 1px solid var(--color-border-line); }
+#dash-root .pt-tabs button { all: unset; cursor: pointer; padding: var(--cds-pad-sm) var(--cds-pad-md); min-height: 28px; font-size: var(--cds-font-size-body); color: var(--color-fg-muted); border-bottom: 2px solid transparent; }
+#dash-root .pt-tabs button[aria-selected="true"] { color: var(--color-fg); border-bottom-color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+#dash-root .pt-tabs button:focus-visible, #dash-root .pt-q tr:focus-visible, #dash-root .pt-clear:focus-visible { outline: 2px solid var(--cds-chart-reference); outline-offset: 2px; }
+#dash-root .pt-page { display: grid; gap: var(--cds-gap-lg); }
+#dash-root .pt-tiles { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); }
+#dash-root .pt-tile, #dash-root .pt-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+#dash-root .pt-tile .lbl { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+#dash-root .pt-tile .num { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; line-height: 1.2; }
+#dash-root .pt-tile .note { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+#dash-root .pt-tile.great .num { color: var(--color-ok); }
+#dash-root .pt-tile.neutral .num { color: var(--color-warn); }
+#dash-root .pt-tile.bad .num { color: var(--color-bad); }
+#dash-root .pt-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+#dash-root .pt-card h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+#dash-root .pt-card .sub { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: var(--cds-gap-xs) 0 var(--cds-gap-md); }
+#dash-root .pt-stack { display: flex; height: 28px; border-radius: 8px; overflow: hidden; background: var(--cds-chart-grid); min-height: 28px; }
+#dash-root .pt-stack > div { display: flex; align-items: center; justify-content: center; font-size: var(--cds-font-size-caption); color: var(--color-bg); font-weight: var(--cds-font-weight-medium); min-width: 0; }
+#dash-root .pt-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); margin-top: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+#dash-root .sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+#dash-root .pt-bars { display: grid; gap: var(--cds-gap-sm); min-height: 7rem; }
+#dash-root .pt-bar { display: grid; grid-template-columns: minmax(7rem, 10rem) 1fr 2.5rem; gap: var(--cds-gap-sm); align-items: center; }
+#dash-root .pt-track { height: 14px; border-radius: 7px; background: var(--cds-chart-grid); position: relative; overflow: hidden; }
+#dash-root .pt-fill { position: absolute; inset: 0 auto 0 0; border-radius: 7px; }
+#dash-root .pt-bar .v { text-align: right; font-variant-numeric: tabular-nums; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+#dash-root .tbl { overflow: auto; max-height: 28rem; }
+#dash-root table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); font-variant-numeric: tabular-nums; }
+#dash-root th { position: sticky; top: 0; background: var(--color-panel); text-align: left; font-weight: var(--cds-font-weight-medium); border-bottom: 1px solid var(--color-border-line); padding: var(--cds-pad-xs) var(--cds-pad-sm); white-space: nowrap; }
+#dash-root td { border-bottom: 1px solid var(--color-border-line); padding: var(--cds-pad-xs) var(--cds-pad-sm); vertical-align: top; }
+#dash-root .pt-q tbody tr { cursor: pointer; }
+#dash-root .pt-q tbody tr[aria-selected="true"] td { background: var(--cds-chart-grid); }
+#dash-root .pill { display: inline-flex; gap: 4px; align-items: center; padding: 1px 8px; border-radius: 999px; font-size: var(--cds-font-size-caption); border: 1px solid var(--color-border-line); white-space: nowrap; }
+#dash-root .pill.great, #dash-root .pill.ok { color: var(--color-ok); }
+#dash-root .pill.neutral, #dash-root .pill.warn { color: var(--color-warn); }
+#dash-root .pill.bad { color: var(--color-bad); }
+#dash-root .pt-clear { all: unset; cursor: pointer; font-size: var(--cds-font-size-caption); padding: 2px 10px; border: 1px solid var(--color-border-line); border-radius: 999px; }
+#dash-root .pt-alert-head { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; justify-content: space-between; }
+#dash-root .hide-narrow { }
+@media (max-width: 640px) { #dash-root .hide-narrow { display: none; } #dash-root .pt-bar { grid-template-columns: 7rem 1fr 2rem; } }
+#dash-root .prose { max-width: 70ch; display: grid; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-body); line-height: 1.55; }
+#dash-root .prose h3 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: var(--cds-gap-sm) 0 0; }
+#dash-root .prose ol, #dash-root .prose ul { margin: 0; padding-left: 1.3em; display: grid; gap: 4px; }
+#dash-root .prose p { margin: 0; }
+#dash-root .rule-grid { display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+#dash-root .rule { border-radius: var(--cds-radius); border: 1px solid var(--color-border-line); padding: var(--cds-pad-md); display: grid; gap: var(--cds-gap-xs); background: var(--color-panel); }
+#dash-root .rule .big { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-title); }
+#dash-root .rule.great .big { color: var(--color-ok); }
+#dash-root .rule.neutral .big { color: var(--color-warn); }
+#dash-root .rule.bad .big { color: var(--color-bad); }
+#dash-root code { font-size: 0.92em; }
+#dash-root .pt-todo { margin: 0; padding-left: 1.1em; display: grid; gap: 2px; }
+#dash-root .pt-open { all: unset; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-weight: var(--cds-font-weight-medium); }
+#dash-root .pt-open:focus-visible, #dash-root .pt-back:focus-visible { outline: 2px solid var(--cds-chart-reference); outline-offset: 2px; }
+#dash-root .pill.p1 { color: var(--color-bad); border-color: var(--color-bad); }
+#dash-root .pill.p2 { color: var(--color-warn); }
+#dash-root .pill.p3 { color: var(--color-fg-muted); }
+#dash-root .pt-detail-head { display: grid; gap: var(--cds-gap-sm); }
+#dash-root .pt-detail-head h2 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; }
+#dash-root .pt-chips { display: flex; flex-wrap: wrap; gap: var(--cds-gap-xs); }
+#dash-root .pt-facts { display: grid; gap: var(--cds-gap-sm) var(--cds-gap-lg); grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr)); margin: 0; }
+#dash-root .pt-facts dt { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+#dash-root .pt-facts dd { margin: 0; }
+#dash-root .pt-missing { border-left: 3px solid var(--color-bad); }
+#dash-root .pt-back { all: unset; cursor: pointer; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+#dash-root .pt-empty { color: var(--color-fg-muted); }
+#dash-root .pt-summary-text { max-width: 72ch; line-height: 1.55; margin: 0; }
+/* Accessibility layer (WCAG 2.2 AA) */
+#dash-root .pt-sr { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+#dash-root .pt-skips { display: flex; gap: var(--cds-gap-sm); }
+#dash-root .pt-skip { position: absolute; left: -9999px; }
+#dash-root .pt-skip:focus { position: static; padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 2px solid var(--color-fg); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); }
+#dash-root :is(a, button, select, [tabindex]):focus-visible { outline: 3px solid var(--color-fg); outline-offset: 2px; border-radius: 4px; }
+#dash-root .pt-tabs button { min-height: 44px; box-sizing: border-box; display: inline-flex; align-items: center; }
+#dash-root .pt-open, #dash-root .pt-back, #dash-root .pt-clear { min-height: 24px; min-width: 24px; display: inline-flex; align-items: center; }
+#dash-root .pt-q tbody tr[aria-current="true"] td { background: var(--cds-chart-grid); }
+#dash-root .pt-q tbody tr[aria-current="true"] th { background: var(--cds-chart-grid); box-shadow: inset 4px 0 0 var(--color-fg); }
+#dash-root th[scope="row"] { font-weight: var(--cds-font-weight-medium); position: static; background: transparent; border-bottom: 1px solid var(--color-border-line); }
+#dash-root .pill .ico { font-size: 0.9em; line-height: 1; }
+#dash-root .pt-filter { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; font-size: var(--cds-font-size-caption); }
+#dash-root .pt-filter select { font: inherit; min-height: 32px; padding: 2px 8px; border-radius: var(--cds-radius); border: 1px solid var(--color-border-line); background: var(--color-bg); color: var(--color-fg); }
+#dash-root #pd-title:focus { outline: 3px solid var(--color-fg); outline-offset: 4px; }
+#dash-root .pt-timers { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm) var(--cds-gap-lg); margin: 0 0 var(--cds-gap-sm); font-size: var(--cds-font-size-body); }
+#dash-root .pt-timers strong { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; font-size: 1.1em; }
+#dash-root .pt-mono { font-family: ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; white-space: nowrap; }
+#dash-root .pt-compose { display: grid; gap: var(--cds-gap-sm); margin-top: var(--cds-gap-md); padding: var(--cds-pad-md); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); }
+#dash-root .pt-compose h3 { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); }
+#dash-root .pt-compose label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); display: grid; gap: 2px; }
+#dash-root .pt-compose input, #dash-root .pt-compose select, #dash-root .pt-compose textarea { font: inherit; padding: 6px 8px; border-radius: var(--cds-radius); border: 1px solid var(--color-border-line); background: var(--color-bg); color: var(--color-fg); min-height: 36px; width: 100%; box-sizing: border-box; }
+#dash-root .pt-compose textarea { min-height: 10rem; resize: vertical; line-height: 1.45; }
+#dash-root .pt-btns { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); }
+#dash-root .pt-btn { all: unset; cursor: pointer; min-height: 36px; padding: 0 14px; display: inline-flex; align-items: center; border-radius: var(--cds-radius); border: 1px solid var(--color-fg); font-size: var(--cds-font-size-body); }
+#dash-root .pt-btn.primary { background: var(--color-fg); color: var(--color-bg); }
+#dash-root .pt-btn:focus-visible { outline: 3px solid var(--color-fg); outline-offset: 2px; }
+#dash-root .pt-reply { all: unset; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; font-size: var(--cds-font-size-caption); min-height: 24px; display: inline-flex; align-items: center; }
+#dash-root .pt-reply:focus-visible { outline: 3px solid var(--color-fg); outline-offset: 2px; }
+#dash-root .pt-kbd { font-family: ui-monospace, Menlo, monospace; font-size: 0.9em; padding: 0 5px; border: 1px solid var(--color-border-line); border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { #dash-root * { transition: none !important; animation: none !important; } }
+@media (forced-colors: active) {
+  #dash-root .pill, #dash-root .pt-tile, #dash-root .pt-card, #dash-root .rule { border: 1px solid CanvasText; }
+  #dash-root .pt-fill, #dash-root .pt-stack > div { forced-color-adjust: none; outline: 1px solid CanvasText; }
+  #dash-root .pt-tabs button[aria-selected="true"] { border-bottom: 3px solid Highlight; }
+  #dash-root .pt-q tbody tr[aria-current="true"] th { outline: 2px solid Highlight; }
+}
+#dash-root [data-dash-source-state=empty] { color: transparent; }
+#dash-root [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+#dash-root .failed { display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); min-height: 5rem; }
+#dash-root .failed::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+</style>
+
+<div class="pt" lang="en">
+  <div class="pt-skips"><a class="pt-skip" href="#queue">Skip to the queue</a><a class="pt-skip" href="#alerts">Skip to alerts</a></div>
+  <div id="pt-live" class="pt-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+  <header class="pt-head" id="top">
+    <h1>Anchor Board</h1>
+    <p id="pt-take" class="dash-skeleton" data-source="summary">—</p>
+    <span class="pt-sample">Draft with made-up sample packets. No real referral data.</span>
+  </header>
+
+  <div class="pt-tabs" role="tablist" aria-label="Board sections" aria-orientation="horizontal">
+    <button type="button" role="tab" id="tab-today" aria-controls="today" aria-selected="true">Today</button>
+    <button type="button" role="tab" id="tab-packet" aria-controls="packet" aria-selected="false">Packet details</button>
+    <button type="button" role="tab" id="tab-grading" aria-controls="grading" aria-selected="false">How grading works</button>
+    <button type="button" role="tab" id="tab-staff" aria-controls="staff" aria-selected="false">Staff guide</button>
+    <button type="button" role="tab" id="tab-it" aria-controls="it" aria-selected="false">IT guide</button>
+  </div>
+
+  <!-- TODAY -->
+  <section class="pt-page" id="today" role="tabpanel" tabindex="-1" aria-labelledby="tab-today">
+    <div class="pt-tiles" aria-label="Headline figures">
+      <div class="pt-tile"><div class="lbl">Packets waiting</div><div class="num dash-skeleton" data-source="summary" data-field="pending" data-row="0">—</div><div class="note">Not yet answered</div></div>
+      <div class="pt-tile bad"><div class="lbl">At risk or late</div><div class="num dash-skeleton" data-source="summary" data-field="at_risk" data-row="0">—</div><div class="note">Past 90 min of the 2-hour promise</div></div>
+      <div class="pt-tile great"><div class="lbl">Great</div><div class="num dash-skeleton" data-source="summary" data-field="great" data-row="0">—</div><div class="note">Ready to decide</div></div>
+      <div class="pt-tile neutral"><div class="lbl">Neutral</div><div class="num dash-skeleton" data-source="summary" data-field="neutral" data-row="0">—</div><div class="note">Ask for a few items</div></div>
+      <div class="pt-tile bad"><div class="lbl">Bad</div><div class="num dash-skeleton" data-source="summary" data-field="bad" data-row="0">—</div><div class="note">Call the hospital first</div></div>
+      <div class="pt-tile"><div class="lbl">Facts checked by a person</div><div class="num dash-skeleton" data-source="summary" data-field="verified_pct" data-row="0">—</div><div class="note">Share of all facts, ticked Verified</div></div>
+    </div>
+
+    <article class="pt-card" id="queue">
+      <h2>The queue</h2>
+      <p class="sub">Sorted by priority (patient need and urgency), then by time waiting. Click a packet name to open its details. The clock turns amber at 90 minutes and red at 2 hours.</p>
+      <div class="tbl">
+        <table class="pt-q" id="queue-tbl" data-source="graded" data-row-key="packet_id">
+          <caption class="pt-sr">Packet queue, sorted by priority then time waiting</caption>
+          <thead><tr>
+            <th scope="col" data-field="packet_id">Packet</th>
+            <th scope="col" data-source="priority" data-field="priority">Priority</th>
+            <th scope="col" data-field="received" class="hide-narrow">Received</th>
+            <th scope="col" data-field="clock">Answer clock</th>
+            <th scope="col" data-field="grade">Grade</th>
+            <th scope="col" data-field="score_pct">Score</th>
+            <th scope="col" data-field="critical_alerts" class="hide-narrow">Critical</th>
+            <th scope="col" data-field="contradictions" class="hide-narrow">Conflicts</th>
+            <th scope="col" data-field="next_step">Next step</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </article>
+
+    <article class="pt-card" id="needs">
+      <h2>What's needed to complete each packet</h2>
+      <p class="sub">Every packet with open items. Critical items first, then documents to get, facts to find, conflicts to settle, and dates to confirm. Finish these and the grade can move up.</p>
+      <div class="tbl">
+        <table id="needs-tbl" data-source="to_complete" data-row-key="packet_id">
+          <caption class="pt-sr">What is needed to complete each packet</caption>
+          <thead><tr>
+            <th scope="col" data-field="packet_id">Packet</th>
+            <th scope="col" data-field="grade">Grade</th>
+            <th scope="col" data-field="needed_count">Open items</th>
+            <th scope="col" data-field="needed">What to do</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </article>
+
+    <section class="pt-grid">
+      <article class="pt-card" id="grades">
+        <h2>Today's grades</h2>
+        <p class="sub">How complete each packet is. Not whether the patient qualifies.</p>
+        <div class="pt-stack dash-skeleton" id="grade-stack" data-source="grade_counts" role="img" aria-label="Grades loading"></div>
+        <div class="pt-legend"><span><span class="sw" style="background: var(--color-ok)"></span>Great</span><span><span class="sw" style="background: var(--color-warn)"></span>Neutral</span><span><span class="sw" style="background: var(--color-bad)"></span>Bad</span></div>
+      </article>
+      <article class="pt-card" id="alert-types">
+        <h2>Alerts by type</h2>
+        <p class="sub">Across all packets today. Red types block a decision.</p>
+        <div class="pt-bars dash-skeleton" id="type-bars" data-source="alert_types" role="list" aria-label="Alerts by type"></div>
+      </article>
+    </section>
+
+    <article class="pt-card" id="alerts">
+      <div class="pt-alert-head">
+        <h2 id="alerts-title">Alerts: all packets</h2>
+        <div class="pt-filter"><label for="pt-filter">Show alerts for</label><select id="pt-filter" data-source="graded"><option value="">All packets</option></select><button type="button" class="pt-clear" id="pt-clear" hidden>Show all packets</button></div>
+      </div>
+      <p class="sub">What is missing or conflicting, the IHH rule it touches, and where to look. Open the page and check it yourself.</p>
+      <div class="tbl">
+        <table id="alerts-tbl" data-source="alerts" data-row-key="alert_id">
+          <caption class="pt-sr">Alerts with type, description, rule and page</caption>
+          <thead><tr>
+            <th scope="col" data-field="packet_id">Packet</th>
+            <th scope="col" data-field="type">Type</th>
+            <th scope="col" data-field="what">What</th>
+            <th scope="col" data-field="rule_id" class="hide-narrow">Rule</th>
+            <th scope="col" data-field="page">Page</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </article>
+    <article class="pt-card" id="email-log">
+      <h2>Email log: all packets</h2>
+      <p class="sub">Newest first. Received faxes and emails, messages staff sent, and drafts not yet sent. The board itself sends nothing.</p>
+      <div class="tbl">
+        <table id="log-tbl" data-source="emails" data-row-key="log_id">
+          <caption class="pt-sr">Email log for all packets, newest first</caption>
+          <thead><tr><th scope="col" data-field="time">Time</th><th scope="col" data-field="packet_id">Packet</th><th scope="col" data-field="direction">Direction</th><th scope="col" data-field="channel" class="hide-narrow">Channel</th><th scope="col" data-field="subject">Subject</th><th scope="col" data-field="status" class="hide-narrow">Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </article>
+  </section>
+
+  <!-- PACKET DETAILS -->
+  <section class="pt-page" id="packet" role="tabpanel" tabindex="-1" aria-labelledby="tab-packet" hidden>
+    <p id="pd-none" class="pt-empty">Pick a packet in the queue on the Today tab to see its details here.</p>
+    <div id="pd-body" class="pt-page" hidden>
+      <article class="pt-card pt-detail-head" id="pd-head">
+        <button type="button" class="pt-back" id="pd-back">← Back to the queue</button>
+        <h2 id="pd-title" tabindex="-1">—</h2>
+        <div class="pt-chips" id="pd-chips"></div>
+      </article>
+
+      <article class="pt-card" id="pd-summary">
+        <h2>Summary</h2>
+        <p class="pt-summary-text" id="pd-summary-text" data-source="profiles" data-field="summary">—</p>
+      </article>
+
+      <article class="pt-card pt-missing" id="pd-missing">
+        <h2>Key missing information</h2>
+        <p class="sub">Do these first. Each item names the page and the IHH rule.</p>
+        <table id="pd-missing-tbl" data-source="alerts" data-row-key="alert_id">
+          <caption class="pt-sr">Key missing information for this packet</caption>
+          <thead><tr><th scope="col" data-field="type">To do</th><th scope="col" data-field="what">What</th><th scope="col" data-field="page">Page</th><th scope="col" data-field="rule_id" class="hide-narrow">Rule</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </article>
+
+      <article class="pt-card" id="pd-priority">
+        <h2>Priority</h2>
+        <p class="sub">How soon to look at this packet, based on patient need. It does not decide eligibility.</p>
+        <div class="pt-chips" style="margin-bottom: var(--cds-gap-sm)"><span id="pd-plevel" data-source="priority" data-field="priority">—</span><span class="pill" id="pd-pscore" data-source="priority" data-field="priority_score">—</span></div>
+        <table id="pd-ptbl" data-source="priority" data-row-key="packet_id">
+          <caption class="pt-sr">Priority points for this packet</caption>
+          <thead><tr><th scope="col">Factor</th><th scope="col">This packet</th><th scope="col">Points</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <p class="sub">P1 Urgent is 6 or more points. P2 High is 3 to 5. P3 Routine is 2 or less.</p>
+      </article>
+
+      <article class="pt-card" id="pd-patient">
+        <h2>Patient details</h2>
+        <dl class="pt-facts">
+          <div><dt>Name</dt><dd id="pd-name" data-source="profiles" data-field="patient_name">—</dd></div>
+          <div><dt>Address</dt><dd id="pd-address" data-source="profiles" data-field="address">—</dd></div>
+          <div><dt>Allergies</dt><dd id="pd-allergy" data-source="profiles" data-field="allergies">—</dd></div>
+          <div><dt>Blood type</dt><dd id="pd-blood" data-source="profiles" data-field="blood_type">—</dd></div>
+          <div><dt>Reason for hospital stay</dt><dd id="pd-reason" data-source="profiles" data-field="reason">—</dd></div>
+          <div><dt>Expected discharge</dt><dd id="pd-discharge" data-source="profiles" data-field="discharge">—</dd></div>
+          <div><dt>Housing</dt><dd id="pd-housing" data-source="profiles" data-field="housing">—</dd></div>
+          <div><dt>Care needs</dt><dd id="pd-care" data-source="profiles" data-field="care_needs">—</dd></div>
+        </dl>
+        <p class="sub">In real packets, name and address are blacked out for privacy and show as "Removed for privacy". "Not in packet" means the hospital didn't send it.</p>
+      </article>
+
+      <article class="pt-card" id="pd-original">
+        <h2>Original fax or email</h2>
+        <p class="sub">The packet as it arrived, as a PDF. Opens in a new tab. For the samples this is a made-up mock fax.</p>
+        <p id="pd-pdf-wrap"><a id="pd-pdf" class="pt-open" href="#" target="_blank" rel="noopener">Open original (PDF)</a></p>
+      </article>
+
+      <article class="pt-card" id="pd-log">
+        <h2>Email log</h2>
+        <p class="sub">Every message about this packet: what arrived, what staff sent, and drafts waiting. Times to the second. The board never sends anything itself.</p>
+        <p class="pt-timers" id="pd-timers">
+          <span>Since received: <strong id="pd-t-recv" role="timer">—</strong></span>
+          <span>Since last message: <strong id="pd-t-last" role="timer">—</strong></span>
+          <span id="pd-t-left"></span>
+        </p>
+        <div class="tbl">
+          <table id="pd-log-tbl" data-source="emails" data-row-key="log_id">
+          <caption class="pt-sr">Email log for this packet, with time since received and since the previous message</caption>
+            <thead><tr><th scope="col" data-field="time">Time</th><th scope="col" data-source="email_timing" data-field="since_received">Since received</th><th scope="col" data-source="email_timing" data-field="since_prev" class="hide-narrow">Since previous</th><th scope="col" data-field="direction">Direction</th><th scope="col" data-field="channel" class="hide-narrow">Channel</th><th scope="col" data-field="subject">Subject</th><th scope="col" data-field="status" class="hide-narrow">Status</th><th scope="col"><span class="pt-sr">Reply</span></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="pt-compose" role="group" aria-labelledby="pd-reply-h">
+          <h3 id="pd-reply-h">Reply to the hospital</h3>
+          <p class="sub">Drafts a message from this packet's open items. Copy it into IHH's approved channel to send. "Add to log as draft" keeps it in this view until you reload; nothing is saved or sent.</p>
+          <label for="pd-tpl">Start from</label>
+          <select id="pd-tpl">
+            <option value="missing">Request missing items</option>
+            <option value="clinical">Clinical question: answer needed to proceed</option>
+            <option value="receipt">Confirm receipt (2-hour promise)</option>
+            <option value="status">Status update</option>
+            <option value="blank">Blank</option>
+          </select>
+          <label for="pd-subj">Subject</label>
+          <input id="pd-subj" type="text">
+          <label for="pd-msg">Message</label>
+          <textarea id="pd-msg"></textarea>
+          <div class="pt-btns">
+            <button type="button" class="pt-btn primary" id="pd-copy">Copy message</button>
+            <button type="button" class="pt-btn" id="pd-add">Add to log as draft</button>
+            <button type="button" class="pt-btn" id="pd-reset">Start over</button>
+          </div>
+          <p class="sub" id="pd-reply-status" role="status"></p>
+        </div>
+      </article>
+
+      <article class="pt-card" id="pd-doc">
+        <h2>The packet, page by page</h2>
+        <p class="sub">The original fax laid out as a table of contents: which pages hold which document, and what each one says that matters.</p>
+        <div class="tbl">
+          <table id="pd-pages-tbl" data-source="pages" data-row-key="page_id">
+          <caption class="pt-sr">Packet table of contents by page</caption>
+            <thead><tr><th scope="col" data-field="page_from">Pages</th><th scope="col" data-field="doc_type">Document</th><th scope="col" data-field="key_content">What it shows</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </article>
+
+      <section class="pt-grid">
+        <article class="pt-card" id="pd-meds">
+          <h2>Medications</h2>
+          <p class="sub">From the medication list or record. "Unclear" means the packet doesn't show whether the patient gives it to themselves.</p>
+          <div class="tbl">
+            <table id="pd-meds-tbl" data-source="meds" data-row-key="med_id">
+          <caption class="pt-sr">Medications in this packet</caption>
+              <thead><tr><th scope="col" data-field="medicine">Medicine</th><th scope="col" data-field="dose">Dose</th><th scope="col" data-field="how_often">How often</th><th scope="col" data-field="self_administers">Self-gives?</th><th scope="col" data-field="purpose" class="hide-narrow">For</th><th scope="col" data-field="page">Page</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </article>
+        <article class="pt-card" id="pd-history">
+          <h2>Medical history</h2>
+          <p class="sub">Conditions in the packet, and whether each has happened recently.</p>
+          <div class="tbl">
+            <table id="pd-hist-tbl" data-source="history" data-row-key="hist_id">
+          <caption class="pt-sr">Medical history in this packet</caption>
+              <thead><tr><th scope="col" data-field="condition">Condition</th><th scope="col" data-field="status">Status</th><th scope="col" data-field="recent">Recent?</th><th scope="col" data-field="page">Page</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+          <div class="pt-card" style="margin-top: var(--cds-gap-md)">
+            <strong>Has this happened recently?</strong>
+            <p class="pt-summary-text"><span id="pd-recent" data-source="profiles" data-field="recent_episode">—</span>. <span id="pd-recent-note" data-source="profiles" data-field="recent_note"></span></p>
+          </div>
+        </article>
+      </section>
+    </div>
+  </section>
+
+  <!-- GRADING -->
+  <section class="pt-page" id="grading" role="tabpanel" tabindex="-1" aria-labelledby="tab-grading" hidden>
+    <div class="pt-card prose">
+      <h2>How a packet gets its grade</h2>
+      <p>The grade says <strong>how complete and consistent the packet is</strong>. It never says whether the patient qualifies. A coordinator always decides.</p>
+      <h3>Step 1: score the 27 facts</h3>
+      <ul>
+        <li><strong>Found</strong> (with a page): 2 points</li>
+        <li><strong>Unclear</strong> or <strong>Can't tell</strong> (a date is blacked out): 1 point</li>
+        <li><strong>Missing</strong>: 0 points</li>
+        <li><strong>Redacted</strong> (a black box): not counted. A black box is privacy, not a gap.</li>
+      </ul>
+      <p>Score = points ÷ (2 × facts that apply), shown as a percent.</p>
+      <h3>Step 2: pick the grade</h3>
+    </div>
+    <div class="rule-grid">
+      <div class="rule great"><span class="big">Great</span><span>All 7 core documents are there (IHH form, face sheet, authorization, H&amp;P, vitals, medication list, PT/OT or nursing notes).</span><span>Score 85% or more.</span><span>No conflicts between the form and the chart.</span><strong>Next step: ready to decide.</strong></div>
+      <div class="rule neutral"><span class="big">Neutral</span><span>Core documents are there.</span><span>Score 60% to 84%, or one or more conflicts a phone call can settle.</span><strong>Next step: request specific items.</strong></div>
+      <div class="rule bad"><span class="big">Bad</span><span>Any critical alert (a rule that would exclude the patient looks true).</span><span>Or a core document is missing.</span><span>Or score under 60%.</span><strong>Next step: call the hospital before deciding.</strong></div>
+    </div>
+    <div class="pt-card prose">
+      <h3>When a packet is incomplete</h3>
+      <p>A Neutral or Bad packet always comes with a <strong>to-do list</strong>. Each item starts with what to do:</p>
+      <ul>
+        <li><strong>Clinical review</strong>: a nurse or medical director reads the page before anything else.</li>
+        <li><strong>Get</strong>: ask the hospital for a missing document (for example PT/OT notes).</li>
+        <li><strong>Find</strong>: the document is there, but the fact isn't. Look again or ask (for example MRSA result).</li>
+        <li><strong>Settle</strong>: the form and chart disagree. Check both pages; the chart wins, or call.</li>
+        <li><strong>Confirm with hospital</strong>: the rule needs a date we can't see.</li>
+        <li><strong>Coordinator decides</strong>: the written rules don't settle it.</li>
+      </ul>
+      <p>When every item is done and the score reaches 85% with no conflicts, the packet becomes Great.</p>
+    </div>
+    <div class="pt-card prose">
+      <h3>Priority: who to look at first</h3>
+      <p>The grade says how complete a packet is. <strong>Priority says how soon to look at it</strong>, based on the patient's need. It never decides eligibility.</p>
+      <ul>
+        <li>Discharge expected today: +3. Tomorrow: +2.</li>
+        <li>Answer clock late: +3. At risk: +2.</li>
+        <li>Unhoused (would leave to the street): +1.</li>
+        <li>High care need (insulin, IV, oxygen, wound care, isolation): +1.</li>
+        <li>Same problem happened recently (repeat episode): +1.</li>
+      </ul>
+      <p><strong>P1 Urgent</strong> is 6 or more points, <strong>P2 High</strong> is 3 to 5, <strong>P3 Routine</strong> is 2 or less. Answered packets show <strong>Done</strong>.</p>
+    </div>
+    <div class="pt-card prose">
+      <h3>The answer clock</h3>
+      <p>IHH promises hospitals an answer within 2 hours. <strong>On time</strong> is under 90 minutes, <strong>At risk</strong> is 90 to 120 minutes, and <strong>Late</strong> is over 2 hours. Answered packets show <strong>Answered</strong>.</p>
+      <h3>Alert types</h3>
+      <ul>
+        <li><strong>Critical</strong>: a rule that excludes the patient looks true (for example dementia, suicidal thoughts, aggression, isolation not cleared).</li>
+        <li><strong>Missing document</strong>: one of IHH's 10 checklist documents is not in the packet.</li>
+        <li><strong>Missing fact</strong>: the document is there but the fact isn't (for example no MRSA result).</li>
+        <li><strong>Contradiction</strong>: the form and the chart disagree. The chart wins.</li>
+        <li><strong>Can't tell</strong>: the rule needs a date or time, and dates are blacked out.</li>
+        <li><strong>Rule gap</strong>: IHH's written rules don't settle it. The coordinator decides.</li>
+      </ul>
+    </div>
+    <article class="pt-card" id="score-detail">
+      <h2>How each packet scored</h2>
+      <p class="sub">Every number here is worked out from the sample packets, so you can check the math.</p>
+      <div class="tbl">
+        <table id="score-tbl" data-source="graded" data-row-key="packet_id">
+          <caption class="pt-sr">How each packet scored</caption>
+          <thead><tr>
+            <th scope="col" data-field="packet_id">Packet</th>
+            <th scope="col" data-field="facts_found">Found</th>
+            <th scope="col" data-field="facts_partial">Unclear or can't tell</th>
+            <th scope="col" data-field="facts_missing">Missing</th>
+            <th scope="col" data-field="required_docs_present">Core docs (of 7)</th>
+            <th scope="col" data-field="score_pct">Score</th>
+            <th scope="col" data-field="grade">Grade</th>
+            <th scope="col" data-field="why">Why</th>
+            <th scope="col" data-source="to_complete" data-field="needed_count">Open items</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </article>
+  </section>
+
+  <!-- STAFF GUIDE -->
+  <section class="pt-page" id="staff" role="tabpanel" tabindex="-1" aria-labelledby="tab-staff" hidden>
+    <div class="pt-card prose">
+      <h2>Staff guide: using the board</h2>
+      <p>For referral coordinators and nurses. Five steps, about 10 minutes a packet.</p>
+      <h3>1. Start with the queue</h3>
+      <p>Work from the top: the queue is sorted by <strong>priority</strong> (P1 Urgent first). Watch the <strong>answer clock</strong>. Amber means you have under 30 minutes left on the 2-hour promise.</p>
+      <p>Click a packet name to open <strong>Packet details</strong>: summary, key missing information, priority with its points, patient details (name, address, allergies, blood type), the original fax or email as a PDF, the email log, the packet page by page, medications, and medical history with recent episodes.</p>
+      <p>Log every message in the <strong>email log</strong>: what arrived, what you sent, and any draft. Times show to the second, with the time since the referral arrived and since the previous message. Live clocks show time since received, since the last message, and how long is left on the 2-hour promise.</p>
+      <p>To answer a hospital, use <strong>Reply to the hospital</strong> under the log (or "Reply" on a received message). It starts from the packet's open items. <strong>Copy message</strong> and send it through IHH's approved channel. The board never sends, and drafts you add to the log last only until you reload.</p>
+      <h3>2. Look at the grade</h3>
+      <ul>
+        <li><strong>Great</strong>: go to the facts and decide.</li>
+        <li><strong>Neutral</strong>: send the hospital the short list of items, then keep working.</li>
+        <li><strong>Bad</strong>: call the hospital now. Read the critical alerts first.</li>
+      </ul>
+      <h3>3. Read the alerts, then the pages</h3>
+      <p>Click the packet to see its alerts. Each one names the page. <strong>Open that page and read it yourself.</strong> The tool can misread a crooked fax.</p>
+      <h3>4. Tick Verified</h3>
+      <p>On the printable checklist, tick <strong>Verified</strong> for each fact you checked on the page. The board counts how many facts a person has checked.</p>
+      <h3>5. Decide and write it down</h3>
+      <p>You decide. The tool never approves or denies. Write the reason, especially for a denial.</p>
+      <h3>Keyboard and screen reader</h3>
+      <ul>
+        <li><span class="pt-kbd">Tab</span> moves between controls. The first stop offers "Skip to the queue" and "Skip to alerts".</li>
+        <li>On the section tabs, <span class="pt-kbd">←</span> <span class="pt-kbd">→</span> switch tabs, and <span class="pt-kbd">Home</span> and <span class="pt-kbd">End</span> jump to the first or last.</li>
+        <li>In the queue, each packet name is a button. <span class="pt-kbd">Enter</span> opens its details and moves focus to the packet's title. "Back to the queue" returns you to the same packet.</li>
+        <li>Use "Show alerts for" above the alerts table to filter by packet without a mouse.</li>
+        <li>Changes are announced: which packet is open, its priority, grade and open items.</li>
+        <li>Every status has a word and a symbol, not only a color (✓ good, ! needs work, ✕ blocking, ▲ urgent).</li>
+      </ul>
+      <h3>Remember</h3>
+      <ul>
+        <li>A black box is privacy, not a missing document.</li>
+        <li>"Can't tell" means the rule needs a date we can't see. Ask the hospital if it matters.</li>
+        <li>When the form and the chart disagree, the chart wins.</li>
+        <li>Sex offender status is case by case. Never auto-deny.</li>
+        <li>Never type names or record numbers into notes.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- IT GUIDE -->
+  <section class="pt-page" id="it" role="tabpanel" tabindex="-1" aria-labelledby="tab-it" hidden>
+    <div class="pt-card prose">
+      <h2>IT guide: how the board works</h2>
+      <p>For whoever sets it up and keeps it running.</p>
+      <h3>What it shows</h3>
+      <p>Two lists: one row per packet (its fact counts, documents, alerts and times) and one row per alert. The board works out the score, grade and answer clock from those rows. Open <strong>Sources</strong> in the toolbar to see each list and the math behind every number.</p>
+      <h3>Where the data comes from today</h3>
+      <p>Two small sample files with made-up packets. Nothing here comes from a real referral.</p>
+      <h3>How to connect the real tool later</h3>
+      <ol>
+        <li>The review tool writes one <code>review.json</code> per packet (see the plan, section 5).</li>
+        <li>A small script turns those into the two lists, with the same column names as the sample files.</li>
+        <li>Replace the sample files in Sources, or point the board at a database table with the same columns.</li>
+      </ol>
+      <h3>Rules that don't bend</h3>
+      <ul>
+        <li><strong>No patient details on the board.</strong> Packet IDs only. No names, dates of birth, record numbers, or page images.</li>
+        <li>Never connect to IHH's live systems in the prototype.</li>
+        <li>The tool sends nothing. Hospital requests are drafts.</li>
+        <li>Keep packets and page images in a folder that git ignores.</li>
+        <li>API keys go in environment variables, never in code.</li>
+      </ul>
+      <h3>Columns the board needs</h3>
+      <p><strong>Packets:</strong> <code>packet_id, hospital, received, minutes_open, status, pages, required_docs_present, docs_present, facts_applicable, facts_found, facts_unclear, facts_cant_tell, facts_missing, facts_verified, critical_alerts, contradictions, minutes_to_ready, missing_docs</code></p>
+      <p><strong>Alerts:</strong> <code>alert_id, packet_id, type, what, rule_id, page</code></p>
+      <p><strong>Profiles:</strong> <code>packet_id, summary, discharge, housing, reason, care_needs, recent_episode, recent_note, high_need, patient_name, address, allergies, blood_type, fax_pdf</code></p>
+      <p><strong>Pages:</strong> <code>page_id, packet_id, page_from, page_to, doc_type, key_content</code></p>
+      <p><strong>Medications:</strong> <code>med_id, packet_id, medicine, dose, route, how_often, self_administers, purpose, page</code></p>
+      <p><strong>History:</strong> <code>hist_id, packet_id, condition, status, recent, page</code></p>
+      <p><strong>Email log:</strong> <code>log_id, packet_id, time, direction (Received, Sent, Draft), channel (Fax, Email, Phone), who, subject, status</code>. Staff record what they sent; the board never sends.</p>
+      <p><strong>Profiles</strong> also carry <code>patient_name, address, allergies, blood_type, fax_pdf</code>. In the prototype, name and address must stay "Removed for privacy" for real packets, and real PDFs stay on a staff computer.</p>
+      <p>The real packets must never be uploaded to a published board. For real packets, run this view as a local file on a staff computer.</p>
+      <h3>Accessibility statement</h3>
+      <p>Target: <strong>WCAG 2.2 Level AA</strong>. What the board does:</p>
+      <ul>
+        <li><strong>Keyboard:</strong> every action works without a mouse; tabs follow the ARIA tabs pattern (arrows, Home, End); skip links; focus is never lost when the board redraws; focus moves to the packet title when details open and back to the packet when you return.</li>
+        <li><strong>Screen readers:</strong> real headings, tables with captions and column and row headers, a polite live region for changes, charts with text equivalents, PDF links that say they open a new tab.</li>
+        <li><strong>Vision:</strong> status uses a word and a symbol plus color; text uses the theme's contrast-checked colors in light and dark; works at 200% zoom and narrow widths with no sideways page scroll; Windows high-contrast mode keeps borders, bars and the selected row visible.</li>
+        <li><strong>Motion and targets:</strong> no animation when reduced motion is on; tabs are 44 px tall and other controls at least 24 px (WCAG 2.2 target size).</li>
+        <li><strong>Language and time:</strong> page language is set; nothing times out or erases work.</li>
+      </ul>
+      <p><strong>Known gaps:</strong> not yet tested with JAWS, NVDA or VoiceOver by real users; the mock PDFs are not tagged for screen readers (real faxes are scanned images, so the page-by-page table is the accessible version); a formal audit is a pilot step.</p>
+      <h3>If something looks wrong</h3>
+      <ul>
+        <li>A card says "Failed to load": open Sources and check the file is there.</li>
+        <li>A grade looks off: check the "How each packet scored" table. Every number is shown.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<script>
+dash.calc('graded', {
+  title: 'Score, grade and clock per packet',
+  description: "Score = (2 x found + unclear + can't tell) / (2 x facts that apply). Bad if any critical alert, a core document missing, or under 60%. Great if 85%+ with no conflicts. Otherwise Neutral.",
+  inputs: ['packets'],
+  fn: (packets) => packets.map((p) => {
+    const pts = 2 * p.facts_found + p.facts_unclear + p.facts_cant_tell;
+    const pct = Math.round((100 * pts) / (2 * p.facts_applicable));
+    let grade = 'Neutral', why = 'Score 60-84% or conflicts to settle';
+    if (p.critical_alerts > 0) { grade = 'Bad'; why = 'Critical alert'; }
+    else if (p.required_docs_present < 7) { grade = 'Bad'; why = 'Core document missing'; }
+    else if (pct < 60) { grade = 'Bad'; why = 'Score under 60%'; }
+    else if (pct >= 85 && p.contradictions === 0) { grade = 'Great'; why = '85%+ and no conflicts'; }
+    else if (pct >= 85) { why = 'Conflicts to settle'; }
+    const clock = p.status === 'Decided' ? 'Answered' : (p.minutes_open <= 90 ? 'On time' : (p.minutes_open <= 120 ? 'At risk' : 'Late'));
+    const next_step = p.status === 'Decided' ? 'Done' : ({ Great: 'Ready to decide', Neutral: 'Request items', Bad: 'Call hospital' })[grade];
+    return { packet_id: p.packet_id, received: p.received, minutes_open: p.minutes_open, status: p.status, clock, grade, score_pct: pct, why, next_step,
+      critical_alerts: p.critical_alerts, contradictions: p.contradictions, facts_found: p.facts_found,
+      facts_partial: p.facts_unclear + p.facts_cant_tell, facts_missing: p.facts_missing, required_docs_present: p.required_docs_present };
+  }),
+});
+
+dash.calc('summary', {
+  title: 'Today in numbers',
+  description: 'Counts of waiting packets, packets at risk of the 2-hour promise, grades, and the share of facts a person has verified.',
+  inputs: ['graded', 'packets'],
+  fn: (graded, packets) => {
+    const total = packets.reduce((s, p) => s + p.facts_applicable, 0);
+    const verified = packets.reduce((s, p) => s + p.facts_verified, 0);
+    return [{
+      packets: graded.length,
+      pending: graded.filter((g) => g.status !== 'Decided').length,
+      at_risk: graded.filter((g) => g.clock === 'At risk' || g.clock === 'Late').length,
+      great: graded.filter((g) => g.grade === 'Great').length,
+      neutral: graded.filter((g) => g.grade === 'Neutral').length,
+      bad: graded.filter((g) => g.grade === 'Bad').length,
+      verified_pct: total ? Math.round((100 * verified) / total) + '%' : '0%',
+    }];
+  },
+});
+
+dash.calc('email_timing', {
+  title: 'Email log timing',
+  description: 'For each message: time since the referral was received (the first Received message) and since the previous message on the same packet, in seconds.',
+  inputs: ['emails'],
+  fn: (emails) => {
+    const sec = (t) => { const [h, m, s] = String(t).split(':').map(Number); return h * 3600 + m * 60 + (s || 0); };
+    const out = [];
+    [...new Set(emails.map((e) => e.packet_id))].forEach((pid) => {
+      const rows = emails.filter((e) => e.packet_id === pid).sort((a, b) => sec(a.time) - sec(b.time));
+      const first = rows.find((r) => r.direction === 'Received') || rows[0];
+      let prev = null;
+      rows.forEach((r) => {
+        out.push({ log_id: r.log_id, packet_id: pid, since_received: sec(r.time) - sec(first.time), since_prev: prev === null ? 0 : sec(r.time) - prev });
+        prev = sec(r.time);
+      });
+    });
+    return out;
+  },
+});
+
+dash.calc('to_complete', {
+  title: 'What each packet needs',
+  description: 'For every packet with an open alert, the specific items to finish: documents to get, facts to find, conflicts to settle, dates to confirm, and items for clinical review.',
+  inputs: ['graded', 'alerts'],
+  fn: (graded, alerts) => {
+    const verb = { 'Critical': 'Clinical review', 'Missing document': 'Get', 'Missing fact': 'Find', 'Contradiction': 'Settle', "Can't tell": 'Confirm with hospital', 'Rule gap': 'Coordinator decides' };
+    const order = { 'Critical': 0, 'Missing document': 1, 'Missing fact': 2, 'Contradiction': 3, "Can't tell": 4, 'Rule gap': 5 };
+    return graded.map((g) => {
+      const mine = alerts.filter((a) => a.packet_id === g.packet_id).sort((x, y) => order[x.type] - order[y.type]);
+      return { packet_id: g.packet_id, grade: g.grade, needed_count: mine.length,
+        needed: mine.map((a) => `${verb[a.type] || a.type}: ${a.what}${a.page && a.page !== '—' ? ' (' + a.page + ')' : ''}${a.rule_id && a.rule_id !== '—' ? ' [' + a.rule_id + ']' : ''}`).join(' | ') };
+    }).filter((r) => r.needed_count > 0);
+  },
+});
+
+dash.calc('priority', {
+  title: 'Priority by patient need',
+  description: 'Order of review, not eligibility. Discharge today +3 (tomorrow +2), clock late +3 (at risk +2), unhoused +1, high care need +1, recent repeat episode +1. P1 is 6+, P2 is 3-5, P3 is 2 or less.',
+  inputs: ['graded', 'profiles'],
+  fn: (graded, profiles) => graded.map((g) => {
+    const p = profiles.find((x) => x.packet_id === g.packet_id) || {};
+    const pts_discharge = p.discharge === 'Today' ? 3 : (p.discharge === 'Tomorrow' ? 2 : 0);
+    const pts_clock = g.clock === 'Late' ? 3 : (g.clock === 'At risk' ? 2 : 0);
+    const pts_housing = p.housing === 'Unhoused' ? 1 : 0;
+    const pts_need = Number(p.high_need) === 1 ? 1 : 0;
+    const pts_recent = p.recent_episode === 'Yes' ? 1 : 0;
+    const base = { packet_id: g.packet_id, discharge: p.discharge || 'Not stated', clock: g.clock, housing: p.housing || 'Not stated', care_needs: p.care_needs || '', recent: p.recent_episode || "Can't tell",
+      pts_discharge, pts_clock, pts_housing, pts_need, pts_recent };
+    if (g.status === 'Decided') return { ...base, priority: 'Done', priority_score: 0, priority_why: 'Already answered' };
+    const score = pts_discharge + pts_clock + pts_housing + pts_need + pts_recent;
+    const parts = [pts_discharge && ('Discharge ' + p.discharge.toLowerCase()), pts_clock && (g.clock === 'Late' ? 'Past the 2-hour promise' : 'Close to the 2-hour promise'),
+      pts_housing && 'Unhoused', pts_need && 'High care need', pts_recent && 'Recent repeat episode'].filter(Boolean);
+    const priority = score >= 6 ? 'P1 Urgent' : (score >= 3 ? 'P2 High' : 'P3 Routine');
+    return { ...base, priority, priority_score: score, priority_why: parts.join(' · ') || 'No urgency factors' };
+  }),
+});
+
+dash.calc('grade_counts', {
+  title: 'Packets per grade',
+  description: 'How many packets got each grade today.',
+  inputs: ['graded'],
+  fn: (graded) => ['Great', 'Neutral', 'Bad'].map((grade) => ({ grade, count: graded.filter((g) => g.grade === grade).length })),
+});
+
+dash.calc('alert_types', {
+  title: 'Alerts per type',
+  description: 'How many alerts of each type across all packets.',
+  inputs: ['alerts'],
+  fn: (alerts) => ['Critical', 'Missing document', 'Missing fact', 'Contradiction', "Can't tell", 'Rule gap'].map((type) => ({ type, count: alerts.filter((a) => a.type === type).length })),
+});
+
+(function () {
+  const tabs = [...document.querySelectorAll('#dash-root .pt-tabs [role=tab]')];
+  const live = document.getElementById('pt-live');
+  const say = (msg) => { live.textContent = ''; setTimeout(() => { live.textContent = msg; }, 50); };
+  function show(id) {
+    tabs.forEach((t) => { const on = t.getAttribute('aria-controls') === id; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    document.querySelectorAll('#dash-root .pt-page[role=tabpanel]').forEach((p) => { p.hidden = p.id !== id; });
+    dash.setLink(id);
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => show(t.getAttribute('aria-controls')));
+    t.addEventListener('keydown', (e) => {
+      let j = null;
+      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') j = (i + tabs.length - 1) % tabs.length;
+      else if (e.key === 'Home') j = 0;
+      else if (e.key === 'End') j = tabs.length - 1;
+      if (j === null) return;
+      e.preventDefault(); tabs[j].focus(); tabs[j].click();
+    });
+  });
+  const start = location.hash.slice(1);
+  if (['today', 'packet', 'grading', 'staff', 'it'].includes(start)) show(start);
+  window.ptShow = show;
+
+  const el = (tag, props, kids) => { const e = Object.assign(document.createElement(tag), props || {}); (kids || []).forEach((k) => e.append(k)); return e; };
+  const ICON = { ok: '✓', great: '✓', warn: '!', neutral: '!', p2: '!', bad: '✕', p1: '▲' };
+  const pill = (text, cls) => {
+    const sp = el('span', { className: 'pill ' + (cls || '') });
+    const ic = ICON[(cls || '').split(' ')[0]];
+    if (ic) { const i = el('span', { className: 'ico', textContent: ic }); i.setAttribute('aria-hidden', 'true'); sp.append(i); }
+    sp.append(document.createTextNode(text));
+    return sp;
+  };
+  let focusTitle = false, lastPicked = null;
+  const toSec = (t) => { const [h, m, s] = String(t).split(':').map(Number); return h * 3600 + m * 60 + (s || 0); };
+  const hms = (x) => { x = Math.max(0, Math.floor(x)); const h = Math.floor(x / 3600), m = Math.floor((x % 3600) / 60), s = x % 60; return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`; };
+  const spoken = (x) => { x = Math.max(0, Math.floor(x)); const h = Math.floor(x / 3600), m = Math.floor((x % 3600) / 60), s = x % 60; return [h && `${h} hour${h === 1 ? '' : 's'}`, m && `${m} minute${m === 1 ? '' : 's'}`, `${s} second${s === 1 ? '' : 's'}`].filter(Boolean).join(' '); };
+  const drafts = {};            // packet_id -> [{...}] kept only in this view
+  const timer = { picked: null, anchor: 0, base: 0, loadedAt: Date.now(), last: 0, decided: false, answeredIn: 0 };
+  const boardNow = () => timer.base + (timer.decided ? 0 : (Date.now() - timer.loadedAt) / 1000);
+  const tplText = { picked: null, alerts: [], hospital: '' };
+  function buildTemplate(kind) {
+    const pid = tplText.picked || 'this referral';
+    const by = (types) => tplText.alerts.filter((a) => types.includes(a.type));
+    const item = (a) => `  - ${a.what}${a.rule_id && a.rule_id !== '—' ? ' (IHH rule ' + a.rule_id + ')' : ''}`;
+    const foot = '\n\nPlease reply by fax or secure email with the referral number above, and include no more patient information than needed.\n\nIHH Referral Intake team\n(Prototype draft. Not sent.)';
+    if (kind === 'missing') {
+      const items = by(['Missing document', 'Missing fact', 'Contradiction', "Can't tell"]);
+      return [`Referral ${pid}: ${items.length} item(s) needed to decide`,
+        `Referral: ${pid}\n\nTo finish our review within our 2-hour promise, please send or confirm:\n` + (items.length ? items.map(item).join('\n') : '  - (No open items. Choose another template.)') + foot];
+    }
+    if (kind === 'clinical') {
+      const items = by(['Critical']);
+      return [`Referral ${pid}: clinical question, answer needed to proceed`,
+        `Referral: ${pid}\n\nA clinical question needs your answer before we can continue:\n` + (items.length ? items.map(item).join('\n') : '  - (No red flags on this packet.)') + '\n\nPlease call the IHH referral line or reply right away. This is not a decision; a coordinator will decide once this is answered.' + foot];
+    }
+    if (kind === 'receipt') return [`Referral ${pid} received: answer within 2 hours`, `Referral: ${pid}\n\nThank you. Illumination Health + Home received this referral. A coordinator will review it and reply with a decision within 2 hours of receipt. We may contact you for clarification.` + foot];
+    if (kind === 'status') return [`Referral ${pid}: status update`, `Referral: ${pid}\n\nUpdate: our review is in progress. ` + (tplText.alerts.length ? `We are waiting on ${tplText.alerts.length} open item(s).` : 'We expect to reply with a decision shortly.') + foot];
+    return [`Referral ${pid}: `, `Referral: ${pid}\n\n` + foot.trim()];
+  }
+  function fillTemplate(kind, subjectOverride) {
+    const [subj, body] = buildTemplate(kind);
+    document.getElementById('pd-subj').value = subjectOverride || subj;
+    document.getElementById('pd-msg').value = body;
+  }
+  document.getElementById('pd-tpl').addEventListener('change', (e) => fillTemplate(e.target.value));
+  document.getElementById('pd-reset').addEventListener('click', () => { fillTemplate(document.getElementById('pd-tpl').value); document.getElementById('pd-reply-status').textContent = 'Message reset.'; });
+  document.getElementById('pd-copy').addEventListener('click', () => {
+    const st = document.getElementById('pd-reply-status');
+    const text = `Subject: ${document.getElementById('pd-subj').value}\n\n${document.getElementById('pd-msg').value}`;
+    navigator.clipboard.writeText(text).then(() => { st.textContent = 'Copied. Paste it into IHH\'s approved channel to send.'; }).catch(() => {
+      const b = document.getElementById('pd-msg'); b.focus(); b.select(); st.textContent = 'Copy was blocked. The message is selected; press Ctrl+C or Cmd+C.';
+    });
+  });
+  document.getElementById('pd-add').addEventListener('click', () => {
+    const pid = tplText.picked; if (!pid) return;
+    const subj = document.getElementById('pd-subj').value.trim();
+    const st = document.getElementById('pd-reply-status');
+    if (!subj) { st.textContent = 'Add a subject first.'; document.getElementById('pd-subj').focus(); return; }
+    (drafts[pid] = drafts[pid] || []).push({ log_id: `D-${pid}-${(drafts[pid] || []).length + 1}`, packet_id: pid, time: hms(boardNow()), direction: 'Draft', channel: 'Email', subject: subj, status: 'Draft in this view only, not sent', _sec: boardNow() });
+    st.textContent = `Draft added to the log at ${hms(boardNow())}. It disappears when you reload.`;
+    dash.setParams({ packet: pid, _d: Date.now() });
+  });
+  document.querySelector('#pd-log-tbl tbody').addEventListener('click', (e) => {
+    const b = e.target.closest('.pt-reply'); if (!b) return;
+    document.getElementById('pd-tpl').value = 'status';
+    fillTemplate('status', 'Re: ' + b.dataset.subject);
+    document.getElementById('pd-msg').focus();
+    say('Reply started. Edit the message, then copy it or add it to the log as a draft.');
+  });
+  setInterval(() => {
+    if (!timer.picked || document.getElementById('packet').hidden) return;
+    const nowS = boardNow();
+    const recv = document.getElementById('pd-t-recv'), last = document.getElementById('pd-t-last'), left = document.getElementById('pd-t-left');
+    recv.textContent = hms(nowS - timer.anchor); recv.setAttribute('aria-label', spoken(nowS - timer.anchor));
+    last.textContent = hms(nowS - timer.last); last.setAttribute('aria-label', spoken(nowS - timer.last));
+    if (timer.decided) left.textContent = `Answered in ${hms(timer.answeredIn)}`;
+    else { const rem = 7200 - (nowS - timer.anchor); left.textContent = rem >= 0 ? `2-hour promise: ${hms(rem)} left` : `2-hour promise passed ${hms(-rem)} ago`; left.className = rem < 0 ? 'bad' : (rem < 1800 ? 'warn' : ''); }
+  }, 1000);
+  const gradeCls = (g) => (g || '').toLowerCase();
+  const clockCls = (c) => ({ 'On time': 'ok', 'At risk': 'warn', 'Late': 'bad', 'Answered': '' })[c] || '';
+  const failed = (host) => { host.classList.remove('dash-skeleton'); host.replaceChildren(el('div', { className: 'failed', textContent: 'Failed to load' })); };
+  const typeColor = (t) => (t === 'Critical' ? 'var(--color-bad)' : (t === 'Contradiction' || t === 'Missing document' ? 'var(--color-warn)' : dash.colors[0]));
+
+  const qBody = document.querySelector('#queue-tbl tbody');
+  qBody.addEventListener('click', (e) => {
+    const tr = e.target.closest('tr[data-key]'); if (!tr) return;
+    if (e.target.closest('.pt-open')) { focusTitle = true; show('packet'); }
+    dash.setParams({ packet: tr.dataset.key });
+  });
+  document.getElementById('pd-back').addEventListener('click', () => {
+    const k = dash.params().packet; show('today');
+    const b = k && qBody.querySelector(`tr[data-key="${CSS.escape(k)}"] .pt-open`); if (b) b.focus();
+    say('Back to the queue.');
+  });
+  const filterSel = document.getElementById('pt-filter');
+  filterSel.addEventListener('change', () => { dash.setParams({ packet: filterSel.value || null }); say(filterSel.value ? `Alerts filtered to ${filterSel.value}.` : 'Showing alerts for all packets.'); });
+  document.getElementById('pt-clear').addEventListener('click', () => { dash.setParams({ packet: null }); say('Showing alerts for all packets.'); filterSel.focus(); });
+
+  dash.onData(() => {
+    const picked = dash.params().packet || null;
+    const s = dash.data('summary');
+    const take = document.getElementById('pt-take');
+    if (s.status === 'ok' && s.data[0]) {
+      const x = s.data[0];
+      take.classList.remove('dash-skeleton');
+      take.textContent = `${x.pending} packets are waiting. ${x.at_risk} ${x.at_risk === 1 ? 'is' : 'are'} at risk of missing the 2-hour promise, and ${x.bad} ${x.bad === 1 ? 'needs' : 'need'} a call to the hospital before anyone can decide.`;
+      document.querySelectorAll('#dash-root [data-source="summary"][data-field]').forEach((n) => { n.classList.remove('dash-skeleton'); n.textContent = String(x[n.dataset.field]); });
+    } else if (s.status === 'error') take.textContent = '';
+
+    const tc = dash.data('to_complete');
+    const needCount = {};
+    if (tc.status === 'ok') tc.data.forEach((r) => { needCount[r.packet_id] = r.needed_count; });
+    const nBody = document.querySelector('#needs-tbl tbody');
+    if (tc.status === 'ok') {
+      const rank = { Bad: 0, Neutral: 1, Great: 2 };
+      nBody.replaceChildren(...tc.data.slice().sort((x, y) => (rank[x.grade] - rank[y.grade]) || (y.needed_count - x.needed_count)).map((r) => {
+        const tr = el('tr'); tr.dataset.key = r.packet_id;
+        const list = el('ul', { className: 'pt-todo' }, r.needed.split(' | ').map((t) => el('li', { textContent: t })));
+        tr.append(el('td', { textContent: r.packet_id }), el('td', {}, [pill(r.grade, gradeCls(r.grade))]), el('td', { textContent: String(r.needed_count) }), el('td', {}, [list]));
+        return tr;
+      }));
+    } else nBody.replaceChildren();
+
+    const g = dash.data('graded');
+    if (g.status === 'ok') {
+      const act = document.activeElement;
+      const keepKey = act && qBody.contains(act) ? act.closest('tr[data-key]')?.dataset.key : null;
+      const pr = dash.data('priority');
+      const pmap = {};
+      if (pr.status === 'ok') pr.data.forEach((x) => { pmap[x.packet_id] = x; });
+      const rank = (id) => (pmap[id]?.priority === 'Done' ? -1 : (pmap[id]?.priority_score ?? 0));
+      const rows = g.data.slice().sort((a, b) => (rank(b.packet_id) - rank(a.packet_id)) || (b.minutes_open - a.minutes_open));
+      const pcls = (p) => (p || '').startsWith('P1') ? 'p1' : (p || '').startsWith('P2') ? 'p2' : 'p3';
+      qBody.replaceChildren(...rows.map((r) => {
+        const tr = el('tr'); tr.dataset.key = r.packet_id; if (picked === r.packet_id) tr.setAttribute('aria-current', 'true');
+        const pv = pmap[r.packet_id];
+        const ob = el('button', { type: 'button', className: 'pt-open', textContent: r.packet_id }); ob.setAttribute('aria-label', `Open details for ${r.packet_id}`);
+        const th = el('th', { scope: 'row' }, [ob]);
+        tr.append(
+          th,
+          el('td', {}, [pv ? pill(pv.priority, pcls(pv.priority)) : el('span', { textContent: '—' })]),
+          el('td', { className: 'hide-narrow', textContent: r.received }),
+          el('td', {}, [pill(`${r.clock}${r.clock === 'Answered' ? '' : ' · ' + r.minutes_open + ' min'}`, clockCls(r.clock))]),
+          el('td', {}, [pill(r.grade, gradeCls(r.grade))]), el('td', { textContent: r.score_pct + '%' }),
+          el('td', { className: 'hide-narrow', textContent: String(r.critical_alerts) }), el('td', { className: 'hide-narrow', textContent: String(r.contradictions) }),
+          el('td', { textContent: r.next_step }),
+        );
+        return tr;
+      }));
+      if (keepKey) { const b = qBody.querySelector(`tr[data-key="${CSS.escape(keepKey)}"] .pt-open`); if (b) b.focus(); }
+            filterSel.replaceChildren(el('option', { value: '', textContent: 'All packets' }), ...g.data.map((r) => el('option', { value: r.packet_id, textContent: r.packet_id })));
+      filterSel.value = picked || '';
+      const sBody = document.querySelector('#score-tbl tbody');
+      sBody.replaceChildren(...g.data.map((r) => {
+        const tr = el('tr'); tr.dataset.key = r.packet_id;
+        tr.append(el('td', { textContent: r.packet_id }), el('td', { textContent: String(r.facts_found) }), el('td', { textContent: String(r.facts_partial) }),
+          el('td', { textContent: String(r.facts_missing) }), el('td', { textContent: String(r.required_docs_present) }), el('td', { textContent: r.score_pct + '%' }),
+          el('td', {}, [pill(r.grade, gradeCls(r.grade))]), el('td', { textContent: r.why }),
+          el('td', { textContent: String(needCount[r.packet_id] || 0) }));
+        return tr;
+      }));
+    } else { qBody.replaceChildren(); document.querySelector('#score-tbl tbody').replaceChildren(); }
+
+    const gc = dash.data('grade_counts'); const stack = document.getElementById('grade-stack');
+    if (gc.status === 'ok') {
+      stack.classList.remove('dash-skeleton');
+      const total = gc.data.reduce((a, r) => a + r.count, 0) || 1;
+      const col = { Great: 'var(--color-ok)', Neutral: 'var(--color-warn)', Bad: 'var(--color-bad)' };
+      stack.setAttribute('aria-label', 'Grades today: ' + gc.data.map((r) => `${r.grade} ${r.count}`).join(', '));
+      stack.replaceChildren(...gc.data.filter((r) => r.count).map((r) => { const d = el('div', { textContent: `${r.grade} ${r.count}` }); d.style.width = (r.count / total * 100) + '%'; d.style.background = col[r.grade]; return d; }));
+    } else if (gc.status === 'error') failed(stack);
+
+    const at = dash.data('alert_types'); const tb = document.getElementById('type-bars');
+    if (at.status === 'ok') {
+      tb.classList.remove('dash-skeleton');
+      const max = Math.max(1, ...at.data.map((r) => r.count));
+      tb.replaceChildren(...at.data.map((r) => {
+        const track = el('div', { className: 'pt-track' }); const f = el('div', { className: 'pt-fill' }); f.style.width = (r.count / max * 100) + '%'; f.style.background = typeColor(r.type); track.append(f);
+        track.setAttribute('aria-hidden', 'true');
+        const row = el('div', { className: 'pt-bar' }, [el('span', { textContent: r.type }), track, el('span', { className: 'v', textContent: String(r.count) })]);
+        row.setAttribute('role', 'listitem'); row.setAttribute('aria-label', `${r.type}: ${r.count}`);
+        return row;
+      }));
+    } else if (at.status === 'error') failed(tb);
+
+    const a = dash.data('alerts'); const aBody = document.querySelector('#alerts-tbl tbody');
+    document.getElementById('alerts-title').textContent = picked ? `Alerts: ${picked}` : 'Alerts: all packets';
+    document.getElementById('pt-clear').hidden = !picked;
+    if (a.status === 'ok') {
+      const order = { 'Critical': 0, 'Missing document': 1, 'Contradiction': 2, 'Missing fact': 3, "Can't tell": 4, 'Rule gap': 5 };
+      const rows = a.data.filter((r) => !picked || r.packet_id === picked).sort((x, y) => (order[x.type] ?? 9) - (order[y.type] ?? 9));
+      const cls = (t) => (t === 'Critical' ? 'bad' : (t === 'Missing document' || t === 'Contradiction' || t === 'Missing fact' ? 'warn' : ''));
+      aBody.replaceChildren(...(rows.length ? rows.map((r) => {
+        const tr = el('tr'); tr.dataset.key = r.alert_id;
+        tr.append(el('td', { textContent: r.packet_id }), el('td', {}, [pill(r.type, cls(r.type))]), el('td', { textContent: r.what }),
+          el('td', { className: 'hide-narrow', textContent: r.rule_id }), el('td', { textContent: r.page }));
+        return tr;
+      }) : [el('tr', {}, [el('td', { colSpan: 5, textContent: 'No alerts for this packet.' })])]));
+    } else aBody.replaceChildren();
+
+    const emAll = dash.data('emails'); const lBody = document.querySelector('#log-tbl tbody');
+    if (emAll.status === 'ok') {
+      const dcls = (d) => (d === 'Draft' ? 'warn' : (d === 'Received' ? 'ok' : ''));
+      lBody.replaceChildren(...emAll.data.slice().sort((x, y) => y.time.localeCompare(x.time)).map((r) => {
+        const tr = el('tr'); tr.dataset.key = r.log_id;
+        tr.append(el('td', { textContent: r.time }), el('td', { textContent: r.packet_id }), el('td', {}, [pill(r.direction, dcls(r.direction))]), el('td', { className: 'hide-narrow', textContent: r.channel }), el('td', { textContent: r.subject }), el('td', { className: 'hide-narrow', textContent: r.status }));
+        return tr;
+      }));
+    } else lBody.replaceChildren();
+
+    // Packet details
+    const none = document.getElementById('pd-none'), body = document.getElementById('pd-body');
+    none.hidden = !!picked; body.hidden = !picked;
+    if (!picked) { lastPicked = null; return; }
+    document.getElementById('pd-title').textContent = picked;
+    const where = 'packet_id=' + encodeURIComponent(picked);
+    const prof = dash.data('profiles');
+    const p = prof.status === 'ok' ? prof.data.find((x) => x.packet_id === picked) : null;
+    ['reason', 'discharge', 'housing', 'care', 'summary-text', 'recent', 'recent-note', 'name', 'address', 'allergy', 'blood'].forEach((k) => {
+      const n = document.getElementById('pd-' + k); n.setAttribute('data-where', where);
+      const field = n.dataset.field; n.textContent = p ? String(p[field] ?? '') : '—';
+    });
+    const gr = g.status === 'ok' ? g.data.find((x) => x.packet_id === picked) : null;
+    const prow = dash.data('priority'); const pv = prow.status === 'ok' ? prow.data.find((x) => x.packet_id === picked) : null;
+    const chips = document.getElementById('pd-chips'); chips.replaceChildren();
+    if (pv) chips.append(pill(pv.priority, pv.priority.startsWith('P1') ? 'p1' : pv.priority.startsWith('P2') ? 'p2' : 'p3'));
+    if (gr) chips.append(pill('Grade: ' + gr.grade, gradeCls(gr.grade)), pill(gr.clock + (gr.clock === 'Answered' ? '' : ' · ' + gr.minutes_open + ' min'), clockCls(gr.clock)), pill('Score ' + gr.score_pct + '%', ''));
+    const wrap = document.getElementById('pd-pdf-wrap');
+    if (p && p.fax_pdf) {
+      const link = el('a', { id: 'pd-pdf', className: 'pt-open', href: p.fax_pdf, target: '_blank', rel: 'noopener' }, [document.createTextNode(`Open original fax for ${picked}`), el('span', { className: 'pt-sr', textContent: ' (PDF, opens in a new tab)' })]);
+      wrap.replaceChildren(link, el('span', { className: 'sub', textContent: ' PDF' }));
+    } else wrap.replaceChildren(el('span', { textContent: 'No original on file.' }));
+    const pl = document.getElementById('pd-plevel'), ps = document.getElementById('pd-pscore');
+    pl.setAttribute('data-where', where); ps.setAttribute('data-where', where);
+    pl.replaceChildren(pv ? pill(pv.priority, pv.priority.startsWith('P1') ? 'p1' : pv.priority.startsWith('P2') ? 'p2' : 'p3') : document.createTextNode('—'));
+    ps.textContent = pv ? (pv.priority === 'Done' ? 'Answered' : pv.priority_score + ' points') : '—';
+    const ptb = document.querySelector('#pd-ptbl tbody');
+    if (pv) {
+      const tr = el('tr'); tr.dataset.key = pv.packet_id;
+      const rowsP = [['Expected discharge', pv.discharge, pv.pts_discharge], ['Answer clock', pv.clock, pv.pts_clock], ['Housing', pv.housing, pv.pts_housing], ['High care need', pv.care_needs || '—', pv.pts_need], ['Recent repeat episode', pv.recent, pv.pts_recent]];
+      ptb.replaceChildren(...rowsP.map(([f, v, n]) => el('tr', {}, [el('td', { textContent: f }), el('td', { textContent: v }), el('td', { textContent: n ? '+' + n : '0' })])),
+        el('tr', {}, [el('td', {}, [el('strong', { textContent: 'Total' })]), el('td', { textContent: pv.priority }), el('td', {}, [el('strong', { textContent: pv.priority === 'Done' ? '—' : String(pv.priority_score) })])]));
+    } else ptb.replaceChildren();
+
+    const verb = { 'Critical': 'Clinical review', 'Missing document': 'Get', 'Missing fact': 'Find', 'Contradiction': 'Settle', "Can't tell": 'Confirm with hospital', 'Rule gap': 'Coordinator decides' };
+    const mBody = document.querySelector('#pd-missing-tbl tbody');
+    if (a.status === 'ok') {
+      const order = { 'Critical': 0, 'Missing document': 1, 'Missing fact': 2, 'Contradiction': 3, "Can't tell": 4, 'Rule gap': 5 };
+      const mine = a.data.filter((r) => r.packet_id === picked).sort((x, y) => order[x.type] - order[y.type]);
+      mBody.replaceChildren(...(mine.length ? mine.map((r) => {
+        const tr = el('tr'); tr.dataset.key = r.alert_id;
+        tr.append(el('td', {}, [pill(verb[r.type] || r.type, r.type === 'Critical' ? 'bad' : (r.type === 'Rule gap' || r.type === "Can't tell" ? '' : 'warn'))]), el('td', { textContent: r.what }), el('td', { textContent: r.page }), el('td', { className: 'hide-narrow', textContent: r.rule_id }));
+        return tr;
+      }) : [el('tr', {}, [el('td', { colSpan: 4, textContent: 'Nothing missing. Check the facts and decide.' })])]));
+    } else mBody.replaceChildren();
+
+    const fill = (id, data, key, cols) => {
+      const tb = document.querySelector(id + ' tbody');
+      if (data.status !== 'ok') { tb.replaceChildren(); return; }
+      const rows = data.data.filter((r) => r.packet_id === picked);
+      tb.replaceChildren(...(rows.length ? rows.map((r) => {
+        const tr = el('tr'); tr.dataset.key = r[key];
+        cols.forEach((c) => tr.append(el('td', { className: c.cls || '', textContent: c.fn ? c.fn(r) : String(r[c.f] ?? '') })));
+        return tr;
+      }) : [el('tr', {}, [el('td', { colSpan: cols.length, textContent: 'Nothing in this packet.' })])]));
+    };
+    const em = dash.data('emails'), et = dash.data('email_timing');
+    const logBody = document.querySelector('#pd-log-tbl tbody');
+    if (em.status === 'ok') {
+      const tmap = {}; if (et.status === 'ok') et.data.forEach((t) => { tmap[t.log_id] = t; });
+      const mine = em.data.filter((r) => r.packet_id === picked).sort((x, y) => toSec(x.time) - toSec(y.time));
+      const first = mine.find((r) => r.direction === 'Received') || mine[0];
+      const pk = dash.data('packets'); const prow = pk.status === 'ok' ? pk.data.find((x) => x.packet_id === picked) : null;
+      if (picked !== timer.picked) {
+        timer.picked = picked; timer.loadedAt = Date.now();
+        timer.anchor = first ? toSec(first.time) : 0;
+        timer.decided = !!(prow && prow.status === 'Decided');
+        timer.base = timer.anchor + (prow ? Number(prow.minutes_open) * 60 : 0);
+        timer.answeredIn = prow ? Number(prow.minutes_open) * 60 : 0;
+      }
+      const myDrafts = (drafts[picked] || []);
+      const lastSec = Math.max(...mine.map((r) => toSec(r.time)), ...myDrafts.map((d) => d._sec), timer.anchor);
+      timer.last = lastSec;
+      const dcls = (d) => (d === 'Draft' ? 'warn' : (d === 'Received' ? 'ok' : ''));
+      const rows = mine.map((r) => ({ ...r, sr: tmap[r.log_id]?.since_received ?? (toSec(r.time) - timer.anchor), sp: tmap[r.log_id]?.since_prev ?? 0, session: false }));
+      let prevS = rows.length ? toSec(rows[rows.length - 1].time) : timer.anchor;
+      myDrafts.forEach((d) => { rows.push({ ...d, sr: d._sec - timer.anchor, sp: d._sec - prevS, session: true }); prevS = d._sec; });
+      logBody.replaceChildren(...(rows.length ? rows.map((r) => {
+        const tr = el('tr'); tr.dataset.key = r.log_id;
+        const replyCell = el('td');
+        if (r.direction === 'Received') { const b = el('button', { type: 'button', className: 'pt-reply', textContent: 'Reply' }); b.dataset.subject = r.subject; b.setAttribute('aria-label', `Reply to: ${r.subject}`); replyCell.append(b); }
+        const srCell = el('td', { className: 'pt-mono', textContent: '+' + hms(r.sr) }); srCell.setAttribute('aria-label', spoken(r.sr) + ' after received');
+        const spCell = el('td', { className: 'pt-mono hide-narrow', textContent: r.sp ? '+' + hms(r.sp) : '—' });
+        tr.append(el('td', { className: 'pt-mono', textContent: r.time }), srCell, spCell, el('td', {}, [pill(r.session ? 'Draft (not saved)' : r.direction, dcls(r.direction))]),
+          el('td', { className: 'hide-narrow', textContent: r.channel }), el('td', { textContent: r.subject }), el('td', { className: 'hide-narrow', textContent: r.status }), replyCell);
+        return tr;
+      }) : [el('tr', {}, [el('td', { colSpan: 8, textContent: 'No messages yet.' })])]));
+    } else logBody.replaceChildren();
+    if (picked !== tplText.picked) {
+      tplText.picked = picked; tplText.alerts = a.status === 'ok' ? a.data.filter((r) => r.packet_id === picked) : [];
+      const hasCritical = tplText.alerts.some((x) => x.type === 'Critical');
+      const kind = hasCritical ? 'clinical' : (tplText.alerts.length ? 'missing' : 'status');
+      document.getElementById('pd-tpl').value = kind; fillTemplate(kind);
+      document.getElementById('pd-reply-status').textContent = '';
+    }
+    fill('#pd-pages-tbl', dash.data('pages'), 'page_id', [{ fn: (r) => r.page_from === r.page_to ? 'p. ' + r.page_from : 'pp. ' + r.page_from + '–' + r.page_to }, { f: 'doc_type' }, { f: 'key_content' }]);
+    fill('#pd-meds-tbl', dash.data('meds'), 'med_id', [{ f: 'medicine' }, { f: 'dose' }, { f: 'how_often' }, { f: 'self_administers' }, { f: 'purpose', cls: 'hide-narrow' }, { fn: (r) => 'p. ' + r.page }]);
+    fill('#pd-hist-tbl', dash.data('history'), 'hist_id', [{ f: 'condition' }, { f: 'status' }, { f: 'recent' }, { fn: (r) => 'p. ' + r.page }]);
+    if (focusTitle) { focusTitle = false; document.getElementById('pd-title').focus(); }
+    if (picked !== lastPicked && gr && pv) {
+      lastPicked = picked;
+      const open = a.status === 'ok' ? a.data.filter((r) => r.packet_id === picked).length : 0;
+      say(`${picked}: ${pv.priority}, grade ${gr.grade}, ${open} open item${open === 1 ? '' : 's'}.`);
+    }
+  });
+})();
+</script>

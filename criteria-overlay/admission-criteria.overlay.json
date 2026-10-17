@@ -1,0 +1,2255 @@
+{
+ "about": "Local overlay on IHH's admission criteria for the Packet Triage tool. Adds fields only; rule text stays in the source file. Not an IHH document.",
+ "source_file": "claude-impact-lab-oc/challenges/1-referral-intake/criteria/admission-criteria.json",
+ "source_sha256": "e7842d0468a26e851ffd0bbad2fb8eb831a101fb091dee610f27cb3e50c80a10",
+ "built_on": "2026-10-17",
+ "fields": {
+  "kind": "must | exclude | document | conditional | ask | note | eligible_condition | any_of. 'kind_source: overlay' means the source had no kind and the overlay inferred it from the list the rule sits in.",
+  "needs_date": "True if the check depends on a date or time window. Dates are redacted, so return 'can't tell' unless timing is stated without a date.",
+  "gap": "True if IHH's written rules leave this unclear or a settled conflict applies. Show gap_note to the coordinator; never decide silently.",
+  "evidence": "Where the evidence usually is (DOC-n from IHH's referral checklist, or a page type).",
+  "facts": "Which of the 27 core facts the rule depends on."
+ },
+ "fact_keys": {
+  "housing": "Housing status (unhoused / at risk)",
+  "admitting_diagnosis": "Admitting diagnosis / chief complaint",
+  "aox4": "Alert and oriented x4",
+  "cognitive_impairment": "Cognitive impairment / dementia",
+  "adl_independent": "ADLs independent (hygiene, toileting)",
+  "walk_100ft_transfers": "Walks 100 ft / transfers independently",
+  "dme_independent": "DME used independently",
+  "self_admin_meds": "Self-administers medications",
+  "wounds": "Wounds: location, size, stage, who does care",
+  "home_health": "Home health arranged",
+  "oxygen": "Oxygen required; tank ordered",
+  "iv_access": "IV access / IV antibiotics",
+  "continence": "Continence; catheter; ostomy",
+  "diabetes": "Diabetes; insulin; 5 glucose readings",
+  "vitals_last5": "Last 5 sets of vital signs stable",
+  "tb_test": "TB test / chest X-ray result",
+  "mrsa_swab": "MRSA swab negative",
+  "covid_swab": "COVID swab within 24 h",
+  "isolation": "Isolation / active infection cleared",
+  "mental_health_stable": "Mental health diagnosis; stable on meds",
+  "si_hallucinations": "Suicidal ideation / command hallucinations",
+  "substance_withdrawal": "Substance use; withdrawal (CIWA < 8, 72 h)",
+  "aggression": "Aggressive or combative behavior",
+  "sex_offender": "Registered sex offender",
+  "conservatorship_fsp": "Conservatorship / FSP",
+  "follow_up": "Follow-up appointments scheduled",
+  "med_list_supply": "Medication list + 30-day supply"
+ },
+ "evidence_types": {
+  "DOC-1": "IHH referral form",
+  "DOC-2": "Face sheet / demographic page",
+  "DOC-3": "CalOptima form / LOA / auth",
+  "DOC-4": "History and physical",
+  "DOC-5": "Progress notes",
+  "DOC-6": "Vitals (last 24 h)",
+  "DOC-7": "Medication list",
+  "DOC-8": "PT/OT or nursing notes",
+  "DOC-9": "Blood or wound culture",
+  "DOC-10": "30-day medication supply",
+  "labs": "Lab results",
+  "imaging": "Imaging reports",
+  "ekg": "EKG / ECG",
+  "rt_notes": "Respiratory therapy notes",
+  "psych_consult": "Psychiatry consult",
+  "social_work": "Social work notes",
+  "wound_notes": "Wound care notes",
+  "mar": "Medication administration record",
+  "orders": "Physician orders"
+ },
+ "global_notes": [
+  "Outcomes are approve or deny; there is no stated 're-refer when ready' for a patient who will qualify in a day or two.",
+  "When the referral form (FORM-*) and the outline disagree, the outline wins. Where the outline is silent, the form's exclusion applies.",
+  "Dates are redacted in the packets: rules with needs_date=true should return 'can't tell' unless the packet states the timing without a date.",
+  "Ophthalmology has no ineligible conditions listed in the source. Treat that as 'none listed', not 'nothing excludes'."
+ ],
+ "rules": {
+  "GEN-1": {
+   "kind": "any_of",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-2",
+    "social_work"
+   ],
+   "facts": [
+    "housing"
+   ]
+  },
+  "GEN-2": {
+   "kind": "any_of",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-2",
+    "social_work"
+   ],
+   "facts": [
+    "housing"
+   ]
+  },
+  "GEN-3": {
+   "kind": "any_of",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-2",
+    "social_work"
+   ],
+   "facts": [
+    "housing"
+   ]
+  },
+  "ADL-1": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8",
+    "DOC-1",
+    "DOC-3"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  "ADL-2": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8",
+    "DOC-1",
+    "DOC-3"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  "ADL-3": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8",
+    "DOC-1",
+    "DOC-3"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  "MOB-1": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ]
+  },
+  "MOB-2": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ]
+  },
+  "MOB-3": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ],
+   "gap_note": "Settled: wheelchair-dependent patients who transfer and use the chair independently are eligible."
+  },
+  "MOB-4": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ],
+   "gap_note": "Settled: see MOB-3."
+  },
+  "MH-1": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "psych_consult"
+   ],
+   "facts": [
+    "mental_health_stable"
+   ]
+  },
+  "MH-2": {
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "psych_consult"
+   ],
+   "facts": [
+    "si_hallucinations"
+   ]
+  },
+  "MH-3": {
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "psych_consult"
+   ],
+   "facts": [
+    "si_hallucinations"
+   ]
+  },
+  "MH-4": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "labs"
+   ],
+   "facts": [
+    "substance_withdrawal"
+   ],
+   "date_note": "72-hour hold after acute alcohol intoxication"
+  },
+  "MH-5": {
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "social_work",
+    "psych_consult"
+   ],
+   "facts": [
+    "conservatorship_fsp"
+   ],
+   "gap_note": "'FSP' is not spelled out; likely Full Service Partnership, a county mental-health program."
+  },
+  "COG-1": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-3",
+    "DOC-8",
+    "DOC-5"
+   ],
+   "facts": [
+    "self_admin_meds"
+   ]
+  },
+  "COG-2": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "DOC-3"
+   ],
+   "facts": [
+    "aox4",
+    "cognitive_impairment"
+   ]
+  },
+  "OTH-1": {
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-5",
+    "DOC-8",
+    "social_work"
+   ],
+   "facts": [
+    "aggression"
+   ]
+  },
+  "OTH-2": {
+   "kind": "note",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-1",
+    "DOC-3",
+    "social_work"
+   ],
+   "facts": [
+    "sex_offender"
+   ],
+   "gap_note": "Settled: case by case; offenses involving violence likely denied. Flag for the coordinator; never auto-deny.",
+   "human_review": true
+  },
+  "OTH-3": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "orders",
+    "DOC-5",
+    "DOC-3"
+   ],
+   "facts": [
+    "iv_access",
+    "home_health"
+   ],
+   "gap_note": "Home health threshold wording varies across rules: established, ordered, coordinated, coordinated and scheduled."
+  },
+  "OTH-4": {
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "DOC-9"
+   ],
+   "facts": [
+    "isolation"
+   ]
+  },
+  "EOL-1": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-5"
+   ],
+   "facts": [
+    "home_health"
+   ]
+  },
+  "INF-1": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs"
+   ],
+   "facts": [
+    "mrsa_swab"
+   ]
+  },
+  "INF-2": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": true,
+   "evidence": [
+    "labs"
+   ],
+   "facts": [
+    "covid_swab"
+   ],
+   "date_note": "COVID swab negative within 24 hours of admission",
+   "gap_note": "A swab negative when the referral is sent can be more than 24 hours old by arrival."
+  },
+  "DM-1": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  "DM-2": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ],
+   "gap_note": "Related to END-X3: resolved DKA not addressed."
+  },
+  "DM-3": {
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": true,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ],
+   "date_note": "Insulin regimen started less than 24 hours before admission",
+   "gap_note": "Does not say whether the 24 hours start at the first dose or when doses stop changing."
+  },
+  "DM-4": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ],
+   "date_note": "Follow-up within 5-7 days; no hypoglycemia in the last week"
+  },
+  "DM-5": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  "DM-6": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  "DM-Q1": {
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  "DM-Q2": {
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  "DM-Q3": {
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ],
+   "gap_note": "The A1C sentence is cut off in the source."
+  },
+  "ID-1": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "DOC-9",
+    "DOC-4"
+   ],
+   "facts": [
+    "vitals_last5",
+    "isolation"
+   ]
+  },
+  "ID-2": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "mar",
+    "DOC-8",
+    "DOC-5"
+   ],
+   "facts": [
+    "self_admin_meds"
+   ]
+  },
+  "ID-3": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "orders",
+    "DOC-5",
+    "DOC-3"
+   ],
+   "facts": [
+    "iv_access",
+    "home_health"
+   ],
+   "gap_note": "Home health wording varies (see OTH-3)."
+  },
+  "ID-Q1": {
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "DOC-9",
+    "DOC-4"
+   ],
+   "facts": [
+    "vitals_last5",
+    "isolation"
+   ]
+  },
+  "ID-Q2": {
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "DOC-9",
+    "DOC-4"
+   ],
+   "facts": [
+    "vitals_last5",
+    "isolation"
+   ]
+  },
+  "ID-Q3": {
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "DOC-9",
+    "DOC-4"
+   ],
+   "facts": [
+    "vitals_last5",
+    "isolation"
+   ]
+  },
+  "RESP-1": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  "RESP-2": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  "RESP-3": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ],
+   "date_note": "Oxygen tank ready the day before the client arrives"
+  },
+  "RESP-4": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  "RESP-Q1": {
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  "RESP-Q2": {
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  "CARD-1": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "labs",
+    "ekg"
+   ],
+   "facts": [
+    "vitals_last5"
+   ],
+   "date_note": "Blood pressure stable on oral medication for at least 24 hours"
+  },
+  "CARD-2": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-6",
+    "labs",
+    "ekg"
+   ],
+   "facts": [
+    "vitals_last5"
+   ],
+   "gap_note": "Asks for two negative troponins, but a patient admitted for a heart attack won't have them, while history of heart attack (CIR-E7) is eligible."
+  },
+  "CARD-3": {
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "labs",
+    "ekg"
+   ],
+   "facts": [
+    "vitals_last5"
+   ]
+  },
+  "CARD-4": {
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-7",
+    "mar",
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "self_admin_meds"
+   ]
+  },
+  "CARD-5": {
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "labs",
+    "ekg"
+   ],
+   "facts": [
+    "vitals_last5"
+   ]
+  },
+  "CARD-6": {
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "mar",
+    "orders",
+    "DOC-6"
+   ],
+   "facts": [
+    "vitals_last5"
+   ],
+   "date_note": "No IV blood pressure medicine within 24 hours"
+  },
+  "INT-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ]
+  },
+  "INT-E2": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ],
+   "date_note": "Wound care to arrive within 24 hours if a dressing change is due",
+   "gap_note": "Hard-to-reach list reads 'coccyx, , back of thighs, back, perineum': an item seems missing and the sacrum is not named. Home health wording here is 'coordinated' (see OTH-3)."
+  },
+  "INT-E3": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "iv_access",
+    "home_health"
+   ],
+   "gap_note": "Home health wording varies (see OTH-3)."
+  },
+  "INT-E4": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ]
+  },
+  "INT-E5": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "follow_up"
+   ]
+  },
+  "INT-E6": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ],
+   "gap_note": "Home health wording varies: here wound care must be 'coordinated and scheduled' (see OTH-3)."
+  },
+  "INT-E7": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ],
+   "gap_note": "Home health wording varies (see OTH-3)."
+  },
+  "INT-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ]
+  },
+  "INT-X2": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ],
+   "gap_note": "'Complicated large abscess' is not defined."
+  },
+  "INT-X3": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ]
+  },
+  "OPH-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "OPH-E2": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "OPH-E3": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "OPH-E4": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "OPH-E5": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "OPH-E6": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "OPH-E7": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "RSP-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-E2": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-E3": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-E4": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-E5": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ],
+   "gap_note": "'O2 baseline of 94% or greater with physician explanation': meaning in practice not stated."
+  },
+  "RSP-E6": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-E7": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-X2": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-X3": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-X4": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "RSP-X5": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  "MSK-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "MSK-E2": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "MSK-E3": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "MSK-E4": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "MSK-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "MSK-X2": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "MSK-X3": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "MSK-X4": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "MSK-X5": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  "GI-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-E2": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-E3": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-E4": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-E5": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-E6": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-E7": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-X2": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "GI-X3": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ],
+   "gap_note": "C. diff is ineligible; the outline does not say whether that ends when isolation lifts or when treatment finishes. The form (FORM-X4) excludes it only until cleared by a doctor or CID. Show both to the coordinator."
+  },
+  "END-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  "END-E2": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  "END-E3": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  "END-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  "END-X2": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  "END-X3": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ],
+   "gap_note": "DKA is ineligible; does not say whether resolved DKA still excludes."
+  },
+  "GU-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  "GU-E2": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  "GU-E3": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  "GU-E4": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  "GU-E5": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "continence",
+    "follow_up"
+   ]
+  },
+  "GU-E6": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  "GU-E7": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  "GU-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  "CIR-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  "CIR-E2": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  "CIR-E3": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  "CIR-E4": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  "CIR-E5": {
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ],
+   "gap_note": "Home health wording varies (see OTH-3)."
+  },
+  "CIR-E6": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  "CIR-E7": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ],
+   "gap_note": "See CARD-2: troponin rule conflicts for patients admitted for a heart attack."
+  },
+  "CIR-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  "CIR-X2": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  "NEU-E1": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "NEU-E2": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "NEU-E3": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "NEU-E4": {
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "NEU-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "NEU-X2": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "NEU-X3": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "NEU-X4": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  "NEU-X5": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-2",
+    "DOC-4",
+    "DOC-5"
+   ],
+   "facts": [
+    "cognitive_impairment"
+   ]
+  },
+  "NEU-X6": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ],
+   "human_review": true
+  },
+  "DOC-1": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  "DOC-2": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  "DOC-3": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  "DOC-4": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  "DOC-5": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  "DOC-6": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [],
+   "facts": [
+    "vitals_last5"
+   ],
+   "date_note": "Vitals from the last 24 hours"
+  },
+  "DOC-7": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": [
+    "med_list_supply"
+   ]
+  },
+  "DOC-8": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": [
+    "walk_100ft_transfers",
+    "adl_independent"
+   ]
+  },
+  "DOC-9": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  "DOC-10": {
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": [
+    "med_list_supply"
+   ]
+  },
+  "FORM-M1": {
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1"
+   ],
+   "facts": [
+    "housing"
+   ]
+  },
+  "FORM-M2": {
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5"
+   ],
+   "facts": [
+    "mental_health_stable",
+    "vitals_last5"
+   ]
+  },
+  "FORM-M3": {
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "DOC-3"
+   ],
+   "facts": [
+    "aox4"
+   ]
+  },
+  "FORM-M4": {
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  "FORM-M5": {
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1"
+   ],
+   "facts": [
+    "self_admin_meds"
+   ]
+  },
+  "FORM-M6": {
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ],
+   "gap_note": "Superseded by MOB-3 and MOB-4.",
+   "superseded_by": "MOB-3, MOB-4"
+  },
+  "FORM-X1": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-2",
+    "DOC-4"
+   ],
+   "facts": [
+    "cognitive_impairment"
+   ]
+  },
+  "FORM-X2": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  "FORM-X3": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ],
+   "gap_note": "Superseded by MOB-3 and MOB-4.",
+   "superseded_by": "MOB-3, MOB-4"
+  },
+  "FORM-X4": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "labs",
+    "DOC-9",
+    "imaging"
+   ],
+   "facts": [
+    "tb_test",
+    "mrsa_swab",
+    "isolation"
+   ],
+   "gap_note": "Only the tuberculosis part falls to the form (the outline is silent on TB). MRSA is covered by INF-1 and C. diff by GI-X3, so the outline governs those."
+  },
+  "FORM-X5": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "DOC-5"
+   ],
+   "facts": [
+    "substance_withdrawal"
+   ],
+   "gap_note": "Refusing detox is listed only on the form; the outline is silent, so the form's exclusion applies."
+  },
+  "FORM-X6": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-1"
+   ],
+   "facts": [
+    "sex_offender"
+   ],
+   "gap_note": "Superseded by OTH-2 (case by case).",
+   "superseded_by": "OTH-2"
+  },
+  "FORM-X7": {
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-5",
+    "DOC-8"
+   ],
+   "facts": [
+    "aggression"
+   ]
+  }
+ }
+}

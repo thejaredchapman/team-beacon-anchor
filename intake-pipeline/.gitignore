@@ -1,0 +1,7 @@
+work/
+outbox/
+fax-inbox/
+samples/
+__pycache__/
+*.db
+.env

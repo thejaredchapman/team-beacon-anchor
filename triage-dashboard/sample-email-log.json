@@ -1,0 +1,332 @@
+[
+  {
+    "log_id": "L001",
+    "packet_id": "Sample-01",
+    "time": "08:05:19",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 22 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L002",
+    "packet_id": "Sample-01",
+    "time": "08:07:29",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L003",
+    "packet_id": "Sample-01",
+    "time": "08:40:31",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Decision sent to hospital",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L004",
+    "packet_id": "Sample-02",
+    "time": "08:20:56",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 22 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L005",
+    "packet_id": "Sample-02",
+    "time": "08:22:00",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L006",
+    "packet_id": "Sample-02",
+    "time": "08:45:43",
+    "direction": "Draft",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Request for 3 item(s): No PT/OT notes; so walking 100 ft (MOB-3) can't be checked; Form says independent with ADLs; nursing note says needs help with dressing changes and bathing; COVID swab within 24 h: dat",
+    "status": "Draft, not sent"
+  },
+  {
+    "log_id": "L007",
+    "packet_id": "Sample-02",
+    "time": "09:00:22",
+    "direction": "Sent",
+    "channel": "Phone",
+    "who": "Hospital case manager (sample)",
+    "subject": "Called about missing items; hospital will fax notes",
+    "status": "Logged by staff"
+  },
+  {
+    "log_id": "L008",
+    "packet_id": "Sample-03",
+    "time": "08:40:21",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 18 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L009",
+    "packet_id": "Sample-03",
+    "time": "08:42:11",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L010",
+    "packet_id": "Sample-03",
+    "time": "09:05:06",
+    "direction": "Draft",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Request for 2 item(s): Form says no oxygen; progress note mentions oxygen at night; MRSA swab result not found",
+    "status": "Draft, not sent"
+  },
+  {
+    "log_id": "L011",
+    "packet_id": "Sample-04",
+    "time": "09:00:47",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 30 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L012",
+    "packet_id": "Sample-04",
+    "time": "09:02:27",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L013",
+    "packet_id": "Sample-04",
+    "time": "09:25:48",
+    "direction": "Draft",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Request for 4 item(s): No IHH referral form; No medication list; Age differs between face sheet and H&P; Living situation differs between form and social work note",
+    "status": "Draft, not sent"
+  },
+  {
+    "log_id": "L014",
+    "packet_id": "Sample-05",
+    "time": "09:15:38",
+    "direction": "Received",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 14 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L015",
+    "packet_id": "Sample-05",
+    "time": "09:17:44",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L016",
+    "packet_id": "Sample-05",
+    "time": "09:55:34",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Decision sent to hospital",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L017",
+    "packet_id": "Sample-06",
+    "time": "09:30:22",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 29 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L018",
+    "packet_id": "Sample-06",
+    "time": "09:32:08",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L019",
+    "packet_id": "Sample-06",
+    "time": "09:55:27",
+    "direction": "Draft",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Request for 1 item(s): Wound size and stage not stated",
+    "status": "Draft, not sent"
+  },
+  {
+    "log_id": "L020",
+    "packet_id": "Sample-07",
+    "time": "09:45:54",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 31 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L021",
+    "packet_id": "Sample-07",
+    "time": "09:47:38",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L022",
+    "packet_id": "Sample-07",
+    "time": "10:10:27",
+    "direction": "Draft",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Request for 4 item(s): Last 5 sets of vitals not sent; Insulin listed on MAR; form says diabetic on oral meds only; Form says no wounds; wound note describes a sac",
+    "status": "Draft, not sent"
+  },
+  {
+    "log_id": "L023",
+    "packet_id": "Sample-07",
+    "time": "10:25:53",
+    "direction": "Sent",
+    "channel": "Phone",
+    "who": "Hospital case manager (sample)",
+    "subject": "Called about missing items; hospital will fax notes",
+    "status": "Logged by staff"
+  },
+  {
+    "log_id": "L024",
+    "packet_id": "Sample-07",
+    "time": "10:55:23",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Partial reply: wound note resent; vitals still pending",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L025",
+    "packet_id": "Sample-08",
+    "time": "10:10:04",
+    "direction": "Received",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 21 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L026",
+    "packet_id": "Sample-08",
+    "time": "10:12:16",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L027",
+    "packet_id": "Sample-08",
+    "time": "10:35:20",
+    "direction": "Draft",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Request for 1 item(s): TB test result not found",
+    "status": "Draft, not sent"
+  },
+  {
+    "log_id": "L028",
+    "packet_id": "Sample-09",
+    "time": "10:25:32",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 23 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L029",
+    "packet_id": "Sample-09",
+    "time": "10:27:02",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L030",
+    "packet_id": "Sample-09",
+    "time": "10:50:27",
+    "direction": "Draft",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Request for 1 item(s): No CalOptima authorization",
+    "status": "Draft, not sent"
+  },
+  {
+    "log_id": "L031",
+    "packet_id": "Sample-10",
+    "time": "10:40:20",
+    "direction": "Received",
+    "channel": "Fax",
+    "who": "Hospital case manager (sample)",
+    "subject": "Recuperative care referral, 26 pages",
+    "status": "Logged"
+  },
+  {
+    "log_id": "L032",
+    "packet_id": "Sample-10",
+    "time": "10:42:21",
+    "direction": "Sent",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Confirmation: referral received, answer within 2 hours",
+    "status": "Sent by staff, logged"
+  },
+  {
+    "log_id": "L033",
+    "packet_id": "Sample-10",
+    "time": "10:55:25",
+    "direction": "Draft",
+    "channel": "Email",
+    "who": "Hospital case manager (sample)",
+    "subject": "Request for 2 item(s): Form says AOx4; progress note says intermittently confused; Follow-up appointment not scheduled",
+    "status": "Draft, not sent"
+  }
+]

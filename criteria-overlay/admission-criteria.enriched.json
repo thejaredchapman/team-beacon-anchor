@@ -1,0 +1,2720 @@
+{
+ "about": "Local overlay on IHH's admission criteria for the Packet Triage tool. Adds fields only; rule text stays in the source file. Not an IHH document.",
+ "source_file": "claude-impact-lab-oc/challenges/1-referral-intake/criteria/admission-criteria.json",
+ "source_sha256": "e7842d0468a26e851ffd0bbad2fb8eb831a101fb091dee610f27cb3e50c80a10",
+ "built_on": "2026-10-17",
+ "fields": {
+  "kind": "must | exclude | document | conditional | ask | note | eligible_condition | any_of. 'kind_source: overlay' means the source had no kind and the overlay inferred it from the list the rule sits in.",
+  "needs_date": "True if the check depends on a date or time window. Dates are redacted, so return 'can't tell' unless timing is stated without a date.",
+  "gap": "True if IHH's written rules leave this unclear or a settled conflict applies. Show gap_note to the coordinator; never decide silently.",
+  "evidence": "Where the evidence usually is (DOC-n from IHH's referral checklist, or a page type).",
+  "facts": "Which of the 27 core facts the rule depends on."
+ },
+ "fact_keys": {
+  "housing": "Housing status (unhoused / at risk)",
+  "admitting_diagnosis": "Admitting diagnosis / chief complaint",
+  "aox4": "Alert and oriented x4",
+  "cognitive_impairment": "Cognitive impairment / dementia",
+  "adl_independent": "ADLs independent (hygiene, toileting)",
+  "walk_100ft_transfers": "Walks 100 ft / transfers independently",
+  "dme_independent": "DME used independently",
+  "self_admin_meds": "Self-administers medications",
+  "wounds": "Wounds: location, size, stage, who does care",
+  "home_health": "Home health arranged",
+  "oxygen": "Oxygen required; tank ordered",
+  "iv_access": "IV access / IV antibiotics",
+  "continence": "Continence; catheter; ostomy",
+  "diabetes": "Diabetes; insulin; 5 glucose readings",
+  "vitals_last5": "Last 5 sets of vital signs stable",
+  "tb_test": "TB test / chest X-ray result",
+  "mrsa_swab": "MRSA swab negative",
+  "covid_swab": "COVID swab within 24 h",
+  "isolation": "Isolation / active infection cleared",
+  "mental_health_stable": "Mental health diagnosis; stable on meds",
+  "si_hallucinations": "Suicidal ideation / command hallucinations",
+  "substance_withdrawal": "Substance use; withdrawal (CIWA < 8, 72 h)",
+  "aggression": "Aggressive or combative behavior",
+  "sex_offender": "Registered sex offender",
+  "conservatorship_fsp": "Conservatorship / FSP",
+  "follow_up": "Follow-up appointments scheduled",
+  "med_list_supply": "Medication list + 30-day supply"
+ },
+ "evidence_types": {
+  "DOC-1": "IHH referral form",
+  "DOC-2": "Face sheet / demographic page",
+  "DOC-3": "CalOptima form / LOA / auth",
+  "DOC-4": "History and physical",
+  "DOC-5": "Progress notes",
+  "DOC-6": "Vitals (last 24 h)",
+  "DOC-7": "Medication list",
+  "DOC-8": "PT/OT or nursing notes",
+  "DOC-9": "Blood or wound culture",
+  "DOC-10": "30-day medication supply",
+  "labs": "Lab results",
+  "imaging": "Imaging reports",
+  "ekg": "EKG / ECG",
+  "rt_notes": "Respiratory therapy notes",
+  "psych_consult": "Psychiatry consult",
+  "social_work": "Social work notes",
+  "wound_notes": "Wound care notes",
+  "mar": "Medication administration record",
+  "orders": "Physician orders"
+ },
+ "global_notes": [
+  "Outcomes are approve or deny; there is no stated 're-refer when ready' for a patient who will qualify in a day or two.",
+  "When the referral form (FORM-*) and the outline disagree, the outline wins. Where the outline is silent, the form's exclusion applies.",
+  "Dates are redacted in the packets: rules with needs_date=true should return 'can't tell' unless the packet states the timing without a date.",
+  "Ophthalmology has no ineligible conditions listed in the source. Treat that as 'none listed', not 'nothing excludes'."
+ ],
+ "rules": [
+  {
+   "id": "GEN-1",
+   "section": "General admission criteria (any one)",
+   "text": "Homeless/at risk of homelessness and too ill or frail to recover from illness or injury",
+   "kind": "any_of",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-2",
+    "social_work"
+   ],
+   "facts": [
+    "housing"
+   ]
+  },
+  {
+   "id": "GEN-2",
+   "section": "General admission criteria (any one)",
+   "text": "Lives alone with no formal supports and too ill or frail to recover from illness or injury",
+   "kind": "any_of",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-2",
+    "social_work"
+   ],
+   "facts": [
+    "housing"
+   ]
+  },
+  {
+   "id": "GEN-3",
+   "section": "General admission criteria (any one)",
+   "text": "At risk of hospitalization or re-hospitalization after hospitalization",
+   "kind": "any_of",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-2",
+    "social_work"
+   ],
+   "facts": [
+    "housing"
+   ]
+  },
+  {
+   "id": "ADL-1",
+   "section": "ADLs",
+   "text": "Able to complete all Activities of Daily Living (ADLs) independently including personal hygiene",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8",
+    "DOC-1",
+    "DOC-3"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  {
+   "id": "ADL-2",
+   "section": "ADLs",
+   "text": "Patient must be able to complete personal hygiene independently. Benches are available for bathing so seated shower is acceptable. Patient must be able to gather all of their own bathing/showering supplies, transfer to shower area and perform shower/bath independently",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8",
+    "DOC-1",
+    "DOC-3"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  {
+   "id": "ADL-3",
+   "section": "ADLs",
+   "text": "Able to toilet independently and/or change briefs/diapers independently",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8",
+    "DOC-1",
+    "DOC-3"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  {
+   "id": "MOB-1",
+   "section": "Mobility",
+   "text": "If using DME (wheelchair, walker, etc) must be able to use independently",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ]
+  },
+  {
+   "id": "MOB-2",
+   "section": "Mobility",
+   "text": "PT/OT notes must be sent for review",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ]
+  },
+  {
+   "id": "MOB-3",
+   "section": "Mobility",
+   "text": "Patient must be able to ambulate at least 100 ft (rest breaks are acceptable) at modified independence if not wheelchair dependent",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ],
+   "gap_note": "Settled: wheelchair-dependent patients who transfer and use the chair independently are eligible."
+  },
+  {
+   "id": "MOB-4",
+   "section": "Mobility",
+   "text": "Wheelchair dependent patients must be able to transfer independently",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ],
+   "gap_note": "Settled: see MOB-3."
+  },
+  {
+   "id": "MH-1",
+   "section": "Mental Health",
+   "text": "Patient must be mentally stable on medications",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "psych_consult"
+   ],
+   "facts": [
+    "mental_health_stable"
+   ]
+  },
+  {
+   "id": "MH-2",
+   "section": "Mental Health",
+   "text": "No suicidal ideation",
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "psych_consult"
+   ],
+   "facts": [
+    "si_hallucinations"
+   ]
+  },
+  {
+   "id": "MH-3",
+   "section": "Mental Health",
+   "text": "No commanding auditory or visual hallucinations",
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "psych_consult"
+   ],
+   "facts": [
+    "si_hallucinations"
+   ]
+  },
+  {
+   "id": "MH-4",
+   "section": "Mental Health",
+   "text": "If a patient was admitted with acute alcohol intoxication, the patient must be held for at least 72 hours and not have signs of alcohol withdrawal (maintain a CIWA-AR score of <8, if being assessed with this tool) prior to admission to recuperative care.",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "labs"
+   ],
+   "facts": [
+    "substance_withdrawal"
+   ],
+   "date_note": "72-hour hold after acute alcohol intoxication"
+  },
+  {
+   "id": "MH-5",
+   "section": "Mental Health",
+   "text": "Cannot qualify, have history of or currently be under a conservatorship or FSP",
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "social_work",
+    "psych_consult"
+   ],
+   "facts": [
+    "conservatorship_fsp"
+   ],
+   "gap_note": "'FSP' is not spelled out; likely Full Service Partnership, a county mental-health program."
+  },
+  {
+   "id": "COG-1",
+   "section": "Cognition",
+   "text": "Must be capable of self-administering medications (must confirm that patient can self-administer insulin) and receiving medical education",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-3",
+    "DOC-8",
+    "DOC-5"
+   ],
+   "facts": [
+    "self_admin_meds"
+   ]
+  },
+  {
+   "id": "COG-2",
+   "section": "Cognition",
+   "text": "AOx4",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "DOC-3"
+   ],
+   "facts": [
+    "aox4",
+    "cognitive_impairment"
+   ]
+  },
+  {
+   "id": "OTH-1",
+   "section": "Other Factors",
+   "text": "Ineligible if client is verbally or physically aggressive towards staff or other patients",
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-5",
+    "DOC-8",
+    "social_work"
+   ],
+   "facts": [
+    "aggression"
+   ]
+  },
+  {
+   "id": "OTH-2",
+   "section": "Other Factors",
+   "text": "Patients that are registered sex offenders will be evaluated on a case-by-case basis (however, as a general guide, any offense that involves violence will likely be denied",
+   "kind": "note",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-1",
+    "DOC-3",
+    "social_work"
+   ],
+   "facts": [
+    "sex_offender"
+   ],
+   "gap_note": "Settled: case by case; offenses involving violence likely denied. Flag for the coordinator; never auto-deny.",
+   "human_review": true
+  },
+  {
+   "id": "OTH-3",
+   "section": "Other Factors",
+   "text": "Patients with IV access can be accepted if they have home health established to maintain the IV and administer the medication as needed. There is no limit on time for IV",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "orders",
+    "DOC-5",
+    "DOC-3"
+   ],
+   "facts": [
+    "iv_access",
+    "home_health"
+   ],
+   "gap_note": "Home health threshold wording varies across rules: established, ordered, coordinated, coordinated and scheduled."
+  },
+  {
+   "id": "OTH-4",
+   "section": "Other Factors",
+   "text": "Cannot accept patients on isolation unless isolation status is cleared prior to admission to recuperative care",
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "DOC-9"
+   ],
+   "facts": [
+    "isolation"
+   ]
+  },
+  {
+   "id": "EOL-1",
+   "section": "End of life care",
+   "text": "Hospice patients are eligible for recuperative care admission. Hospice services must be arranged prior to admission to recuperative care and patient, family and other involved parties must be made aware that recuperative care staff cannot administer medications, these medications will be administered by hospice staff",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1",
+    "DOC-5"
+   ],
+   "facts": [
+    "home_health"
+   ]
+  },
+  {
+   "id": "INF-1",
+   "section": "Infection Control",
+   "text": "MRSA swab, documented negative prior to recuperative care admission if coming from inpatient hospitalization",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs"
+   ],
+   "facts": [
+    "mrsa_swab"
+   ]
+  },
+  {
+   "id": "INF-2",
+   "section": "Infection Control",
+   "text": "Covid swab (rapid swab acceptable) documented negative within 24 hours of recuperative care admission if coming from inpatient admission",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": true,
+   "evidence": [
+    "labs"
+   ],
+   "facts": [
+    "covid_swab"
+   ],
+   "date_note": "COVID swab negative within 24 hours of admission",
+   "gap_note": "A swab negative when the referral is sent can be more than 24 hours old by arrival."
+  },
+  {
+   "id": "DM-1",
+   "section": "Diabetes",
+   "text": "If patient is being referred from inpatient hospitalization, 5 consecutive glucose readings should be sent. Readings must be show improvement and stabilization.",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  {
+   "id": "DM-2",
+   "section": "Diabetes",
+   "text": "If admitted from the emergency department, it must be established and documented that the patient is not in DKA.",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ],
+   "gap_note": "Related to END-X3: resolved DKA not addressed."
+  },
+  {
+   "id": "DM-3",
+   "section": "Diabetes",
+   "text": "We will not accept a diabetic patient that was started on an insulin regimen less than 24 hours prior to admission.",
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": true,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ],
+   "date_note": "Insulin regimen started less than 24 hours before admission",
+   "gap_note": "Does not say whether the 24 hours start at the first dose or when doses stop changing."
+  },
+  {
+   "id": "DM-4",
+   "section": "Diabetes",
+   "text": "Poorly controlled diabetics on an oral medication or established insulin regimen may be accepted from the ED if they have follow up with a primary care provider scheduled within the next 5-7 days, have not had an episode of hypoglycemia within the last week and have a written treatment plan for glucose control (i.e. sliding scale parameters, medication hold guidelines, etc).",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ],
+   "date_note": "Follow-up within 5-7 days; no hypoglycemia in the last week"
+  },
+  {
+   "id": "DM-5",
+   "section": "Diabetes",
+   "text": "Patient should understand how to use glucometer",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  {
+   "id": "DM-6",
+   "section": "Diabetes",
+   "text": "Patient should understand insulin administration, if applicable",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  {
+   "id": "DM-Q1",
+   "section": "Diabetes",
+   "text": "Does the patient use insulin? Is the insulin administered through a pump?",
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  {
+   "id": "DM-Q2",
+   "section": "Diabetes",
+   "text": "Does the patient take oral medication?",
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ]
+  },
+  {
+   "id": "DM-Q3",
+   "section": "Diabetes",
+   "text": "What was the patient's last hemoglobin A1C? This is not a limiting factor for admission but does provide important information about the patient's baseline glucose level",
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "labs",
+    "mar",
+    "DOC-4",
+    "DOC-7"
+   ],
+   "facts": [
+    "diabetes"
+   ],
+   "gap_note": "The A1C sentence is cut off in the source."
+  },
+  {
+   "id": "ID-1",
+   "section": "Infection",
+   "text": "The last 5 sets of vital signs should be sent. Patient is ineligible for recuperative care if VS show signs of sepsis (continued fever, elevated heart rate, low blood pressure)",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "DOC-9",
+    "DOC-4"
+   ],
+   "facts": [
+    "vitals_last5",
+    "isolation"
+   ]
+  },
+  {
+   "id": "ID-2",
+   "section": "Infection",
+   "text": "The patient should be able to administer oral antibiotics independently",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "mar",
+    "DOC-8",
+    "DOC-5"
+   ],
+   "facts": [
+    "self_admin_meds"
+   ]
+  },
+  {
+   "id": "ID-3",
+   "section": "Infection",
+   "text": "If IV antibiotics are required, home health care should be ordered before admission to recuperative care to maintain IV and administer antibiotics",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "orders",
+    "DOC-5",
+    "DOC-3"
+   ],
+   "facts": [
+    "iv_access",
+    "home_health"
+   ],
+   "gap_note": "Home health wording varies (see OTH-3)."
+  },
+  {
+   "id": "ID-Q1",
+   "section": "Infection",
+   "text": "Location of infection?",
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "DOC-9",
+    "DOC-4"
+   ],
+   "facts": [
+    "vitals_last5",
+    "isolation"
+   ]
+  },
+  {
+   "id": "ID-Q2",
+   "section": "Infection",
+   "text": "Were cultures performed? Results should be sent",
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "DOC-9",
+    "DOC-4"
+   ],
+   "facts": [
+    "vitals_last5",
+    "isolation"
+   ]
+  },
+  {
+   "id": "ID-Q3",
+   "section": "Infection",
+   "text": "Is the patient on isolation?",
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "DOC-9",
+    "DOC-4"
+   ],
+   "facts": [
+    "vitals_last5",
+    "isolation"
+   ]
+  },
+  {
+   "id": "RESP-1",
+   "section": "Respiratory Illness",
+   "text": "Chest imaging should be sent (Chest XR, CT, MRI) when available",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "RESP-2",
+   "section": "Respiratory Illness",
+   "text": "The last 5 sets of vital signs should be sent, if available; O2 saturation may be chronically low if patient has a history of COPD, readings should be stable and consistent with patient's normal O2 saturation",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "RESP-3",
+   "section": "Respiratory Illness",
+   "text": "If O2 is required, the hospital must order it and have the tank ready to be sent to the site the day before the client arrives at the recuperative care site",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ],
+   "date_note": "Oxygen tank ready the day before the client arrives"
+  },
+  {
+   "id": "RESP-4",
+   "section": "Respiratory Illness",
+   "text": "Respiratory therapy notes should be sent",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "RESP-Q1",
+   "section": "Respiratory Illness",
+   "text": "Is the patient receiving any breathing treatments? If so, what are they?",
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "RESP-Q2",
+   "section": "Respiratory Illness",
+   "text": "Is the patient on antibiotics for this condition?",
+   "kind": "ask",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "imaging",
+    "DOC-6",
+    "rt_notes"
+   ],
+   "facts": [
+    "oxygen",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CARD-1",
+   "section": "Cardiac",
+   "text": "The last 5 sets of vital signs should be sent. Patient's BP should be stable on oral medication for at least 24 hours",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "labs",
+    "ekg"
+   ],
+   "facts": [
+    "vitals_last5"
+   ],
+   "date_note": "Blood pressure stable on oral medication for at least 24 hours"
+  },
+  {
+   "id": "CARD-2",
+   "section": "Cardiac",
+   "text": "If patient had a troponin in the hospital, at least 3 consecutive results should be sent with at least 2 negative results",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-6",
+    "labs",
+    "ekg"
+   ],
+   "facts": [
+    "vitals_last5"
+   ],
+   "gap_note": "Asks for two negative troponins, but a patient admitted for a heart attack won't have them, while history of heart attack (CIR-E7) is eligible."
+  },
+  {
+   "id": "CARD-3",
+   "section": "Cardiac",
+   "text": "EKG results should be sent",
+   "kind": "document",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "labs",
+    "ekg"
+   ],
+   "facts": [
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CARD-4",
+   "section": "Cardiac",
+   "text": "If patient has a history of atrial fibrillation or has been diagnosed with atrial fibrillation, patient should be able to take anticoagulation therapy independently and understand any associated lab work (i.e. INR) necessary to track this medication",
+   "kind": "must",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-7",
+    "mar",
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "self_admin_meds"
+   ]
+  },
+  {
+   "id": "CARD-5",
+   "section": "Cardiac",
+   "text": "Ejection Fraction of 25% or higher may be accepted as long as this has been established to be the patient's baseline. If the patient is on chemotherapy or is being immediately discharged from hospitalization for heart attack with a lowered ejection fraction, this patient is ineligible for recuperative care",
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-6",
+    "labs",
+    "ekg"
+   ],
+   "facts": [
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CARD-6",
+   "section": "Cardiac",
+   "text": "Patient will not be accepted for admission to recuperative care if IV blood pressure medications have been required within 24 hours",
+   "kind": "exclude",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [
+    "mar",
+    "orders",
+    "DOC-6"
+   ],
+   "facts": [
+    "vitals_last5"
+   ],
+   "date_note": "No IV blood pressure medicine within 24 hours"
+  },
+  {
+   "id": "INT-E1",
+   "section": "Integumentary: eligible",
+   "text": "Uncomplicated infections of the skin, cellulitis or abscess, requiring oral antibiotic treatments",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ]
+  },
+  {
+   "id": "INT-E2",
+   "section": "Integumentary: eligible",
+   "text": "Wound care to be coordinated with home health agency prior to arrival at recuperative care and should coincide with the frequency of dressing changes or wound monitoring. If a patient should have a dressing change or wound check within 24 hours of discharge from the hospital, wound care should be arranged to arrive to recuperative care within 24 hours. Additionally, all wounds in hard-to-reach areas (coccyx, back of thighs, back, perineum) will require at least one visit from wound care in the recuperative care setting regardless of patient's ability to change the dressing in a hospital setting.",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": true,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ],
+   "date_note": "Wound care to arrive within 24 hours if a dressing change is due",
+   "gap_note": "Hard-to-reach list reads 'coccyx, , back of thighs, back, perineum': an item seems missing and the sacrum is not named. Home health wording here is 'coordinated' (see OTH-3)."
+  },
+  {
+   "id": "INT-E3",
+   "section": "Integumentary: eligible",
+   "text": "IV antibiotics are allowed as long as home health has been coordinated to maintain the IV and either patient is able to administer their own IV antibiotics or home health will be administering the antibiotic",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "iv_access",
+    "home_health"
+   ],
+   "gap_note": "Home health wording varies (see OTH-3)."
+  },
+  {
+   "id": "INT-E4",
+   "section": "Integumentary: eligible",
+   "text": "Uncomplicated wounds (e.g. laceration without infection)",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ]
+  },
+  {
+   "id": "INT-E5",
+   "section": "Integumentary: eligible",
+   "text": "Post-surgical incision. If staples or external sutures are placed, appropriate follow up should be scheduled for removal prior to admission to recuperative care",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "follow_up"
+   ]
+  },
+  {
+   "id": "INT-E6",
+   "section": "Integumentary: eligible",
+   "text": "Stage 1, 2, 3 pressure ulcers. Wound care to be coordinated and scheduled prior to admission to recuperative care",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ],
+   "gap_note": "Home health wording varies: here wound care must be 'coordinated and scheduled' (see OTH-3)."
+  },
+  {
+   "id": "INT-E7",
+   "section": "Integumentary: eligible",
+   "text": "Third degree burns that affect <15% of the body. Wound care to be coordinated with home health agency prior to admission to recuperative care",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ],
+   "gap_note": "Home health wording varies (see OTH-3)."
+  },
+  {
+   "id": "INT-X1",
+   "section": "Integumentary: ineligible",
+   "text": "Complicated wounds requiring skin grafting",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ]
+  },
+  {
+   "id": "INT-X2",
+   "section": "Integumentary: ineligible",
+   "text": "Complicated large abscess",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ],
+   "gap_note": "'Complicated large abscess' is not defined."
+  },
+  {
+   "id": "INT-X3",
+   "section": "Integumentary: ineligible",
+   "text": "Burns associated with inhalation injury",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "wound_notes",
+    "DOC-4",
+    "DOC-3"
+   ],
+   "facts": [
+    "wounds",
+    "home_health"
+   ]
+  },
+  {
+   "id": "OPH-E1",
+   "section": "Ophthalmology: eligible",
+   "text": "Uncomplicated infections of the eye",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "OPH-E2",
+   "section": "Ophthalmology: eligible",
+   "text": "Post-op glaucoma surgery",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "OPH-E3",
+   "section": "Ophthalmology: eligible",
+   "text": "Cataract surgery requiring extraction with lens implant (uncomplicated situation)",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "OPH-E4",
+   "section": "Ophthalmology: eligible",
+   "text": "Diabetic retinopathy",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "OPH-E5",
+   "section": "Ophthalmology: eligible",
+   "text": "Diabetic macular edema",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "OPH-E6",
+   "section": "Ophthalmology: eligible",
+   "text": "Post operative admission for vitreous hemorrhage, if patient meets all other criteria",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "OPH-E7",
+   "section": "Ophthalmology: eligible",
+   "text": "Post operative admission for retinal detachment, if patient meets all other criteria",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "RSP-E1",
+   "section": "Respiratory: eligible",
+   "text": "Pneumonia",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-E2",
+   "section": "Respiratory: eligible",
+   "text": "Bronchitis",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-E3",
+   "section": "Respiratory: eligible",
+   "text": "COPD not requiring continuous oxygen therapy",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-E4",
+   "section": "Respiratory: eligible",
+   "text": "Asthma",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-E5",
+   "section": "Respiratory: eligible",
+   "text": "Patients with O2 baseline of 94% or greater with physician explanation",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ],
+   "gap_note": "'O2 baseline of 94% or greater with physician explanation': meaning in practice not stated."
+  },
+  {
+   "id": "RSP-E6",
+   "section": "Respiratory: eligible",
+   "text": "Patients with mature tracheostomy who are able to independently care for their tracheostomy site and are also able to eat and use a speaking valve",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-E7",
+   "section": "Respiratory: eligible",
+   "text": "CPAP",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-X1",
+   "section": "Respiratory: ineligible",
+   "text": "Pneumothorax",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-X2",
+   "section": "Respiratory: ineligible",
+   "text": "Hemothorax",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-X3",
+   "section": "Respiratory: ineligible",
+   "text": "Trach patients with ventilator",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-X4",
+   "section": "Respiratory: ineligible",
+   "text": "Pulmonary Embolism",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "RSP-X5",
+   "section": "Respiratory: ineligible",
+   "text": "Respiratory conditions requiring BiPAP",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-6"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "oxygen"
+   ]
+  },
+  {
+   "id": "MSK-E1",
+   "section": "Musculoskeletal: eligible",
+   "text": "Closed fractures",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "MSK-E2",
+   "section": "Musculoskeletal: eligible",
+   "text": "PT to be coordinated and scheduled prior to arrival at recuperative care",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "MSK-E3",
+   "section": "Musculoskeletal: eligible",
+   "text": "Rheumatoid arthritis",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "MSK-E4",
+   "section": "Musculoskeletal: eligible",
+   "text": "Non-elective hip/knee replacements following SNF placement, if patient meets the other recuperative care guidelines",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "MSK-X1",
+   "section": "Musculoskeletal: ineligible",
+   "text": "Open fractures",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "MSK-X2",
+   "section": "Musculoskeletal: ineligible",
+   "text": "Osteomyelitis",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "MSK-X3",
+   "section": "Musculoskeletal: ineligible",
+   "text": "External fixation devices",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "MSK-X4",
+   "section": "Musculoskeletal: ineligible",
+   "text": "Immediately following hospitalization for amputation with wounds",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "MSK-X5",
+   "section": "Musculoskeletal: ineligible",
+   "text": "Facial trauma with mandibular or maxillary fracture requiring jaw wiring",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "imaging",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "walk_100ft_transfers"
+   ]
+  },
+  {
+   "id": "GI-E1",
+   "section": "GI: eligible",
+   "text": "Post abdominal surgical care",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-E2",
+   "section": "GI: eligible",
+   "text": "Uncomplicated inguinal or umbilical hernia",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-E3",
+   "section": "GI: eligible",
+   "text": "Diverticulitis",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-E4",
+   "section": "GI: eligible",
+   "text": "Uncomplicated inflammatory bowel disease",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-E5",
+   "section": "GI: eligible",
+   "text": "Ascites, if chronic",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-E6",
+   "section": "GI: eligible",
+   "text": "Gastroesophageal reflux disorder",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-E7",
+   "section": "GI: eligible",
+   "text": "Post hospitalization for uncomplicated bowel obstruction that did not require surgical intervention",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-X1",
+   "section": "GI: ineligible",
+   "text": "Decompensated cirrhosis (defined by the development of clinically evident complications of portal hypertension, ascites, variceal hemorrhage, hepatic encephalopathy or liver insufficiency, jaundice)",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-X2",
+   "section": "GI: ineligible",
+   "text": "Immediately following hospitalization for bleeding ulcer disease or esophageal varices",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "GI-X3",
+   "section": "GI: ineligible",
+   "text": "C.Diff",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ],
+   "gap_note": "C. diff is ineligible; the outline does not say whether that ends when isolation lifts or when treatment finishes. The form (FORM-X4) excludes it only until cleared by a doctor or CID. Show both to the coordinator."
+  },
+  {
+   "id": "END-E1",
+   "section": "Endocrine: eligible",
+   "text": "Diabetes that shows improvement and stabilization in glucose levels as seen on at least 5 consecutive glucose readings with medical treatment (see the diabetes rules)",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  {
+   "id": "END-E2",
+   "section": "Endocrine: eligible",
+   "text": "Hypothyroidism or hyperthyroidism on medical treatment",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  {
+   "id": "END-E3",
+   "section": "Endocrine: eligible",
+   "text": "s/p thyroidectomy",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  {
+   "id": "END-X1",
+   "section": "Endocrine: ineligible",
+   "text": "Immediately s/p parathyroidectomy",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  {
+   "id": "END-X2",
+   "section": "Endocrine: ineligible",
+   "text": "Alcoholic ketoacidosis",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ]
+  },
+  {
+   "id": "END-X3",
+   "section": "Endocrine: ineligible",
+   "text": "DKA",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "labs"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "diabetes"
+   ],
+   "gap_note": "DKA is ineligible; does not say whether resolved DKA still excludes."
+  },
+  {
+   "id": "GU-E1",
+   "section": "GU: eligible",
+   "text": "Urinary tract infection",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  {
+   "id": "GU-E2",
+   "section": "GU: eligible",
+   "text": "Post-acute glomerulonephritis, if caused by an infection",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  {
+   "id": "GU-E3",
+   "section": "GU: eligible",
+   "text": "Post-op laparoscopic gynecologic surgery for treatment of non-cancerous conditions",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  {
+   "id": "GU-E4",
+   "section": "GU: eligible",
+   "text": "Urolithiasis",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  {
+   "id": "GU-E5",
+   "section": "GU: eligible",
+   "text": "Patients requiring catheterization if confirmation is provided that patient is able to self-catheterize",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "continence",
+    "follow_up"
+   ]
+  },
+  {
+   "id": "GU-E6",
+   "section": "GU: eligible",
+   "text": "Indwelling catheter if patient is able to empty on their own and follow up has been scheduled for removal",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  {
+   "id": "GU-E7",
+   "section": "GU: eligible",
+   "text": "Patients requiring dialysis if dialysis schedule and frequency has been established",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  {
+   "id": "GU-X1",
+   "section": "GU: ineligible",
+   "text": "Patients requiring intermittent catheterization that has to be performed by medical staff",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-8"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "continence"
+   ]
+  },
+  {
+   "id": "CIR-E1",
+   "section": "Circulatory System: eligible",
+   "text": "Post-op angiogram",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CIR-E2",
+   "section": "Circulatory System: eligible",
+   "text": "Cardiac catheterization/stent placement",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CIR-E3",
+   "section": "Circulatory System: eligible",
+   "text": "Pacemaker/ICD insertion",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CIR-E4",
+   "section": "Circulatory System: eligible",
+   "text": "Stable hypertension (patient with baseline elevated BP; SBP<170, DBP<100, asymptomatic and not currently taking medication but with established follow up with a primary care provider)",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CIR-E5",
+   "section": "Circulatory System: eligible",
+   "text": "Post coronary artery bypass graft or heart valve surgery with controlled, stable blood pressure, normal hemoglobin/hematocrit, normal EF and without arrhythmias. Home health must be ordered and scheduled prior to admission to recuperative care. Cardiac surgery follow up must be scheduled prior to admission to recuperative care.",
+   "kind": "conditional",
+   "kind_source": "source",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ],
+   "gap_note": "Home health wording varies (see OTH-3)."
+  },
+  {
+   "id": "CIR-E6",
+   "section": "Circulatory System: eligible",
+   "text": "Hypertension that responds well to oral anti-hypertensive regimen",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CIR-E7",
+   "section": "Circulatory System: eligible",
+   "text": "History of heart attack. If being admitted to recuperative care immediately following admission for heart attack, will only accept patients who have an normal ejection fraction",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ],
+   "gap_note": "See CARD-2: troponin rule conflicts for patients admitted for a heart attack."
+  },
+  {
+   "id": "CIR-X1",
+   "section": "Circulatory System: ineligible",
+   "text": "Unstable cardiac arrhythmias",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "CIR-X2",
+   "section": "Circulatory System: ineligible",
+   "text": "Hypertension that requires IV medications to improve, is symptomatic or is not responding to oral medication",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-6",
+    "ekg"
+   ],
+   "facts": [
+    "admitting_diagnosis",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "NEU-E1",
+   "section": "Neurology: eligible",
+   "text": "Alcohol withdrawal seizure, following detox/stabilization",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "NEU-E2",
+   "section": "Neurology: eligible",
+   "text": "Post carpal tunnel or cubital release",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "NEU-E3",
+   "section": "Neurology: eligible",
+   "text": "Mild traumatic brain injury with intact ADLs",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "NEU-E4",
+   "section": "Neurology: eligible",
+   "text": "Cervical or lumbar radiculopathy following epidural injection or decompression surgery",
+   "kind": "eligible_condition",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "NEU-X1",
+   "section": "Neurology: ineligible",
+   "text": "Stroke syndrome with neurological residual/deficit (e.g. ambulatory difficulty, seizure)",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "NEU-X2",
+   "section": "Neurology: ineligible",
+   "text": "New onset of seizure with neurological deficit/impairment",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "NEU-X3",
+   "section": "Neurology: ineligible",
+   "text": "Moderate or severe traumatic brain injury",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "NEU-X4",
+   "section": "Neurology: ineligible",
+   "text": "Cervical or lumbar fusion",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ]
+  },
+  {
+   "id": "NEU-X5",
+   "section": "Neurology: ineligible",
+   "text": "Dementia",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-2",
+    "DOC-4",
+    "DOC-5"
+   ],
+   "facts": [
+    "cognitive_impairment"
+   ]
+  },
+  {
+   "id": "NEU-X6",
+   "section": "Neurology: ineligible",
+   "text": "Immediately s/p neurosurgery. Neurosurgical patients who meet other eligibility criteria should be escalated to further clinical review",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-2",
+    "DOC-5"
+   ],
+   "facts": [
+    "admitting_diagnosis"
+   ],
+   "human_review": true
+  },
+  {
+   "id": "DOC-1",
+   "section": "Referral checklist",
+   "text": "Illumination Health + Home Referral Form",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  {
+   "id": "DOC-2",
+   "section": "Referral checklist",
+   "text": "Client's Demographic Page",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  {
+   "id": "DOC-3",
+   "section": "Referral checklist",
+   "text": "CalOptima Form/LOA/AUTH",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  {
+   "id": "DOC-4",
+   "section": "Referral checklist",
+   "text": "H&P (History and Physical)",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  {
+   "id": "DOC-5",
+   "section": "Referral checklist",
+   "text": "Current Progress Notes (if needed)",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  {
+   "id": "DOC-6",
+   "section": "Referral checklist",
+   "text": "Updated Vitals (last 24 hours)",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": true,
+   "gap": false,
+   "evidence": [],
+   "facts": [
+    "vitals_last5"
+   ],
+   "date_note": "Vitals from the last 24 hours"
+  },
+  {
+   "id": "DOC-7",
+   "section": "Referral checklist",
+   "text": "Medication List",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": [
+    "med_list_supply"
+   ]
+  },
+  {
+   "id": "DOC-8",
+   "section": "Referral checklist",
+   "text": "PT/OT or Nursing Notes",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": [
+    "walk_100ft_transfers",
+    "adl_independent"
+   ]
+  },
+  {
+   "id": "DOC-9",
+   "section": "Referral checklist",
+   "text": "Blood or Wound Culture (if needed)",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": []
+  },
+  {
+   "id": "DOC-10",
+   "section": "Referral checklist",
+   "text": "30-day supply of all medications",
+   "kind": "document",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [],
+   "facts": [
+    "med_list_supply"
+   ]
+  },
+  {
+   "id": "FORM-M1",
+   "section": "Referral form: must meet all",
+   "text": "Currently unhoused, at risk of being unhoused, or are living in an inadequate environment post hospitalization",
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1"
+   ],
+   "facts": [
+    "housing"
+   ]
+  },
+  {
+   "id": "FORM-M2",
+   "section": "Referral form: must meet all",
+   "text": "Medically and psychiatrically stable condition upon discharge",
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5"
+   ],
+   "facts": [
+    "mental_health_stable",
+    "vitals_last5"
+   ]
+  },
+  {
+   "id": "FORM-M3",
+   "section": "Referral form: must meet all",
+   "text": "The patient is AAOx4 (alert and oriented)",
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-4",
+    "DOC-5",
+    "DOC-3"
+   ],
+   "facts": [
+    "aox4"
+   ]
+  },
+  {
+   "id": "FORM-M4",
+   "section": "Referral form: must meet all",
+   "text": "Able to manage ADL (activities of daily living)",
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  {
+   "id": "FORM-M5",
+   "section": "Referral form: must meet all",
+   "text": "Able to self-administer medications and manage their medication schedule with staff oversight",
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-1"
+   ],
+   "facts": [
+    "self_admin_meds"
+   ]
+  },
+  {
+   "id": "FORM-M6",
+   "section": "Referral form: must meet all",
+   "text": "Capable of walking 100 ft. with or without DME and able to transfer independently",
+   "kind": "must",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ],
+   "gap_note": "Superseded by MOB-3 and MOB-4.",
+   "superseded_by": "MOB-3, MOB-4"
+  },
+  {
+   "id": "FORM-X1",
+   "section": "Referral form: not eligible if",
+   "text": "Cognitively impaired (i.e., dementia, Alzheimer's)",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-2",
+    "DOC-4"
+   ],
+   "facts": [
+    "cognitive_impairment"
+   ]
+  },
+  {
+   "id": "FORM-X2",
+   "section": "Referral form: not eligible if",
+   "text": "Unable to perform activities of daily living",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "adl_independent"
+   ]
+  },
+  {
+   "id": "FORM-X3",
+   "section": "Referral form: not eligible if",
+   "text": "Unable to transfer, ambulate 100 ft., or use DME independently",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-8"
+   ],
+   "facts": [
+    "walk_100ft_transfers",
+    "dme_independent"
+   ],
+   "gap_note": "Superseded by MOB-3 and MOB-4.",
+   "superseded_by": "MOB-3, MOB-4"
+  },
+  {
+   "id": "FORM-X4",
+   "section": "Referral form: not eligible if",
+   "text": "Active infection has not been cleared by a doctor or CID: MRSA, Tuberculosis, C-DIFF",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "labs",
+    "DOC-9",
+    "imaging"
+   ],
+   "facts": [
+    "tb_test",
+    "mrsa_swab",
+    "isolation"
+   ],
+   "gap_note": "Only the tuberculosis part falls to the form (the outline is silent on TB). MRSA is covered by INF-1 and C. diff by GI-X3, so the outline governs those."
+  },
+  {
+   "id": "FORM-X5",
+   "section": "Referral form: not eligible if",
+   "text": "Non-compliance with detox treatment or a refusal to abstain from substance abuse",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-4",
+    "DOC-5"
+   ],
+   "facts": [
+    "substance_withdrawal"
+   ],
+   "gap_note": "Refusing detox is listed only on the form; the outline is silent, so the form's exclusion applies."
+  },
+  {
+   "id": "FORM-X6",
+   "section": "Referral form: not eligible if",
+   "text": "Registered sex offender",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": true,
+   "evidence": [
+    "DOC-1"
+   ],
+   "facts": [
+    "sex_offender"
+   ],
+   "gap_note": "Superseded by OTH-2 (case by case).",
+   "superseded_by": "OTH-2"
+  },
+  {
+   "id": "FORM-X7",
+   "section": "Referral form: not eligible if",
+   "text": "Aggressive or combative behavior directed at staff or other patients",
+   "kind": "exclude",
+   "kind_source": "overlay",
+   "needs_date": false,
+   "gap": false,
+   "evidence": [
+    "DOC-5",
+    "DOC-8"
+   ],
+   "facts": [
+    "aggression"
+   ]
+  }
+ ]
+}
