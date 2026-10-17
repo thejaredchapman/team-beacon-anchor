@@ -37,7 +37,7 @@ A Santa Ana nonprofit that pairs **housing, healthcare and case management** for
 - **People decide.** The tools never approve or deny.
 - **Nothing is sent, and the real packets are never published.** Messages are drafts in an outbox. With an API key, page images (pre-read) and referral details (Ask Anchor) go to the Claude API, so use only de-identified data.
 - **Checked:**
-  - 38 automated tests pass
+  - 48 automated tests pass
   - an independent verifier moved the rule work from FAIL to PASS WITH FIXES
   - IHH's real decisions are held out for scoring only
 

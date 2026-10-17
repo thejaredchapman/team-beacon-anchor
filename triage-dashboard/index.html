@@ -108,6 +108,34 @@
 }
 #dash-root [data-dash-source-state=empty] { color: transparent; }
 #dash-root [data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+/* Header menu and packet pop-up */
+#dash-root .pt-head { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); align-items: flex-start; justify-content: space-between; }
+#dash-root .pt-head-text { min-width: 0; flex: 1 1 20rem; }
+#dash-root .pt-menu-wrap { position: relative; flex: 0 0 auto; }
+#dash-root .pt-menu-btn { all: unset; box-sizing: border-box; cursor: pointer; min-height: 44px; min-width: 44px; padding: 0 14px; display: inline-flex; gap: 8px; align-items: center; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-panel); color: var(--color-fg); font-size: var(--cds-font-size-body); }
+#dash-root .pt-menu-btn .bars { font-size: 1.2em; line-height: 1; }
+#dash-root .pt-menu-btn[aria-expanded="true"] { border-color: var(--color-fg); }
+#dash-root .pt-menu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 20; min-width: 15rem; display: grid; padding: 4px; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); box-shadow: 0 8px 24px rgb(0 0 0 / .18); }
+#dash-root .pt-menu[hidden] { display: none; }
+#dash-root .pt-menu button { all: unset; box-sizing: border-box; cursor: pointer; min-height: 44px; padding: 0 12px; display: flex; align-items: center; border-radius: calc(var(--cds-radius) - 2px); color: var(--color-fg); font-size: var(--cds-font-size-body); }
+#dash-root .pt-menu button:hover, #dash-root .pt-menu button:focus-visible { background: var(--cds-chart-grid); }
+#dash-root .pt-menu button[aria-current="page"] { font-weight: var(--cds-font-weight-medium); box-shadow: inset 3px 0 0 var(--color-fg); }
+#dash-root .pt-menu hr { border: 0; border-top: 1px solid var(--color-border-line); margin: 4px 0; }
+#dash-root .pt-back-today { justify-self: start; }
+#dash-root .pt-dialog { width: min(64rem, calc(100vw - 2rem)); max-width: none; max-height: calc(100dvh - 2rem); padding: 0; border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-bg); color: var(--color-fg); overflow: auto; overscroll-behavior: contain; }
+#dash-root .pt-dialog::backdrop { background: rgb(0 0 0 / .55); }
+#dash-root .pt-dialog .pt-dialog-inner { padding: var(--cds-pad-lg); display: grid; gap: var(--cds-gap-lg); }
+#dash-root .pt-dialog .pt-detail-head { position: sticky; top: 0; z-index: 2; box-shadow: 0 2px 0 var(--color-bg); }
+#dash-root .pt-dialog-bar { display: flex; gap: var(--cds-gap-md); align-items: center; justify-content: space-between; }
+@media (max-width: 640px) {
+  #dash-root .pt-dialog { width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; border-radius: 0; border: 0; }
+  #dash-root .pt-dialog .pt-dialog-inner { padding: var(--cds-pad-md); }
+  #dash-root .pt-menu { position: fixed; left: var(--cds-pad-md); right: var(--cds-pad-md); top: auto; min-width: 0; }
+}
+@media (forced-colors: active) { #dash-root .pt-menu, #dash-root .pt-dialog, #dash-root .pt-menu-btn { border: 1px solid CanvasText; } #dash-root .pt-menu button[aria-current="page"] { outline: 2px solid Highlight; } }
+#dash-root .team { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--cds-gap-md); grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); }
+#dash-root .team li { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: grid; gap: 4px; }
+#dash-root .team a { color: inherit; text-underline-offset: 3px; min-height: 24px; display: inline-flex; align-items: center; }
 #dash-root .failed { display: flex; align-items: center; justify-content: center; gap: 6px; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); min-height: 5rem; }
 #dash-root .failed::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
 </style>
@@ -116,21 +144,27 @@
   <div class="pt-skips"><a class="pt-skip" href="#queue">Skip to the queue</a><a class="pt-skip" href="#alerts">Skip to alerts</a></div>
   <div id="pt-live" class="pt-sr" role="status" aria-live="polite" aria-atomic="true"></div>
   <header class="pt-head" id="top">
-    <h1>Anchor Board</h1>
-    <p id="pt-take" class="dash-skeleton" data-source="summary">—</p>
-    <span class="pt-sample">Draft with made-up sample packets. No real referral data.</span>
+    <div class="pt-head-text">
+      <h1>Anchor Board</h1>
+      <p id="pt-take" class="dash-skeleton" data-source="summary">—</p>
+      <span class="pt-sample">Draft with made-up sample packets. No real referral data.</span>
+    </div>
+    <nav class="pt-menu-wrap" aria-label="Board">
+      <button type="button" class="pt-menu-btn" id="pt-menu-btn" aria-label="Menu" aria-haspopup="true" aria-expanded="false" aria-controls="pt-menu"><span class="bars" aria-hidden="true">☰</span><span aria-hidden="true">Menu</span></button>
+      <div class="pt-menu" id="pt-menu" role="menu" aria-labelledby="pt-menu-btn" hidden>
+        <button type="button" role="menuitem" tabindex="-1" data-view="today">Today</button>
+        <hr role="separator">
+        <button type="button" role="menuitem" tabindex="-1" data-view="grading">How grading works</button>
+        <button type="button" role="menuitem" tabindex="-1" data-view="staff">Staff guide</button>
+        <button type="button" role="menuitem" tabindex="-1" data-view="it">IT guide</button>
+        <button type="button" role="menuitem" tabindex="-1" data-view="built">How it was built</button>
+        <button type="button" role="menuitem" tabindex="-1" data-view="by">Built by</button>
+      </div>
+    </nav>
   </header>
 
-  <div class="pt-tabs" role="tablist" aria-label="Board sections" aria-orientation="horizontal">
-    <button type="button" role="tab" id="tab-today" aria-controls="today" aria-selected="true">Today</button>
-    <button type="button" role="tab" id="tab-packet" aria-controls="packet" aria-selected="false">Packet details</button>
-    <button type="button" role="tab" id="tab-grading" aria-controls="grading" aria-selected="false">How grading works</button>
-    <button type="button" role="tab" id="tab-staff" aria-controls="staff" aria-selected="false">Staff guide</button>
-    <button type="button" role="tab" id="tab-it" aria-controls="it" aria-selected="false">IT guide</button>
-  </div>
-
   <!-- TODAY -->
-  <section class="pt-page" id="today" role="tabpanel" tabindex="-1" aria-labelledby="tab-today">
+  <section class="pt-page" id="today" data-view tabindex="-1" aria-label="Today">
     <div class="pt-tiles" aria-label="Headline figures">
       <div class="pt-tile"><div class="lbl">Packets waiting</div><div class="num dash-skeleton" data-source="summary" data-field="pending" data-row="0">—</div><div class="note">Not yet answered</div></div>
       <div class="pt-tile bad"><div class="lbl">At risk or late</div><div class="num dash-skeleton" data-source="summary" data-field="at_risk" data-row="0">—</div><div class="note">Past 90 min of the 2-hour promise</div></div>
@@ -226,13 +260,16 @@
     </article>
   </section>
 
-  <!-- PACKET DETAILS -->
-  <section class="pt-page" id="packet" role="tabpanel" tabindex="-1" aria-labelledby="tab-packet" hidden>
-    <p id="pd-none" class="pt-empty">Pick a packet in the queue on the Today tab to see its details here.</p>
-    <div id="pd-body" class="pt-page" hidden>
+  <!-- PACKET DETAILS (pop-up) -->
+  <dialog class="pt-dialog" id="packet" aria-labelledby="pd-title">
+    <div id="pd-live" class="pt-sr" role="status" aria-live="polite" aria-atomic="true"></div>
+    <div id="pd-body" class="pt-dialog-inner" hidden>
       <article class="pt-card pt-detail-head" id="pd-head">
-        <button type="button" class="pt-back" id="pd-back">← Back to the queue</button>
-        <h2 id="pd-title" tabindex="-1">—</h2>
+        <div class="pt-dialog-bar">
+          <h2 id="pd-title" tabindex="-1">—</h2>
+          <span class="pt-sample">Made-up sample</span>
+          <button type="button" class="pt-btn" id="pd-close">Close<span class="pt-sr"> packet details</span></button>
+        </div>
         <div class="pt-chips" id="pd-chips"></div>
       </article>
 
@@ -364,17 +401,18 @@
         </article>
       </section>
     </div>
-  </section>
+  </dialog>
 
   <!-- GRADING -->
-  <section class="pt-page" id="grading" role="tabpanel" tabindex="-1" aria-labelledby="tab-grading" hidden>
+  <section class="pt-page" id="grading" data-view tabindex="-1" aria-labelledby="grading-h" hidden>
+    <button type="button" class="pt-btn pt-back-today" data-view="today">← Back to today</button>
     <div class="pt-card prose">
-      <h2>How a packet gets its grade</h2>
+      <h2 id="grading-h">How a packet gets its grade</h2>
       <p>The grade says <strong>how complete and consistent the packet is</strong>. It never says whether the patient qualifies. A coordinator always decides.</p>
       <h3>Step 1: score the 27 facts</h3>
       <ul>
         <li><strong>Found</strong> (with a page): 2 points</li>
-        <li><strong>Unclear</strong> or <strong>Can't tell</strong> (a date is blacked out): 1 point</li>
+        <li><strong>Unclear</strong>, or <strong>Can't tell</strong> (the rule needs a date, and dates are blacked out): 1 point</li>
         <li><strong>Missing</strong>: 0 points</li>
         <li><strong>Redacted</strong> (a black box): not counted. A black box is privacy, not a gap.</li>
       </ul>
@@ -393,7 +431,7 @@
         <li><strong>Clinical review</strong>: a nurse or medical director reads the page before anything else.</li>
         <li><strong>Get</strong>: ask the hospital for a missing document (for example PT/OT notes).</li>
         <li><strong>Find</strong>: the document is there, but the fact isn't. Look again or ask (for example MRSA result).</li>
-        <li><strong>Settle</strong>: the form and chart disagree. Check both pages; the chart wins, or call.</li>
+        <li><strong>Settle</strong>: the form and chart disagree. Check both pages and decide which is right, or call. Anchor's default is to trust the chart over the form (a team choice, not an IHH rule).</li>
         <li><strong>Confirm with hospital</strong>: the rule needs a date we can't see.</li>
         <li><strong>Coordinator decides</strong>: the written rules don't settle it.</li>
       </ul>
@@ -413,13 +451,13 @@
     </div>
     <div class="pt-card prose">
       <h3>The answer clock</h3>
-      <p>IHH promises hospitals an answer within 2 hours. <strong>On time</strong> is under 90 minutes, <strong>At risk</strong> is 90 to 120 minutes, and <strong>Late</strong> is over 2 hours. Answered packets show <strong>Answered</strong>.</p>
+      <p>IHH promises hospitals an answer within 2 hours. <strong>On time</strong> is up to 90 minutes, <strong>At risk</strong> is 91 to 120 minutes, and <strong>Late</strong> is over 2 hours. Answered packets show <strong>Answered</strong>.</p>
       <h3>Alert types</h3>
       <ul>
         <li><strong>Critical</strong>: a rule that excludes the patient looks true (for example dementia, suicidal thoughts, aggression, isolation not cleared).</li>
         <li><strong>Missing document</strong>: one of IHH's 10 checklist documents is not in the packet.</li>
         <li><strong>Missing fact</strong>: the document is there but the fact isn't (for example no MRSA result).</li>
-        <li><strong>Contradiction</strong>: the form and the chart disagree. The chart wins.</li>
+        <li><strong>Contradiction</strong>: the form and the chart disagree. Check both pages; Anchor's default is to trust the chart (a team choice, not an IHH rule).</li>
         <li><strong>Can't tell</strong>: the rule needs a date or time, and dates are blacked out.</li>
         <li><strong>Rule gap</strong>: IHH's written rules don't settle it. The coordinator decides.</li>
       </ul>
@@ -448,13 +486,14 @@
   </section>
 
   <!-- STAFF GUIDE -->
-  <section class="pt-page" id="staff" role="tabpanel" tabindex="-1" aria-labelledby="tab-staff" hidden>
+  <section class="pt-page" id="staff" data-view tabindex="-1" aria-labelledby="staff-h" hidden>
+    <button type="button" class="pt-btn pt-back-today" data-view="today">← Back to today</button>
     <div class="pt-card prose">
-      <h2>Staff guide: using the board</h2>
-      <p>For referral coordinators and nurses. Five steps, about 10 minutes a packet.</p>
+      <h2 id="staff-h">Staff guide: using the board</h2>
+      <p>For referral coordinators and nurses. Five steps.</p>
       <h3>1. Start with the queue</h3>
       <p>Work from the top: the queue is sorted by <strong>priority</strong> (P1 Urgent first). Watch the <strong>answer clock</strong>. Amber means you have under 30 minutes left on the 2-hour promise.</p>
-      <p>Click a packet name to open <strong>Packet details</strong>: summary, key missing information, priority with its points, patient details (name, address, allergies, blood type), the original fax or email as a PDF, the email log, the packet page by page, medications, and medical history with recent episodes.</p>
+      <p>Click a packet name to open its <strong>details in a pop-up</strong>: summary, key missing information, priority with its points, patient details (name, address, allergies, blood type), the original fax or email as a PDF, the email log, the packet page by page, medications, and medical history with recent episodes.</p>
       <p>Log every message in the <strong>email log</strong>: what arrived, what you sent, and any draft. Times show to the second, with the time since the referral arrived and since the previous message. Live clocks show time since received, since the last message, and how long is left on the 2-hour promise.</p>
       <p>To answer a hospital, use <strong>Reply to the hospital</strong> under the log (or "Reply" on a received message). It starts from the packet's open items. <strong>Copy message</strong> and send it through IHH's approved channel. The board never sends, and drafts you add to the log last only until you reload.</p>
       <h3>2. Look at the grade</h3>
@@ -466,14 +505,14 @@
       <h3>3. Read the alerts, then the pages</h3>
       <p>Click the packet to see its alerts. Each one names the page. <strong>Open that page and read it yourself.</strong> The tool can misread a crooked fax.</p>
       <h3>4. Tick Verified</h3>
-      <p>On the printable checklist, tick <strong>Verified</strong> for each fact you checked on the page. The board counts how many facts a person has checked.</p>
+      <p>Mark each fact <strong>Verified</strong> once you have checked it on its page (in the intake app, press V). The board shows how many facts a person has checked.</p>
       <h3>5. Decide and write it down</h3>
       <p>You decide. The tool never approves or denies. Write the reason, especially for a denial.</p>
       <h3>Keyboard and screen reader</h3>
       <ul>
         <li><span class="pt-kbd">Tab</span> moves between controls. The first stop offers "Skip to the queue" and "Skip to alerts".</li>
-        <li>On the section tabs, <span class="pt-kbd">←</span> <span class="pt-kbd">→</span> switch tabs, and <span class="pt-kbd">Home</span> and <span class="pt-kbd">End</span> jump to the first or last.</li>
-        <li>In the queue, each packet name is a button. <span class="pt-kbd">Enter</span> opens its details and moves focus to the packet's title. "Back to the queue" returns you to the same packet.</li>
+        <li>The <strong>Menu</strong> button (☰, top right) opens the guides, how it was built, and who built it. In the menu, <span class="pt-kbd">↑</span> <span class="pt-kbd">↓</span> move, <span class="pt-kbd">Home</span> and <span class="pt-kbd">End</span> jump to the first or last, <span class="pt-kbd">Enter</span> opens, and <span class="pt-kbd">Esc</span> closes. Each page has "Back to today".</li>
+        <li>In the queue, each packet name is a button. <span class="pt-kbd">Enter</span> opens its details in a pop-up and moves focus to the packet's title. <strong>Close</strong> or <span class="pt-kbd">Esc</span> returns you to the same packet in the queue.</li>
         <li>Use "Show alerts for" above the alerts table to filter by packet without a mouse.</li>
         <li>Changes are announced: which packet is open, its priority, grade and open items.</li>
         <li>Every status has a word and a symbol, not only a color (✓ good, ! needs work, ✕ blocking, ▲ urgent).</li>
@@ -482,7 +521,7 @@
       <ul>
         <li>A black box is privacy, not a missing document.</li>
         <li>"Can't tell" means the rule needs a date we can't see. Ask the hospital if it matters.</li>
-        <li>When the form and the chart disagree, the chart wins.</li>
+        <li>When the form and the chart disagree, check both pages. Trusting the chart is Anchor's default, not an IHH rule.</li>
         <li>Sex offender status is case by case. Never auto-deny.</li>
         <li>Never type names or record numbers into notes.</li>
       </ul>
@@ -490,23 +529,24 @@
   </section>
 
   <!-- IT GUIDE -->
-  <section class="pt-page" id="it" role="tabpanel" tabindex="-1" aria-labelledby="tab-it" hidden>
+  <section class="pt-page" id="it" data-view tabindex="-1" aria-labelledby="it-h" hidden>
+    <button type="button" class="pt-btn pt-back-today" data-view="today">← Back to today</button>
     <div class="pt-card prose">
-      <h2>IT guide: how the board works</h2>
+      <h2 id="it-h">IT guide: how the board works</h2>
       <p>For whoever sets it up and keeps it running.</p>
       <h3>What it shows</h3>
-      <p>Two lists: one row per packet (its fact counts, documents, alerts and times) and one row per alert. The board works out the score, grade and answer clock from those rows. Open <strong>Sources</strong> in the toolbar to see each list and the math behind every number.</p>
+      <p>Seven lists, one row each: packets (fact counts, documents, alerts and times), alerts, profiles, pages, medications, history and the email log. The board works out the score, grade and answer clock from those rows. Open <strong>Sources</strong> in the toolbar to see each list and the math behind every number.</p>
       <h3>Where the data comes from today</h3>
-      <p>Two small sample files with made-up packets. Nothing here comes from a real referral.</p>
+      <p>Seven small sample files (packets, alerts, profiles, pages, medications, history, email log), all made up. Nothing here comes from a real referral.</p>
       <h3>How to connect the real tool later</h3>
       <ol>
         <li>The review tool writes one <code>review.json</code> per packet (see the plan, section 5).</li>
-        <li>A small script turns those into the two lists, with the same column names as the sample files.</li>
+        <li>A small script turns those into the seven lists, with the same column names as the sample files.</li>
         <li>Replace the sample files in Sources, or point the board at a database table with the same columns.</li>
       </ol>
       <h3>Rules that don't bend</h3>
       <ul>
-        <li><strong>No patient details on the board.</strong> Packet IDs only. No names, dates of birth, record numbers, or page images.</li>
+        <li><strong>No real patient details on the board.</strong> The names and addresses shown are made up. With real packets: packet IDs only, no names, dates of birth, record numbers or page images.</li>
         <li>Never connect to IHH's live systems in the prototype.</li>
         <li>The tool sends nothing. Hospital requests are drafts.</li>
         <li>Keep packets and page images in a folder that git ignores.</li>
@@ -520,15 +560,15 @@
       <p><strong>Medications:</strong> <code>med_id, packet_id, medicine, dose, route, how_often, self_administers, purpose, page</code></p>
       <p><strong>History:</strong> <code>hist_id, packet_id, condition, status, recent, page</code></p>
       <p><strong>Email log:</strong> <code>log_id, packet_id, time, direction (Received, Sent, Draft), channel (Fax, Email, Phone), who, subject, status</code>. Staff record what they sent; the board never sends.</p>
-      <p><strong>Profiles</strong> also carry <code>patient_name, address, allergies, blood_type, fax_pdf</code>. In the prototype, name and address must stay "Removed for privacy" for real packets, and real PDFs stay on a staff computer.</p>
+      <p><strong>Profiles</strong> also carry <code>patient_name, address, allergies, blood_type, fax_pdf</code>. In real packets, name and address are black boxes (redacted) and must stay that way; real PDFs stay on a staff computer.</p>
       <p>The real packets must never be uploaded to a published board. For real packets, run this view as a local file on a staff computer.</p>
       <h3>Accessibility statement</h3>
       <p>Target: <strong>WCAG 2.2 Level AA</strong>. What the board does:</p>
       <ul>
-        <li><strong>Keyboard:</strong> every action works without a mouse; tabs follow the ARIA tabs pattern (arrows, Home, End); skip links; focus is never lost when the board redraws; focus moves to the packet title when details open and back to the packet when you return.</li>
+        <li><strong>Keyboard:</strong> every action works without a mouse; the menu button follows the ARIA menu button pattern (arrows, Home, End, Esc); skip links; focus is never lost when the board redraws; packet details open in a modal pop-up that keeps focus inside, moves focus to the packet title, and returns it to the packet when closed.</li>
         <li><strong>Screen readers:</strong> real headings, tables with captions and column and row headers, a polite live region for changes, charts with text equivalents, PDF links that say they open a new tab.</li>
         <li><strong>Vision:</strong> status uses a word and a symbol plus color; text uses the theme's contrast-checked colors in light and dark; works at 200% zoom and narrow widths with no sideways page scroll; Windows high-contrast mode keeps borders, bars and the selected row visible.</li>
-        <li><strong>Motion and targets:</strong> no animation when reduced motion is on; tabs are 44 px tall and other controls at least 24 px (WCAG 2.2 target size).</li>
+        <li><strong>Motion and targets:</strong> no animation when reduced motion is on; the menu button and menu items are 44 px tall and other controls at least 24 px (WCAG 2.2 target size).</li>
         <li><strong>Language and time:</strong> page language is set; nothing times out or erases work.</li>
       </ul>
       <p><strong>Known gaps:</strong> not yet tested with JAWS, NVDA or VoiceOver by real users; the mock PDFs are not tagged for screen readers (real faxes are scanned images, so the page-by-page table is the accessible version); a formal audit is a pilot step.</p>
@@ -536,6 +576,38 @@
       <ul>
         <li>A card says "Failed to load": open Sources and check the file is there.</li>
         <li>A grade looks off: check the "How each packet scored" table. Every number is shown.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- HOW IT WAS BUILT -->
+  <section class="pt-page" id="built" data-view tabindex="-1" aria-labelledby="built-h" hidden>
+    <button type="button" class="pt-btn pt-back-today" data-view="today">← Back to today</button>
+    <div class="pt-card prose">
+      <h2 id="built-h">How it was built</h2>
+      <p>Team Beacon built Anchor at the Orange County Claude Impact Lab on October 17, 2026, for Illumination Health + Home (IHH).</p>
+      <ul>
+        <li><strong>Built with Claude Code</strong> (Claude Opus 5.5): planning, writing, code and data checks.</li>
+        <li><strong>Checked by an independent verifier.</strong> A verifier subagent checked the claims against their sources, and we fixed the serious items it found before sharing.</li>
+        <li><strong>Made-up data only.</strong> This board runs on 10 made-up sample packets. No real referral data is here.</li>
+        <li><strong>Claude inside the intake app:</strong> Claude Sonnet maps the pages and checks each quote is on its page, Claude Opus finds the facts, and Claude Haiku runs the Ask Anchor helper.</li>
+        <li><strong>People decide.</strong> Staff verify every fact and make every decision. The tool never approves or denies.</li>
+        <li><strong>Nothing is sent.</strong> Messages to hospitals are drafts.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- BUILT BY -->
+  <section class="pt-page" id="by" data-view tabindex="-1" aria-labelledby="by-h" hidden>
+    <button type="button" class="pt-btn pt-back-today" data-view="today">← Back to today</button>
+    <div class="pt-card prose">
+      <h2 id="by-h">Built by</h2>
+      <p>Team Beacon, listed by last name.</p>
+      <ul class="team">
+        <li><strong>Jared Chapman</strong><a href="https://www.linkedin.com/in/thejaredchapman/" target="_blank" rel="noopener">LinkedIn profile<span class="pt-sr"> for Jared Chapman (opens in a new tab)</span></a></li>
+        <li><strong>Lei Lu</strong><a href="https://www.linkedin.com/in/8leilu8/" target="_blank" rel="noopener">LinkedIn profile<span class="pt-sr"> for Lei Lu (opens in a new tab)</span></a></li>
+        <li><strong>Nelson Navarrate</strong><a href="https://www.linkedin.com/in/navnelson/" target="_blank" rel="noopener">LinkedIn profile<span class="pt-sr"> for Nelson Navarrate (opens in a new tab)</span></a></li>
+        <li><strong>Alan Zhang</strong><a href="https://www.linkedin.com/in/alan-z/" target="_blank" rel="noopener">LinkedIn profile<span class="pt-sr"> for Alan Zhang (opens in a new tab)</span></a></li>
       </ul>
     </div>
   </section>
@@ -654,28 +726,52 @@ dash.calc('alert_types', {
 });
 
 (function () {
-  const tabs = [...document.querySelectorAll('#dash-root .pt-tabs [role=tab]')];
-  const live = document.getElementById('pt-live');
-  const say = (msg) => { live.textContent = ''; setTimeout(() => { live.textContent = msg; }, 50); };
-  function show(id) {
-    tabs.forEach((t) => { const on = t.getAttribute('aria-controls') === id; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
-    document.querySelectorAll('#dash-root .pt-page[role=tabpanel]').forEach((p) => { p.hidden = p.id !== id; });
+  const VIEWS = ['today', 'grading', 'staff', 'it', 'built', 'by'];
+  const live = document.getElementById('pt-live'), dlg = document.getElementById('packet'), dlgLive = document.getElementById('pd-live');
+  // Inside the modal pop-up the rest of the page is inert, so announce from the pop-up's own live region
+  const say = (msg) => { const r = dlg.open ? dlgLive : live; r.textContent = ''; setTimeout(() => { r.textContent = msg; }, 50); };
+  const menuBtn = document.getElementById('pt-menu-btn'), menu = document.getElementById('pt-menu');
+  const items = [...menu.querySelectorAll('[role=menuitem]')];
+  function show(id, focus) {
+    if (!VIEWS.includes(id)) id = 'today';
+    document.querySelectorAll('#dash-root .pt-page[data-view]').forEach((p) => { p.hidden = p.id !== id; });
+    items.forEach((b) => { if (b.dataset.view === id) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
     dash.setLink(id);
+    if (focus) document.getElementById(id).focus();
   }
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => show(t.getAttribute('aria-controls')));
-    t.addEventListener('keydown', (e) => {
-      let j = null;
-      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length;
-      else if (e.key === 'ArrowLeft') j = (i + tabs.length - 1) % tabs.length;
-      else if (e.key === 'Home') j = 0;
-      else if (e.key === 'End') j = tabs.length - 1;
-      if (j === null) return;
-      e.preventDefault(); tabs[j].focus(); tabs[j].click();
-    });
+  function closeMenu(returnFocus) {
+    if (menu.hidden) return;
+    menu.hidden = true; menuBtn.setAttribute('aria-expanded', 'false');
+    if (returnFocus) menuBtn.focus();
+  }
+  function openMenu(at) {
+    menu.hidden = false; menuBtn.setAttribute('aria-expanded', 'true');
+    const cur = items.findIndex((b) => b.hasAttribute('aria-current'));
+    items[at === 'last' ? items.length - 1 : (cur >= 0 ? cur : 0)].focus();
+  }
+  menuBtn.addEventListener('click', () => (menu.hidden ? openMenu() : closeMenu(false)));
+  menuBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMenu(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); openMenu('last'); }
   });
+  menu.addEventListener('keydown', (e) => {
+    const i = items.indexOf(document.activeElement);
+    let j = null;
+    if (e.key === 'ArrowDown') j = (i + 1) % items.length;
+    else if (e.key === 'ArrowUp') j = (i + items.length - 1) % items.length;
+    else if (e.key === 'Home') j = 0;
+    else if (e.key === 'End') j = items.length - 1;
+    else if (e.key === 'Escape') { e.preventDefault(); closeMenu(true); return; }
+    else if (e.key === 'Tab') { closeMenu(false); return; }
+    if (j !== null) { e.preventDefault(); items[j].focus(); }
+  });
+  items.forEach((b) => b.addEventListener('click', () => { closeMenu(false); show(b.dataset.view, true); }));
+  document.addEventListener('click', (e) => { if (!menu.hidden && !e.target.closest('.pt-menu-wrap')) closeMenu(false); });
+  document.querySelectorAll('#dash-root .pt-back-today').forEach((b) => b.addEventListener('click', () => { show('today', true); say('Back to today.'); }));
+  // Skip links point into Today, so make sure Today is showing first
+  document.querySelectorAll('#dash-root .pt-skip').forEach((a) => a.addEventListener('click', () => show('today')));
   const start = location.hash.slice(1);
-  if (['today', 'packet', 'grading', 'staff', 'it'].includes(start)) show(start);
+  if (VIEWS.includes(start)) show(start); else items[0].setAttribute('aria-current', 'page');
   window.ptShow = show;
 
   const el = (tag, props, kids) => { const e = Object.assign(document.createElement(tag), props || {}); (kids || []).forEach((k) => e.append(k)); return e; };
@@ -745,7 +841,7 @@ dash.calc('alert_types', {
     say('Reply started. Edit the message, then copy it or add it to the log as a draft.');
   });
   setInterval(() => {
-    if (!timer.picked || document.getElementById('packet').hidden) return;
+    if (!timer.picked || !dlg.open) return;
     const nowS = boardNow();
     const recv = document.getElementById('pd-t-recv'), last = document.getElementById('pd-t-last'), left = document.getElementById('pd-t-left');
     recv.textContent = hms(nowS - timer.anchor); recv.setAttribute('aria-label', spoken(nowS - timer.anchor));
@@ -759,15 +855,24 @@ dash.calc('alert_types', {
   const typeColor = (t) => (t === 'Critical' ? 'var(--color-bad)' : (t === 'Contradiction' || t === 'Missing document' ? 'var(--color-warn)' : dash.colors[0]));
 
   const qBody = document.querySelector('#queue-tbl tbody');
+  let openerKey = null;
+  function openPacket(key) {
+    openerKey = key;
+    if (!dlg.open) dlg.showModal();
+    if (dash.params().packet === key) document.getElementById('pd-title').focus();   // same packet: no redraw coming
+    else { focusTitle = true; dash.setParams({ packet: key }); }
+  }
   qBody.addEventListener('click', (e) => {
     const tr = e.target.closest('tr[data-key]'); if (!tr) return;
-    if (e.target.closest('.pt-open')) { focusTitle = true; show('packet'); }
-    dash.setParams({ packet: tr.dataset.key });
+    if (e.target.closest('.pt-open')) openPacket(tr.dataset.key);
+    else dash.setParams({ packet: tr.dataset.key });
   });
-  document.getElementById('pd-back').addEventListener('click', () => {
-    const k = dash.params().packet; show('today');
+  document.getElementById('pd-close').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });   // click on the backdrop
+  dlg.addEventListener('close', () => {
+    const k = openerKey || dash.params().packet;
     const b = k && qBody.querySelector(`tr[data-key="${CSS.escape(k)}"] .pt-open`); if (b) b.focus();
-    say('Back to the queue.');
+    say(k ? `Closed details for ${k}.` : 'Closed packet details.');
   });
   const filterSel = document.getElementById('pt-filter');
   filterSel.addEventListener('change', () => { dash.setParams({ packet: filterSel.value || null }); say(filterSel.value ? `Alerts filtered to ${filterSel.value}.` : 'Showing alerts for all packets.'); });
@@ -886,9 +991,9 @@ dash.calc('alert_types', {
     } else lBody.replaceChildren();
 
     // Packet details
-    const none = document.getElementById('pd-none'), body = document.getElementById('pd-body');
-    none.hidden = !!picked; body.hidden = !picked;
-    if (!picked) { lastPicked = null; return; }
+    const body = document.getElementById('pd-body');
+    body.hidden = !picked;
+    if (!picked) { lastPicked = null; if (dlg.open) dlg.close(); return; }
     document.getElementById('pd-title').textContent = picked;
     const where = 'packet_id=' + encodeURIComponent(picked);
     const prof = dash.data('profiles');

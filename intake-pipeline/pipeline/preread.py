@@ -90,7 +90,7 @@ class ClaudeReader(Reader):
         guide = "\n".join(f"- {k}: {rules.FACT_HINTS[k]}" for k in rules.FACT_KEYS)
         excl = "\n".join(f"- {r['id']}: {r['text']}" for r in rules.EXCLUDE_RULES)
         pm = "\n".join(f"p{p['page']}: {p['doc_type']}" for p in page_map)
-        prompt = (f"Page map:\n{pm}\n\nFind these 27 facts. Report what the IHH referral form or CalAIM form says as source 'form', "
+        prompt = (f"Page map:\n{pm}\n\nFind these 27 facts. Report what the IHH referral form or the health plan's authorization form (CalOptima form/LOA/AUTH) says as source 'form', "
                   f"and what the rest of the chart says as source 'chart'. Give the page and an exact short quote for anything found.\n{guide}\n\n"
                   f"Possible red flags: only if the chart shows one of these IHH exclusion rules may be true. Use these rule IDs exactly; never invent one.\n{excl}\n\n"
                   "Contradictions: where the form and the chart disagree on a fact, give both pages and both quotes.")

@@ -108,7 +108,7 @@ Messages carry the referral number only, never a patient name. Internal messages
 ## Tests
 
 ```bash
-python3 -m unittest discover -s tests -t . -v      # 38 tests
+python3 -m unittest discover -s tests -t . -v      # 48 tests
 ```
 
 The tests cover:

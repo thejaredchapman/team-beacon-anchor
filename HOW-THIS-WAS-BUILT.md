@@ -65,7 +65,7 @@ We began with a Packet Triage design and build plan written before the event. It
   - immediate red-flag messages: a flag staff add goes to the intake team and the hospital at once; a flag the pre-read finds goes to the clinical reviewer at once, and to the hospital once a clinician confirms it
 - **Every internal message goes to the IHH Referral Intake team.** A "for:" line says which role should act.
 - **Dry run only:** every message is a file in `outbox/`.
-- 38 unit tests pass (`cd intake-pipeline && python3 -m unittest discover -s tests -t .`), and a full end-to-end run produced every tier in order.
+- 48 unit tests pass (`cd intake-pipeline && python3 -m unittest discover -s tests -t .`), and a full end-to-end run produced every tier in order.
 
 ## Tools
 

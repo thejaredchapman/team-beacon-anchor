@@ -40,7 +40,7 @@ Judging weights: **Day-one impact 40%** · **Product and idea 35%** · **Clarity
 | Priority by patient need: discharge today +3 (tomorrow +2), clock late +3 (at risk +2), unhoused +1, high care need +1, recent repeat episode +1. **P1** is 6+ points, **P2** 3–5, **P3** 2 or less. | Board, How grading works |
 | The intake app reads PDF, multi-page TIFF faxes, phone photos, Word, text, email and zip, and turns faxes and photos into PDFs. | `intake-pipeline/`; tests |
 | Follow-ups: receipt at **0**, requests at **30** and **60**, escalation at **60**, **90**, **110** and **120** minutes. A red flag the pre-read finds goes to the clinical reviewer **immediately**, and to the hospital once a clinician confirms; a red flag staff add goes to the intake team and hospital at once. | `pipeline/notify.py`; end-to-end run |
-| **38** automated tests pass. | `cd intake-pipeline && python3 -m unittest discover -s tests -t .` |
+| **48** automated tests pass. | `cd intake-pipeline && python3 -m unittest discover -s tests -t .` |
 | An independent verifier first failed our rule work, then passed it after fixes. | `verification/` (local only) |
 
 ## Say what is mocked (judges trust this)

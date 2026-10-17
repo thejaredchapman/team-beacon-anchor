@@ -269,7 +269,7 @@ If you fall behind, cut the UI polish first, then OCR. **Never cut** page citati
 | Held-out scorer (`score_against_decisions.py`) | Written, not run (no reviews yet) | `criteria-overlay/` |
 | Suggestions for the organizers | Drafted, not sent | `criteria-overlay/ORGANIZER-NOTE.md` |
 | Packets copied into `challenges/1-referral-intake/packets/` | **To do (by you)**; the automated copy was blocked | — |
-| **Intake app** (any-format upload, fax-to-email, tiered follow-ups, immediate red flags) **plus seven speed-ups**: pre-read on arrival with quote check; ask the hospital now; side-by-side fact check; resent pages join the referral; fast lane; clinical vs. coordinator owners; keyboard flow. Dry run only | Working local prototype; 38 tests pass; end-to-end run on made-up samples | `intake-pipeline/` |
+| **Intake app** (any-format upload, fax-to-email, tiered follow-ups, immediate red flags) **plus seven speed-ups**: pre-read on arrival with quote check; ask the hospital now; side-by-side fact check; resent pages join the referral; fast lane; clinical vs. coordinator owners; keyboard flow. Dry run only | Working local prototype; 48 tests pass; end-to-end run on made-up samples | `intake-pipeline/` |
 | Team app (T1–T9) | Not started | Team repo |
 
 ---

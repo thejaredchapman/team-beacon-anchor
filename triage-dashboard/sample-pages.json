@@ -20,7 +20,7 @@
     "packet_id": "Sample-01",
     "page_from": 3,
     "page_to": 8,
-    "doc_type": "CalAIM authorization",
+    "doc_type": "CalOptima authorization",
     "key_content": "Recuperative care pathway"
   },
   {
@@ -92,7 +92,7 @@
     "packet_id": "Sample-02",
     "page_from": 3,
     "page_to": 4,
-    "doc_type": "CalAIM authorization",
+    "doc_type": "CalOptima authorization",
     "key_content": "Signed; some boxes blank"
   },
   {
@@ -180,7 +180,7 @@
     "packet_id": "Sample-03",
     "page_from": 3,
     "page_to": 7,
-    "doc_type": "CalAIM authorization",
+    "doc_type": "CalOptima authorization",
     "key_content": "Complete"
   },
   {
@@ -316,7 +316,7 @@
     "packet_id": "Sample-05",
     "page_from": 3,
     "page_to": 6,
-    "doc_type": "CalAIM authorization",
+    "doc_type": "CalOptima authorization",
     "key_content": "Complete"
   },
   {
@@ -364,7 +364,7 @@
     "packet_id": "Sample-06",
     "page_from": 3,
     "page_to": 8,
-    "doc_type": "CalAIM authorization",
+    "doc_type": "CalOptima authorization",
     "key_content": "Home health: wound care"
   },
   {
@@ -508,7 +508,7 @@
     "packet_id": "Sample-08",
     "page_from": 3,
     "page_to": 8,
-    "doc_type": "CalAIM authorization",
+    "doc_type": "CalOptima authorization",
     "key_content": "Complete"
   },
   {
@@ -660,7 +660,7 @@
     "packet_id": "Sample-10",
     "page_from": 3,
     "page_to": 8,
-    "doc_type": "CalAIM authorization",
+    "doc_type": "CalOptima authorization",
     "key_content": "No follow-up listed"
   },
   {

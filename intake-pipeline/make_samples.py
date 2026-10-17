@@ -66,7 +66,7 @@ P2 = [
     ("face_sheet", "Face sheet (sample)", ["Diagnoses: closed fracture of right wrist", "Allergies: none known", "Conservatorship: none"],
      [F("cognitive_impairment", "chart", "found", "No cognitive diagnosis listed", "Diagnoses: closed fracture of right wrist"),
       F("conservatorship_fsp", "chart", "found", "None", "Conservatorship: none")], [], []),
-    ("calaim_authorization", "CalAIM authorization (sample)", ["Pathway: recuperative care only", "Oriented to person, place, time, situation: all checked", "Specialist follow-up: orthopedics booked"],
+    ("calaim_authorization", "CalOptima authorization (sample)", ["Pathway: recuperative care only", "Oriented to person, place, time, situation: all checked", "Specialist follow-up: orthopedics booked"],
      [F("aox4", "form", "found", "Oriented x4", "Oriented to person, place, time, situation: all checked"), F("follow_up", "form", "found", "Orthopedics follow-up booked", "Specialist follow-up: orthopedics booked")], [], []),
     ("history_physical", "History and physical (sample)", ["Alert and oriented x4", "No suicidal ideation, no hallucinations", "Mood stable; no psychiatric history",
       "No alcohol or drug use", "Calm and cooperative", "Not diabetic", "Continent; no catheter", "No IV access at discharge", "No wounds"],

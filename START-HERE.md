@@ -23,7 +23,7 @@ No real patient information is in any of these files or pages. The 11 real refer
 | Rule overlay: 155 IHH rule IDs with type, date-dependence (9), gaps (26), evidence and fact links; children's rules as JSON | Done; verified **PASS WITH FIXES** | [criteria-overlay/](criteria-overlay/README.md) |
 | Fillable, printable verification checklist (5 pages, 151 fields, Great / Neutral / Bad grade) | Done | `../packet-review/IHH-referral-packet-verification-checklist.pdf` (local only) |
 | Triage board: queue, 2-hour clock, priority, grades, what's missing, packet view, email log, staff and IT guides, accessibility | Draft on **10 made-up packets** | https://claude.ai/artifact/NVUonEKc7TRXnVU9QafCVG |
-| **Intake app:** any-format upload, fax-to-email, pre-read on arrival, one-click hospital requests, side-by-side fact checking, resent pages that join the referral, fast lane, owners, keyboard flow, tiered follow-ups and immediate red flags. Dry run | Working local prototype; 38 tests pass | [intake-pipeline/](intake-pipeline/README.md) |
+| **Intake app:** any-format upload, fax-to-email, pre-read on arrival, one-click hospital requests, side-by-side fact checking, resent pages that join the referral, fast lane, owners, keyboard flow, tiered follow-ups and immediate red flags. Dry run | Working local prototype; 48 tests pass | [intake-pipeline/](intake-pipeline/README.md) |
 | Held-out scorer (opens IHH's decisions only after all 11 reviews exist) | Written, not run | `criteria-overlay/score_against_decisions.py` |
 | Review of the 11 real packets | **Ready to resume**: an organizer confirmed a possible date element in one packet is fine (Oct 17) | `../packet-review/notes.md` (local only) |
 | Suggestions for the organizers | Drafted, not sent | [criteria-overlay/ORGANIZER-NOTE.md](criteria-overlay/ORGANIZER-NOTE.md) |
@@ -34,10 +34,11 @@ No real patient information is in any of these files or pages. The 11 real refer
 ```bash
 cd saturday-oct17-build/intake-pipeline
 python3 make_samples.py && INTAKE_PORT=8777 python3 server.py     # open http://127.0.0.1:8777
-python3 -m unittest discover -s tests -v
+python3 -m unittest discover -s tests -t . -v
 
 cd ../criteria-overlay && python3 build_overlay.py && python3 build_childrens.py
 cd .. && python3 make_exec_summary_pdf.py                          # rebuild the one-page PDF
+python3 board_server.py                                           # Anchor Board with Claude: http://127.0.0.1:8790
 ```
 
 ## Open items
