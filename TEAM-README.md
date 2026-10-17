@@ -37,8 +37,6 @@ never sends anything.
 
 ![Patient details and email log for Sample-04](images/ViewOfOnePackageEmail.png)
 
-**Demo video:** [link]
-
 ## How Claude is used
 
 - How we built it with Claude.
